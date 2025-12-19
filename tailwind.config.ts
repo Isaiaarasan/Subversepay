@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 export default {
   darkMode: ["class"],
@@ -11,6 +12,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        blue: colors.zinc,
+        indigo: colors.zinc,
+        violet: colors.zinc,
+        purple: colors.zinc,
+        sky: colors.zinc,
+        cyan: colors.zinc,
+        slate: colors.zinc,
+        gray: colors.zinc,
+        neutral: colors.zinc,
+        stone: colors.zinc,
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

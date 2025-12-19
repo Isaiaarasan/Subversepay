@@ -2,7 +2,6 @@
 
 import React from "react";
 import StatCard from "@/components/ui/stat-card";
-import MultiBarGraph from "@/components/charts/multi-bar-graph";
 import ComparisonGraph from "@/components/charts/comparison-graph";
 import PaymentPieChart from "@/components/charts/payment-pie-chart";
 import TicketOverlayGraph from "@/components/charts/ticket-overlay-graph";
@@ -88,31 +87,20 @@ const Overview = () => {
         ))}
       </div>
 
-      {/* Graph Row 1: Users & Payment Methods */}
+      {/* Graph Row 1: TPV & Payment Methods */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
-          <MultiBarGraph />
+          <ComparisonGraph />
         </div>
         <div className="lg:col-span-1">
           <PaymentPieChart />
         </div>
       </div>
 
-      {/* Graph Row 2: TPV & Efficiency */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2">
-          <ComparisonGraph />
-        </div>
-        <div className="lg:col-span-1">
-          <SuccessScoreGraph />
-        </div>
-      </div>
-
+      {/* Graph Row 2: Ticket Overlay & Efficiency */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TicketOverlayGraph />
-        <div className="bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex items-center justify-center">
-          <p className="text-gray-400 italic">More widgets coming soon...</p>
-        </div>
+        <SuccessScoreGraph />
       </div>
 
       {/* Bottom Widgets */}
@@ -205,10 +193,9 @@ const Overview = () => {
           <div className="space-y-3">
             {recentActivities.map((activity, i) => (
               <div key={i} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                <div className={`w-2 h-2 rounded-full ${
-                  activity.type === 'success' ? 'bg-green-500' :
+                <div className={`w-2 h-2 rounded-full ${activity.type === 'success' ? 'bg-green-500' :
                   activity.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                }`}></div>
+                  }`}></div>
                 <div className="flex-1">
                   <div className="text-sm font-medium text-gray-900">{activity.action}</div>
                   <div className="text-xs text-gray-500">{activity.time}</div>
