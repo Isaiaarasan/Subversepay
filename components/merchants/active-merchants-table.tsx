@@ -14,14 +14,8 @@ import {
     Download,
     TrendingUp,
     TrendingDown,
-    Wifi,
-    Tv,
-    Dumbbell,
+    UserCheck,
     X,
-    Building,
-    CreditCard,
-    FileText,
-    UserCheck
 } from 'lucide-react';
 import Link from 'next/link';
 import MerchantDetailsModalContent from './merchant-details-modal-content';
@@ -163,137 +157,131 @@ const ActiveMerchantsTable: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6 relative">
+        <div className="space-y-6">
             {/* Search & Filter Bar */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/50 dark:border-gray-800 shadow-sm dark:bg-gray-900/80">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-900/80 backdrop-blur-xl p-1 rounded-xl border border-transparent dark:border-gray-800">
                 <div className="relative w-full sm:w-96 group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within:text-blue-500 transition-colors" size={20} />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={16} />
                     <input
                         type="text"
                         placeholder="Search merchants, sectors..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-blue-500/20 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-medium transition-all"
+                        className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-xs transition-all"
                     />
                 </div>
-                <div className="flex gap-3 w-full sm:w-auto">
-                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-all font-medium shadow-sm">
-                        <UserCheck size={18} />
+                <div className="flex gap-2 w-full sm:w-auto">
+                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm">
+                        <UserCheck size={14} />
                         <span>Approvals</span>
                     </Link>
-                    <div className="relative group">
-                        <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-all font-medium shadow-sm">
-                            <Filter size={18} />
+                    <div className="relative group main-dropdown">
+                        <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full">
+                            <Filter size={14} />
                             <span>{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
                         </button>
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 p-2 hidden group-hover:block z-20">
+                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-20">
                             {['all', 'Active', 'Inactive'].map(status => (
                                 <button
                                     key={status}
                                     onClick={() => setStatusFilter(status)}
-                                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium ${statusFilter === status ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}
+                                    className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                                 >
                                     {status === 'all' ? 'All Merchants' : status}
                                 </button>
                             ))}
                         </div>
                     </div>
-                    <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-[#4169E1] text-white rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all font-medium">
-                        <Download size={18} />
+                    <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all text-xs font-medium">
+                        <Download size={14} />
                         <span>Export</span>
                     </button>
                 </div>
             </div>
 
             {/* Table */}
-            <div className="bg-white/80 backdrop-blur-3xl rounded-2xl border border-white/60 dark:border-gray-800 shadow-xl overflow-hidden shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead>
-                            <tr className="border-b border-slate-100">
-                                <th className="px-4 py-3 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Merchant Name</th>
-                                <th className="px-4 py-3 text-left text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sector</th>
-                                <th className="px-4 py-3 text-right text-[10px] font-bold text-slate-400 uppercase tracking-wider">Subscribers</th>
-                                <th className="px-4 py-3 text-right text-[10px] font-bold text-slate-400 uppercase tracking-wider">TPV</th>
-                                <th className="px-4 py-3 text-right text-[10px] font-bold text-slate-400 uppercase tracking-wider">Revenue (Comm.)</th>
-                                <th className="px-4 py-3 text-right text-[10px] font-bold text-slate-400 uppercase tracking-wider">Growth</th>
-                                <th className="px-4 py-3 text-center text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                                <th className="px-4 py-3 text-right text-[10px] font-bold text-slate-400 uppercase tracking-wider">Actions</th>
+                        <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+                            <tr>
+                                <th className="px-6 py-4 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Merchant Name</th>
+                                <th className="px-6 py-4 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sector</th>
+                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Subscribers</th>
+                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">TPV</th>
+                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Revenue</th>
+                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Growth</th>
+                                <th className="px-6 py-4 text-center text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-50 relative">
-                            <AnimatePresence>
-                                {filteredMerchants.map((merchant, index) => (
-                                    <motion.tr
-                                        key={merchant.id}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
-                                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                                        className="group hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors relative"
-                                    >
-                                        <td className="px-4 py-3 cursor-pointer" onClick={() => setSelectedMerchant(merchant)}>
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-700 font-bold shadow-inner text-xs">
-                                                    {merchant.logo}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-slate-800 dark:text-slate-200 text-sm group-hover:text-blue-600 transition-colors">{merchant.name}</div>
-                                                    <div className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">#{merchant.id}</div>
-                                                </div>
+                        <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                            {filteredMerchants.map((merchant, index) => (
+                                <tr
+                                    key={merchant.id}
+                                    className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
+                                >
+                                    <td className="px-6 py-3 cursor-pointer" onClick={() => setSelectedMerchant(merchant)}>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-blue-100 dark:border-blue-900/30 text-[10px]">
+                                                {merchant.logo}
                                             </div>
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 text-slate-800">
-                                                {merchant.sector}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3 text-right font-medium text-slate-600 dark:text-slate-400 text-xs">{merchant.subscribers.toLocaleString()}</td>
-                                        <td className="px-4 py-3 text-right font-bold text-slate-900 dark:text-slate-100 text-xs">{merchant.tpv}</td>
-                                        <td className="px-4 py-3 text-right font-bold text-green-600 text-xs">{merchant.revenue}</td>
-                                        <td className="px-4 py-3 text-right">
-                                            <div className={`inline-flex items-center gap-1 font-bold text-xs ${merchant.growth >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                                {merchant.growth >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                                                {Math.abs(merchant.growth)}%
+                                            <div>
+                                                <div className="font-bold text-gray-900 dark:text-gray-100 text-xs hover:text-blue-600 transition-colors">{merchant.name}</div>
+                                                <div className="text-[10px] text-gray-500 dark:text-gray-400">#{merchant.id}</div>
                                             </div>
-                                        </td>
-                                        <td className="px-4 py-3 text-center">
-                                            <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${merchant.status === 'Active'
-                                                ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
-                                                : 'bg-rose-500/10 text-rose-600 border-rose-500/20'
-                                                }`}>
-                                                {merchant.status}
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-3 text-right">
-                                            <div className="flex items-center justify-end gap-1">
-                                                <button onClick={() => setSelectedMerchant(merchant)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                                                    <Eye size={14} />
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-3">
+                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+                                            {merchant.sector}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-3 text-right text-xs text-gray-600 dark:text-gray-400 font-medium">{merchant.subscribers.toLocaleString()}</td>
+                                    <td className="px-6 py-3 text-right text-xs font-bold text-gray-900 dark:text-gray-100">{merchant.tpv}</td>
+                                    <td className="px-6 py-3 text-right text-xs font-bold text-emerald-600 dark:text-emerald-400">{merchant.revenue}</td>
+                                    <td className="px-6 py-3 text-right">
+                                        <div className={`inline-flex items-center gap-1 font-bold text-[10px] ${merchant.growth >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                                            {merchant.growth >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                            {Math.abs(merchant.growth)}%
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-3 text-center">
+                                        <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${merchant.status === 'Active'
+                                            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
+                                            : 'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-900/30'
+                                            }`}>
+                                            {merchant.status}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-3 text-right">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <button onClick={() => setSelectedMerchant(merchant)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded bg-transparent transition-colors">
+                                                <Eye size={14} />
+                                            </button>
+                                            {merchant.status === 'Active' ? (
+                                                <button onClick={() => handleDeactivateClick(merchant.id)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded bg-transparent transition-colors">
+                                                    <Ban size={14} />
                                                 </button>
-                                                {merchant.status === 'Active' ? (
-                                                    <button onClick={() => handleDeactivateClick(merchant.id)} className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                                                        <Ban size={14} />
-                                                    </button>
-                                                ) : (
-                                                    <button onClick={() => handleActivate(merchant.id)} className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
-                                                        <Power size={14} />
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </td>
-                                    </motion.tr>
-                                ))}
-                            </AnimatePresence>
+                                            ) : (
+                                                <button onClick={() => handleActivate(merchant.id)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded bg-transparent transition-colors">
+                                                    <Power size={14} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
 
                 {/* Pagination */}
-                <div className="px-8 py-5 border-t border-slate-100 dark:border-gray-800 flex items-center justify-between text-sm">
-                    <div className="text-slate-400 font-medium">Showing <span className="text-slate-900 dark:text-white font-bold">1-5</span> of <span className="text-slate-900 dark:text-white font-bold">45</span></div>
+                <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                    <div className="text-gray-500 dark:text-gray-400 text-xs">Showing <span className="font-bold text-gray-900 dark:text-white">1-{filteredMerchants.length}</span> of <span className="font-bold text-gray-900 dark:text-white">{filteredMerchants.length}</span></div>
                     <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-white border border-slate-200 dark:bg-gray-800 dark:border-gray-700 rounded-xl text-slate-600 dark:text-gray-300 font-medium hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50">Previous</button>
-                        <button className="px-4 py-2 bg-white border border-slate-200 dark:bg-gray-800 dark:border-gray-700 rounded-xl text-slate-600 dark:text-gray-300 font-medium hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors">Next</button>
+                        <button className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50">Previous</button>
+                        <button className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Next</button>
                     </div>
                 </div>
             </div>
@@ -312,8 +300,8 @@ const ActiveMerchantsTable: React.FC = () => {
                             initial={{ x: "100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
+                            transition={{ type: "tween", duration: 0.3 }}
+                            className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
                             onClick={e => e.stopPropagation()}
                         >
                             <MerchantDetailsModalContent
@@ -346,21 +334,21 @@ const ActiveMerchantsTable: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+                        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
                     >
                         <motion.div
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
-                            className="bg-white dark:bg-gray-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white dark:bg-gray-900 w-full max-w-md rounded-xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800"
                         >
-                            <div className="bg-red-50 dark:bg-red-900/20 p-6 flex items-center gap-4 border-b border-red-100 dark:border-red-900/30">
-                                <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
-                                    <AlertCircle size={24} />
+                            <div className="bg-white dark:bg-gray-900 p-6 pb-0 flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400">
+                                    <AlertCircle size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-bold text-red-900 dark:text-red-200">Deactivate Merchant</h3>
-                                    <p className="text-sm text-red-600 dark:text-red-300">This action will suspend access immediately.</p>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Deactivate Merchant</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">This action will suspend access immediately.</p>
                                 </div>
                             </div>
                             <div className="p-6 space-y-4">
@@ -369,13 +357,13 @@ const ActiveMerchantsTable: React.FC = () => {
                                     <textarea
                                         value={deactivateReason}
                                         onChange={(e) => setDeactivateReason(e.target.value)}
-                                        className="w-full h-24 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
+                                        className="w-full h-24 p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none text-sm"
                                         placeholder="Please detail the reason..."
                                     ></textarea>
                                 </div>
                                 <div className="flex gap-3 justify-end">
-                                    <button onClick={() => setDeactivateId(null)} className="px-5 py-2.5 rounded-xl text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancel</button>
-                                    <button onClick={confirmDeactivate} className="px-5 py-2.5 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-500/30 transition-shadow">Deactivate</button>
+                                    <button onClick={() => setDeactivateId(null)} className="px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+                                    <button onClick={confirmDeactivate} className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 shadow-sm transition-shadow">Deactivate</button>
                                 </div>
                             </div>
                         </motion.div>

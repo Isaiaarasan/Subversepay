@@ -48,7 +48,7 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
             {/* Header */}
             <div className="flex justify-between items-start mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-2xl font-bold text-blue-600 dark:text-blue-400">
+                    <div className="w-16 h-16 rounded-2xl bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center text-2xl font-bold text-blue-600 dark:text-blue-400">
                         {merchant.logo || merchant.name.charAt(0)}
                     </div>
                     <div>
@@ -59,7 +59,7 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
                         </p>
                     </div>
                 </div>
-                <button onClick={onClose} className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors">
+                <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
                     <X size={24} className="text-gray-500 dark:text-gray-400" />
                 </button>
             </div>
@@ -71,7 +71,7 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex items-center gap-2 pb-3 text-sm font-medium transition-colors whitespace-nowrap ${activeTab === tab.id
-                            ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                            ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-500'
                             : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
                             }`}
                     >
@@ -85,18 +85,18 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
             <div className="space-y-6 min-h-[400px]">
                 {/* OVERVIEW TAB */}
                 {activeTab === 'Overview' && (
-                    <div className="space-y-6 animate-fadeIn">
+                    <div className="space-y-6">
                         {/* Stats Cards */}
                         <div className="grid grid-cols-3 gap-4">
-                            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                            <div className="bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Total Revenue</p>
                                 <p className="text-lg font-bold text-gray-900 dark:text-white">{merchant.revenue}</p>
                             </div>
-                            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                            <div className="bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Subscribers</p>
                                 <p className="text-lg font-bold text-gray-900 dark:text-white">{merchant.subscribers.toLocaleString()}</p>
                             </div>
-                            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                            <div className="bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Growth</p>
                                 <p className={`text-lg font-bold ${merchant.growth >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                                     {merchant.growth >= 0 ? '+' : ''}{merchant.growth}%
@@ -105,8 +105,8 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
                         </div>
 
                         {/* Org Details */}
-                        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm">
-                            <div className="bg-gray-50 dark:bg-gray-700/50 px-6 py-3 border-b border-gray-100 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
+                            <div className="bg-gray-50/50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-100 dark:border-gray-800 font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                 <Building size={16} /> Organization Details
                             </div>
                             <div className="p-6 grid grid-cols-2 gap-y-6 gap-x-12">
@@ -120,8 +120,8 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
                         </div>
 
                         {/* Banking Details */}
-                        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm">
-                            <div className="bg-gray-50 dark:bg-gray-700/50 px-6 py-3 border-b border-gray-100 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
+                            <div className="bg-gray-50/50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-100 dark:border-gray-800 font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                 <CreditCard size={16} /> Banking Details
                             </div>
                             <div className="p-6 grid grid-cols-2 gap-y-6 gap-x-12">
@@ -141,9 +141,9 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
 
                 {/* TEAM TAB */}
                 {activeTab === 'Team' && (
-                    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden animate-fadeIn">
+                    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
                         <table className="w-full text-left">
-                            <thead className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
+                            <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                                 <tr>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Name</th>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Role</th>
@@ -151,18 +151,18 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Status</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
+                            <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                                 <tr>
                                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Admin User</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Owner</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{merchant.email}</td>
-                                    <td className="px-6 py-4"><span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs font-bold">Active</span></td>
+                                    <td className="px-6 py-4"><span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded text-xs font-bold">Active</span></td>
                                 </tr>
                                 <tr>
                                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Support Staff</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Support</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">support@{merchant.name.toLowerCase().replace(/\s/g, '')}.com</td>
-                                    <td className="px-6 py-4"><span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs font-bold">Active</span></td>
+                                    <td className="px-6 py-4"><span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded text-xs font-bold">Active</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -171,49 +171,49 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
 
                 {/* DEVELOPERS TAB */}
                 {activeTab === 'Developers' && (
-                    <div className="space-y-6 animate-fadeIn">
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                    <div className="space-y-6">
+                        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                             <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Key size={18} /> API Credentials</h3>
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Live Public Key</label>
                                     <div className="flex gap-2 mt-1">
-                                        <code className="bg-gray-100 dark:bg-gray-900 px-3 py-2 rounded border border-gray-200 dark:border-gray-700 text-sm font-mono flex-1 text-gray-600 dark:text-gray-300">pk_live_{merchant.id}x98234m2m34...</code>
+                                        <code className="bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded border border-gray-200 dark:border-gray-700 text-sm font-mono flex-1 text-gray-600 dark:text-gray-300">pk_live_{merchant.id}x98234m2m34...</code>
                                         <button className="text-blue-600 dark:text-blue-400 text-sm font-bold hover:underline">Copy</button>
                                     </div>
                                 </div>
                                 <div>
                                     <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Live Secret Key</label>
                                     <div className="flex gap-2 mt-1">
-                                        <code className="bg-gray-100 dark:bg-gray-900 px-3 py-2 rounded border border-gray-200 dark:border-gray-700 text-sm font-mono flex-1 text-gray-600 dark:text-gray-300">sk_live_{merchant.id}x98234m2m34...****************</code>
+                                        <code className="bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded border border-gray-200 dark:border-gray-700 text-sm font-mono flex-1 text-gray-600 dark:text-gray-300">sk_live_{merchant.id}x98234m2m34...****************</code>
                                         <button className="text-blue-600 dark:text-blue-400 text-sm font-bold hover:underline">Reveal</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                             <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Lock size={18} /> Webhooks</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">No webhooks configured.</p>
-                            <button className="mt-4 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200">Configure Webhooks</button>
+                            <button className="mt-4 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Configure Webhooks</button>
                         </div>
                     </div>
                 )}
 
                 {/* CUSTOMERS TAB */}
                 {activeTab === 'Customers' && (
-                    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden animate-fadeIn">
-                        <div className="p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700/50">
+                    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
+                        <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
                             <p className="text-sm text-gray-500 dark:text-gray-400">Showing recent 5 customers of {merchant.subscribers.toLocaleString()} total.</p>
                         </div>
                         <table className="w-full text-left">
-                            <thead className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
+                            <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                                 <tr>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Customer</th>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Email</th>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Joined</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
+                            <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                                 {[1, 2, 3, 4, 5].map((i) => (
                                     <tr key={i}>
                                         <td className="px-6 py-3 font-medium text-gray-900 dark:text-white">Customer {i}</td>
@@ -228,16 +228,16 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
 
                 {/* AUDIT LOGS TAB */}
                 {activeTab === 'Audit' && (
-                    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden animate-fadeIn">
+                    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
                         <table className="w-full text-left">
-                            <thead className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
+                            <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                                 <tr>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Action</th>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">User</th>
                                     <th className="px-6 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Date</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
+                            <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                                 <tr>
                                     <td className="px-6 py-3 font-medium text-gray-900 dark:text-white">Updated Bank Details</td>
                                     <td className="px-6 py-3 text-sm text-gray-600 dark:text-gray-300">Admin User</td>
@@ -263,8 +263,8 @@ const MerchantDetailsModalContent: React.FC<MerchantDetailsModalContentProps> = 
 
                 {/* SETTINGS TAB */}
                 {activeTab === 'Settings' && (
-                    <div className="space-y-6 animate-fadeIn">
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                    <div className="space-y-6">
+                        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                             <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-red-600 dark:text-red-400">Danger Zone</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Actions regarding the merchant account existence.</p>
                             <div className="flex gap-4">

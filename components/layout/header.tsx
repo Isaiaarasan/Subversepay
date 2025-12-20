@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Search, Bell, Download, Filter, User, LogOut, ChevronDown } from "lucide-react";
+import {
+  Search,
+  Bell,
+  Download,
+  Filter,
+  User,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
 import EmbeddedSearch from "@/components/embedded-search";
@@ -118,7 +126,8 @@ const Header: React.FC<HeaderProps> = ({
           </div> */}
 
           <div className="flex items-center gap-3">
-            
+            <ThemeToggle />
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -151,15 +160,24 @@ const Header: React.FC<HeaderProps> = ({
                     <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-blue-600 transition-colors">
                       {userName}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{userEmail}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {userEmail}
+                    </p>
                   </div>
                   <ChevronDown className="h-4 w-4 text-gray-400 dark:text-gray-500 hidden md:block" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700">
+              <DropdownMenuContent
+                align="end"
+                className="w-56 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700"
+              >
                 <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-700">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{userName}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{userEmail}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {userName}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {userEmail}
+                  </p>
                 </div>
                 <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
                 <DropdownMenuItem
@@ -179,4 +197,3 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
-

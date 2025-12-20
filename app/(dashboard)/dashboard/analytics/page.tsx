@@ -44,8 +44,7 @@ const Analytics: React.FC = () => {
                 <StatCard
                     title="Total Revenue"
                     value="₹12.5L"
-                    subtext="This month"
-                    icon={() => <div>₹</div>}
+                    subtext="This month"                  
                     trend="up"
                     trendValue="+15.3%"
                 />
@@ -53,7 +52,6 @@ const Analytics: React.FC = () => {
                     title="Active Users"
                     value="45.2K"
                     subtext="Daily active"
-                    icon={() => <div>👥</div>}
                     trend="up"
                     trendValue="+8.1%"
                 />
@@ -61,7 +59,7 @@ const Analytics: React.FC = () => {
                     title="Conversion Rate"
                     value="3.24%"
                     subtext="Payment success"
-                    icon={() => <div>📈</div>}
+
                     trend="up"
                     trendValue="+0.5%"
                 />
@@ -69,7 +67,6 @@ const Analytics: React.FC = () => {
                     title="Avg Transaction"
                     value="₹1,250"
                     subtext="Per transaction"
-                    icon={() => <div>💰</div>}
                     trend="down"
                     trendValue="-2.1%"
                 />
