@@ -200,11 +200,11 @@ const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, search
           {/* Footer */}
           {filteredItems.length > 0 && (
             <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+              {/* <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
                 <span>↑↓ Navigate</span>
                 <span>↵ Select</span>
                 <span>Esc Close</span>
-              </div>
+              </div> */}
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 {filteredItems.length} result{filteredItems.length !== 1 ? 's' : ''}
               </div>
