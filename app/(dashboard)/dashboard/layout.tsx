@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { User, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { User, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket } from "lucide-react";
 import AuthWrapper from "@/components/auth-wrapper";
 import Header from "@/components/layout/header";
 import { createClient } from "@/lib/supabase/server";
@@ -15,14 +14,6 @@ export default async function DashboardLayout({
     data: { user },
   } = await sb.auth.getUser();
 
-  const handleSignOut = async () => {
-    "use server";
-    const { createClient } = await import("@/lib/supabase/server");
-    const sb = await createClient();
-    await sb.auth.signOut();
-    const { redirect } = await import("next/navigation");
-    redirect("/auth/login");
-  };
 
   return (
     <AuthWrapper>
@@ -68,32 +59,14 @@ export default async function DashboardLayout({
             </Link>
           </nav>
 
-          <div className="p-4 border-t border-slate-800 space-y-3">
-            {/* <div className="flex items-center gap-3 px-3 py-2">
-            <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center">
-              <User className="h-4 w-4" />
-            </div>
-            
-          </div> */}
-            <div className="flex flex-col gap-2">
-              <Link
-                href="/dashboard/settings"
-                className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800 transition-colors"
-              >
-                <Settings className="h-4 w-4" />
-                <span>Settings</span>
-              </Link>
-              <form action={handleSignOut}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start gap-2 text-slate-200 hover:bg-slate-800"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Sign out
-                </Button>
-              </form>
-            </div>
+          <div className="p-4 border-t border-slate-800">
+            <Link
+              href="/dashboard/settings"
+              className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:bg-slate-800 transition-colors"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Settings</span>
+            </Link>
           </div>
         </aside>
 
