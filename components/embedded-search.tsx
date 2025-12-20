@@ -152,7 +152,7 @@ const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, search
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.95 }}
           transition={{ duration: 0.15 }}
-          className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden max-w-2xl mx-auto"
+          className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
         >
           {/* Search Results */}
           <div className="max-h-96 overflow-y-auto">
