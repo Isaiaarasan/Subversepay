@@ -6,7 +6,7 @@ import ComparisonGraph from "@/components/charts/comparison-graph";
 import PaymentPieChart from "@/components/charts/payment-pie-chart";
 //import TicketOverlayGraph from "@/components/charts/ticket-overlay-graph";
 //import SuccessScoreGraph from "@/components/charts/success-score-graph";
-import { Users, CreditCard, UserCheck, Shield, ArrowUpRight, ChevronDown } from "lucide-react";
+import { Users, CreditCard, UserCheck, Shield, ArrowUpRight, ChevronDown, Download, Calendar } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,37 +69,81 @@ const Overview = () => {
   return (
     <div className="space-y-8 pb-8">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Super Admin Dashboard
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400">Overview of platform performance and entities.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl rounded-2xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <Users className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              Super Admin Dashboard
+            </h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Overview of platform performance and entities.</p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {/* Time Range Selector */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="w-[140px] justify-between bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/30 border-0">
-                {timeRange}
-                <ChevronDown className="h-4 w-4 opacity-100" />
+              <Button
+                variant="outline"
+                className="w-[160px] justify-between bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                  <span className="font-medium">{timeRange}</span>
+                </div>
+                <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTimeRange("This Month")}>
+            <DropdownMenuContent
+              align="end"
+              className="w-[160px] bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 shadow-xl"
+            >
+              <DropdownMenuItem
+                onClick={() => setTimeRange("This Month")}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
+                  timeRange === "This Month"
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
                 This Month
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTimeRange("Last Month")}>
+              <DropdownMenuItem
+                onClick={() => setTimeRange("Last Month")}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
+                  timeRange === "Last Month"
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
                 Last Month
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTimeRange("This Quarter")}>
+              <DropdownMenuItem
+                onClick={() => setTimeRange("This Quarter")}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
+                  timeRange === "This Quarter"
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
                 This Quarter
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
+
+          {/* Download Report Button */}
+          <Button
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Download className="h-4 w-4" />
             Download Report
-          </button>
+          </Button>
         </div>
       </div>
 
