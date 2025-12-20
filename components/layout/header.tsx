@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Bell, Download, Filter, User } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
+import EmbeddedSearch from "@/components/embedded-search";
 
 type HeaderProps = {
   userName?: string;
@@ -16,21 +17,76 @@ const Header: React.FC<HeaderProps> = ({
   userEmail = "user@example.com",
   avatarUrl,
 }) => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd+K or Ctrl+K to open search
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+      // Escape to close search
+      if (e.key === "Escape" && isSearchOpen) {
+        e.preventDefault();
+        setIsSearchOpen(false);
+        setSearchQuery("");
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isSearchOpen]);
+
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 dark:bg-gray-900/80 dark:border-gray-800 sticky top-0 z-40">
       <div className="px-8 py-4 flex items-center justify-between">
         {/* Search Bar */}
-        <div className="flex-1 max-w-xl">
-          <div className="relative group">
-            <button className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors z-10">
+        <div className="flex-1 max-w-xl relative">
+          <div className="relative">
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors z-10"
+            >
               <Search size={20} />
             </button>
-            <input
-              type="text"
-              placeholder="Search transactions, merchants, or alerts..."
-              className="w-full bg-gray-50/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl pl-10 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
-            />
+            {isSearchOpen ? (
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search navigation, pages, or type a command..."
+                className="w-full bg-white dark:bg-gray-900 border border-blue-500 ring-2 ring-blue-500/20 rounded-xl pl-10 pr-4 py-2.5 outline-none text-sm text-gray-900 dark:text-gray-100"
+                autoFocus
+              />
+            ) : (
+              <div
+                onClick={() => setIsSearchOpen(true)}
+                className="w-full bg-gray-50/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl pl-10 pr-4 py-2.5 text-left outline-none transition-all text-sm cursor-text hover:bg-gray-100/50 dark:hover:bg-gray-700/50"
+              >
+                <span className="text-gray-400 dark:text-gray-500">
+                  Search navigation, pages, or type a command...
+                </span>
+              </div>
+            )}
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 dark:text-gray-500 font-mono">
+              ⌘K
+            </div>
           </div>
+
+          {/* Embedded Search Results */}
+          {isSearchOpen && (
+            <EmbeddedSearch
+              isOpen={isSearchOpen}
+              onClose={() => {
+                setIsSearchOpen(false);
+                setSearchQuery("");
+              }}
+              searchQuery={searchQuery}
+            />
+          )}
         </div>
 
         {/* Right Actions */}

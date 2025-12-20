@@ -50,7 +50,7 @@ const SystemHealth: React.FC = () => {
         <div className="space-y-8">
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">System Health</h1>
+                    <h1 className="text-2xl font-bold text-white-900">System Health</h1>
                     <p className="text-gray-500">Infrastructure performance and error tracking.</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
