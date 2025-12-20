@@ -165,15 +165,15 @@ const ActiveMerchantsTable: React.FC = () => {
     return (
         <div className="space-y-6 relative">
             {/* Search & Filter Bar */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/50 shadow-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/50 dark:border-gray-800 shadow-sm dark:bg-gray-900/80">
                 <div className="relative w-full sm:w-96 group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within:text-blue-500 transition-colors" size={20} />
                     <input
                         type="text"
                         placeholder="Search merchants, sectors..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500/20 text-slate-700 placeholder:text-slate-400 font-medium transition-all"
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-blue-500/20 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-medium transition-all"
                     />
                 </div>
                 <div className="flex gap-3 w-full sm:w-auto">
@@ -206,7 +206,7 @@ const ActiveMerchantsTable: React.FC = () => {
             </div>
 
             {/* Table */}
-            <div className="bg-white/80 backdrop-blur-3xl rounded-2xl border border-white/60 shadow-xl overflow-hidden shadow-slate-200/50">
+            <div className="bg-white/80 backdrop-blur-3xl rounded-2xl border border-white/60 dark:border-gray-800 shadow-xl overflow-hidden shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
@@ -230,7 +230,7 @@ const ActiveMerchantsTable: React.FC = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         transition={{ duration: 0.2, delay: index * 0.05 }}
-                                        className="group hover:bg-blue-50/50 transition-colors relative"
+                                        className="group hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors relative"
                                     >
                                         <td className="px-4 py-3 cursor-pointer" onClick={() => setSelectedMerchant(merchant)}>
                                             <div className="flex items-center gap-3">
@@ -238,8 +238,8 @@ const ActiveMerchantsTable: React.FC = () => {
                                                     {merchant.logo}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition-colors">{merchant.name}</div>
-                                                    <div className="text-[10px] text-slate-400 font-medium">#{merchant.id}</div>
+                                                    <div className="font-bold text-slate-800 dark:text-slate-200 text-sm group-hover:text-blue-600 transition-colors">{merchant.name}</div>
+                                                    <div className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">#{merchant.id}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -248,8 +248,8 @@ const ActiveMerchantsTable: React.FC = () => {
                                                 {merchant.sector}
                                             </span>
                                         </td>
-                                        <td className="px-4 py-3 text-right font-medium text-slate-600 text-xs">{merchant.subscribers.toLocaleString()}</td>
-                                        <td className="px-4 py-3 text-right font-bold text-slate-900 text-xs">{merchant.tpv}</td>
+                                        <td className="px-4 py-3 text-right font-medium text-slate-600 dark:text-slate-400 text-xs">{merchant.subscribers.toLocaleString()}</td>
+                                        <td className="px-4 py-3 text-right font-bold text-slate-900 dark:text-slate-100 text-xs">{merchant.tpv}</td>
                                         <td className="px-4 py-3 text-right font-bold text-green-600 text-xs">{merchant.revenue}</td>
                                         <td className="px-4 py-3 text-right">
                                             <div className={`inline-flex items-center gap-1 font-bold text-xs ${merchant.growth >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
@@ -289,11 +289,11 @@ const ActiveMerchantsTable: React.FC = () => {
                 </div>
 
                 {/* Pagination */}
-                <div className="px-8 py-5 border-t border-slate-100 flex items-center justify-between text-sm">
-                    <div className="text-slate-400 font-medium">Showing <span className="text-slate-900 font-bold">1-5</span> of <span className="text-slate-900 font-bold">45</span></div>
+                <div className="px-8 py-5 border-t border-slate-100 dark:border-gray-800 flex items-center justify-between text-sm">
+                    <div className="text-slate-400 font-medium">Showing <span className="text-slate-900 dark:text-white font-bold">1-5</span> of <span className="text-slate-900 dark:text-white font-bold">45</span></div>
                     <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition-colors disabled:opacity-50">Previous</button>
-                        <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition-colors">Next</button>
+                        <button className="px-4 py-2 bg-white border border-slate-200 dark:bg-gray-800 dark:border-gray-700 rounded-xl text-slate-600 dark:text-gray-300 font-medium hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50">Previous</button>
+                        <button className="px-4 py-2 bg-white border border-slate-200 dark:bg-gray-800 dark:border-gray-700 rounded-xl text-slate-600 dark:text-gray-300 font-medium hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors">Next</button>
                     </div>
                 </div>
             </div>
@@ -313,10 +313,10 @@ const ActiveMerchantsTable: React.FC = () => {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-50 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
+                            className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
                             onClick={e => e.stopPropagation()}
                         >
-                            <MerchantDetailsModalContent 
+                            <MerchantDetailsModalContent
                                 merchant={{
                                     id: selectedMerchant.id,
                                     name: selectedMerchant.name,
@@ -332,7 +332,7 @@ const ActiveMerchantsTable: React.FC = () => {
                                     gst: selectedMerchant.gst,
                                     bank: selectedMerchant.bank,
                                 }}
-                                onClose={() => setSelectedMerchant(null)} 
+                                onClose={() => setSelectedMerchant(null)}
                             />
                         </motion.div>
                     </motion.div>
@@ -352,29 +352,29 @@ const ActiveMerchantsTable: React.FC = () => {
                             initial={{ scale: 0.9, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 20 }}
-                            className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+                            className="bg-white dark:bg-gray-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
                         >
-                            <div className="bg-red-50 p-6 flex items-center gap-4 border-b border-red-100">
-                                <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                            <div className="bg-red-50 dark:bg-red-900/20 p-6 flex items-center gap-4 border-b border-red-100 dark:border-red-900/30">
+                                <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
                                     <AlertCircle size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-bold text-red-900">Deactivate Merchant</h3>
-                                    <p className="text-sm text-red-600">This action will suspend access immediately.</p>
+                                    <h3 className="text-lg font-bold text-red-900 dark:text-red-200">Deactivate Merchant</h3>
+                                    <p className="text-sm text-red-600 dark:text-red-300">This action will suspend access immediately.</p>
                                 </div>
                             </div>
                             <div className="p-6 space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Reason for Deactivation</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Reason for Deactivation</label>
                                     <textarea
                                         value={deactivateReason}
                                         onChange={(e) => setDeactivateReason(e.target.value)}
-                                        className="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
+                                        className="w-full h-24 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
                                         placeholder="Please detail the reason..."
                                     ></textarea>
                                 </div>
                                 <div className="flex gap-3 justify-end">
-                                    <button onClick={() => setDeactivateId(null)} className="px-5 py-2.5 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-colors">Cancel</button>
+                                    <button onClick={() => setDeactivateId(null)} className="px-5 py-2.5 rounded-xl text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                                     <button onClick={confirmDeactivate} className="px-5 py-2.5 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-500/30 transition-shadow">Deactivate</button>
                                 </div>
                             </div>

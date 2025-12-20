@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Download, Search, Filter } from "lucide-react";
 
@@ -24,20 +26,20 @@ const Settlements: React.FC = () => {
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Settlements</h1>
-                    <p className="text-gray-500">Manage and track merchant payouts.</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settlements</h1>
+                    <p className="text-gray-500 dark:text-gray-400">Manage and track merchant payouts.</p>
                 </div>
 
                 <div className="flex gap-2">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <div className="relative group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Search ID..."
-                            className="pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                            className="pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         />
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:bg-gray-50 text-gray-700">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors">
                         <Filter size={18} />
                         Filter
                     </button>
@@ -48,38 +50,38 @@ const Settlements: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 border border-white/60 overflow-hidden">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-white/60 dark:border-gray-800 overflow-hidden dark:bg-gray-900/80">
                 <table className="w-full text-left">
-                    <thead className="bg-gray-50/50 border-b border-gray-100">
+                    <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                         <tr>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Txn ID</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">From</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">To</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Bank</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Amount</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Date</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Txn ID</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">From</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">To</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Bank</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Amount</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Date</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Status</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                         {settlements.map((item) => (
-                            <tr key={item.id} className="hover:bg-gray-50/50 transition-colors text-xs">
-                                <td className="px-4 py-3 font-mono text-blue-600 font-bold">{item.id}</td>
-                                <td className="px-4 py-3 font-medium text-gray-500">{item.from}</td>
-                                <td className="px-4 py-3 font-bold text-gray-900">{item.to}</td>
+                            <tr key={item.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors text-xs">
+                                <td className="px-4 py-3 font-mono text-blue-600 dark:text-blue-400 font-bold">{item.id}</td>
+                                <td className="px-4 py-3 font-medium text-gray-500 dark:text-gray-400">{item.from}</td>
+                                <td className="px-4 py-3 font-bold text-gray-900 dark:text-gray-200">{item.to}</td>
                                 <td className="px-4 py-3">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[8px] font-bold text-gray-700">
+                                        <div className="w-6 h-6 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center text-[8px] font-bold text-gray-700 dark:text-gray-300">
                                             {item.bankLogo}
                                         </div>
                                     </div>
                                 </td>
-                                <td className="px-4 py-3 font-bold text-gray-800">{item.amount}</td>
-                                <td className="px-4 py-3 text-gray-500">{item.date}</td>
+                                <td className="px-4 py-3 font-bold text-gray-800 dark:text-gray-200">{item.amount}</td>
+                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{item.date}</td>
                                 <td className="px-4 py-3">
-                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${item.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                                        item.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
-                                            'bg-red-100 text-red-800'
+                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${item.status === 'Completed' ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 border-green-200 dark:border-green-900/30' :
+                                        item.status === 'Processing' ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-900/30' :
+                                            'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400 border-red-200 dark:border-red-900/30'
                                         }`}>
                                         {item.status}
                                     </span>

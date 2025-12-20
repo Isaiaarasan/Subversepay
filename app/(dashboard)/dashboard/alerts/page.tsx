@@ -64,16 +64,16 @@ const Alerts: React.FC = () => {
   const getIcon = (type: AlertType) => {
     switch (type) {
       case "Critical":
-        return <AlertOctagon className="text-white" />;
+        return <AlertOctagon className="text-red-500 dark:text-red-400" />;
       case "High":
-        return <AlertTriangle className="text-white" />;
+        return <AlertTriangle className="text-orange-500 dark:text-orange-400" />;
       case "Medium":
-        return <AlertTriangle className="text-black" />;
+        return <AlertTriangle className="text-yellow-500 dark:text-yellow-400" />;
       case "Low":
-        return <Info className="text-zinc-500" />;
+        return <Info className="text-blue-500 dark:text-blue-400" />;
       case "Info":
       default:
-        return <Info className="text-zinc-400" />;
+        return <Info className="text-gray-400 dark:text-gray-500" />;
     }
   };
 
@@ -88,15 +88,15 @@ const Alerts: React.FC = () => {
   const getTypeStyles = (type: AlertType) => {
     switch (type) {
       case "Critical":
-        return "bg-red-600 border-red-600 text-white shadow-md shadow-red-200";
+        return "bg-red-50 dark:bg-red-900/10 border-red-100 dark:border-red-900/30 text-red-800 dark:text-red-200";
       case "High":
-        return "bg-black border-black text-white shadow-lg shadow-zinc-300";
+        return "bg-orange-50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30 text-orange-800 dark:text-orange-200";
       case "Medium":
-        return "bg-white border-2 border-black text-black shadow-md shadow-zinc-200";
+        return "bg-yellow-50 dark:bg-yellow-900/10 border-yellow-100 dark:border-yellow-900/30 text-yellow-800 dark:text-yellow-200";
       case "Low":
-        return "bg-zinc-100 border-zinc-200 text-zinc-800";
+        return "bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30 text-blue-800 dark:text-blue-200";
       default:
-        return "bg-white border-zinc-100 text-zinc-600";
+        return "bg-gray-50 dark:bg-gray-800/50 border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200";
     }
   };
 
@@ -104,8 +104,8 @@ const Alerts: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-black">System Alerts</h1>
-          <p className="text-zinc-500">Real-time monitoring of critical events.</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">System Alerts</h1>
+          <p className="text-gray-500 dark:text-gray-400">Real-time monitoring of critical events.</p>
         </div>
         <div className="flex gap-2">
           <div className="relative">
@@ -152,26 +152,25 @@ const Alerts: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`flex items-start gap-3 p-4 rounded-xl border ${getTypeStyles(alert.type)} relative group`}
+            className={`flex items-start gap-4 p-5 rounded-2xl border transition-all ${getTypeStyles(alert.type)}`}
           >
-            <div className="mt-0.5 flex-shrink-0 bg-white dark:bg-slate-900 p-1.5 rounded-full shadow-sm">
+            <div className="mt-0.5 flex-shrink-0 p-2 rounded-xl bg-white/50 dark:bg-black/20 backdrop-blur-sm">
               {getIcon(alert.type)}
             </div>
             <div className="flex-1">
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-sm text-inherit">{alert.type} Alert</h3>
-                  <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wide border ${alert.type === 'High' || alert.type === 'Critical' ? 'bg-white/20 border-white/20 text-white' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
-                    }`}>
+                  <h3 className="font-bold text-base">{alert.type} Alert</h3>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide bg-white/50 dark:bg-black/20 backdrop-blur-sm`}>
                     {alert.category}
                   </span>
                 </div>
-                <button className={`${alert.type === 'High' || alert.type === 'Critical' ? 'text-white/60 hover:text-white' : 'text-zinc-400 hover:text-black'} transition-colors`}>
-                  <X size={14} />
+                <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                  <X size={16} />
                 </button>
               </div>
-              <p className={`mt-1 text-xs font-medium ${alert.type === 'High' || alert.type === 'Critical' ? 'text-white/90' : 'text-zinc-600'}`}>{alert.message}</p>
-              <div className={`flex items-center gap-4 mt-2 text-[10px] font-semibold uppercase tracking-wide ${alert.type === 'High' || alert.type === 'Critical' ? 'text-white/60' : 'text-zinc-400'}`}>
+              <p className="mt-1 text-sm font-medium opacity-90">{alert.message}</p>
+              <div className="flex items-center gap-4 mt-3 text-xs font-semibold uppercase tracking-wide opacity-60">
                 <span>Source: {alert.source}</span>
                 <span>•</span>
                 <span>{alert.time}</span>

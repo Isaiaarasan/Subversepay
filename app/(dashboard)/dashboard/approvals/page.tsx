@@ -115,47 +115,47 @@ const Approvals: React.FC = () => {
     return (
         <div className="space-y-8 relative">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Pending Approvals</h1>
-                <p className="text-gray-500">Review and approve new merchant onboardings.</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Pending Approvals</h1>
+                <p className="text-gray-500 dark:text-gray-400">Review and approve new merchant onboardings.</p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 border border-white/60 overflow-hidden">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-white/60 dark:border-gray-800 overflow-hidden dark:bg-gray-900/80">
                 <table className="w-full text-left">
-                    <thead className="bg-gray-50/50 border-b border-gray-100">
+                    <thead className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                         <tr>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Merchant Entity</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Type</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Applied Date</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Documents</th>
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase text-right">Actions</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Merchant Entity</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Type</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Applied Date</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Documents</th>
+                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                         {approvals.map((item) => (
-                            <tr key={item.id} className="hover:bg-gray-50/50 transition-colors text-xs">
+                            <tr key={item.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors text-xs">
                                 <td className="px-4 py-3">
-                                    <div className="font-bold text-gray-900">{item.name}</div>
+                                    <div className="font-bold text-gray-900 dark:text-gray-100">{item.name}</div>
                                     <button
                                         onClick={() => setSelectedApproval(item)}
-                                        className="text-[10px] text-blue-600 cursor-pointer hover:underline flex items-center gap-1 mt-0.5"
+                                        className="text-[10px] text-blue-600 dark:text-blue-400 cursor-pointer hover:underline flex items-center gap-1 mt-0.5"
                                     >
                                         <Eye size={10} /> View Details
                                     </button>
                                 </td>
-                                <td className="px-4 py-3 text-gray-600">{item.type}</td>
-                                <td className="px-4 py-3 text-gray-500">{item.date}</td>
+                                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{item.type}</td>
+                                <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{item.date}</td>
                                 <td className="px-4 py-3">
-                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${item.documents === 'Verified' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${item.documents === 'Verified' ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-900/30' : 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-900/30'
                                         }`}>
                                         {item.documents}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3 text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <button onClick={() => handleApproveClick(item.id)} className="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 rounded-md hover:bg-green-100 text-[10px] font-bold transition-colors">
+                                        <button onClick={() => handleApproveClick(item.id)} className="flex items-center gap-1 px-2 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-md hover:bg-green-100 dark:hover:bg-green-900/30 text-[10px] font-bold transition-colors">
                                             <Check size={12} /> Approve
                                         </button>
-                                        <button onClick={() => handleRejectClick(item.id)} className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-700 rounded-md hover:bg-red-100 text-[10px] font-bold transition-colors">
+                                        <button onClick={() => handleRejectClick(item.id)} className="flex items-center gap-1 px-2 py-1 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-[10px] font-bold transition-colors">
                                             <X size={12} /> Reject
                                         </button>
                                     </div>
@@ -174,19 +174,30 @@ const Approvals: React.FC = () => {
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6"
+                            className="bg-white dark:bg-gray-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
                         >
-                            <h3 className="text-lg font-bold text-gray-900 mb-2">Reject Application</h3>
-                            <p className="text-sm text-gray-500 mb-4">Please provide a reason for rejecting this merchant.</p>
-                            <textarea
-                                value={rejectReason}
-                                onChange={(e) => setRejectReason(e.target.value)}
-                                className="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500/20 outline-none resize-none mb-4"
-                                placeholder="Reason for rejection..."
-                            ></textarea>
-                            <div className="flex justify-end gap-3">
-                                <button onClick={() => setRejectId(null)} className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
-                                <button onClick={confirmReject} className="px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 shadow-lg shadow-red-500/30">Confirm Reject</button>
+                            <div className="bg-red-50 dark:bg-red-900/20 p-6 flex items-center gap-4 border-b border-red-100 dark:border-red-900/30">
+                                <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
+                                    <AlertCircle size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-red-900 dark:text-red-200">Reject Application</h3>
+                                    <p className="text-sm text-red-600 dark:text-red-300">Please provide a reason for rejecting this merchant.</p>
+                                </div>
+                            </div>
+                            <div className="p-6 space-y-4">
+                                <div>
+                                    <textarea
+                                        value={rejectReason}
+                                        onChange={(e) => setRejectReason(e.target.value)}
+                                        className="w-full h-24 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
+                                        placeholder="Reason for rejection..."
+                                    ></textarea>
+                                </div>
+                                <div className="flex gap-3 justify-end">
+                                    <button onClick={() => setRejectId(null)} className="px-4 py-2 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors">Cancel</button>
+                                    <button onClick={confirmReject} className="px-4 py-2 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 shadow-lg shadow-red-500/30 transition-shadow">Confirm Reject</button>
+                                </div>
                             </div>
                         </motion.div>
                     </div>
@@ -201,16 +212,16 @@ const Approvals: React.FC = () => {
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 text-center"
+                            className="bg-white dark:bg-gray-900 w-full max-w-sm rounded-2xl shadow-2xl p-6 text-center"
                         >
-                            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+                            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 dark:text-green-400">
                                 <Check size={24} />
                             </div>
-                            <h3 className="text-lg font-bold text-gray-900 mb-2">Approve Merchant?</h3>
-                            <p className="text-sm text-gray-500 mb-6">This will create an active account for the merchant and send them an invitation.</p>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Approve Merchant?</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">This will create an active account for the merchant and send them an invitation.</p>
                             <div className="flex justify-center gap-3">
-                                <button onClick={() => setApproveId(null)} className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
-                                <button onClick={confirmApprove} className="px-5 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow-lg shadow-green-500/30">Approve</button>
+                                <button onClick={() => setApproveId(null)} className="px-4 py-2 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors">Cancel</button>
+                                <button onClick={confirmApprove} className="px-5 py-2 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg shadow-green-500/30 transition-shadow">Approve</button>
                             </div>
                         </motion.div>
                     </div>
@@ -232,10 +243,10 @@ const Approvals: React.FC = () => {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-50 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
+                            className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
                             onClick={e => e.stopPropagation()}
                         >
-                            <MerchantDetailsModalContent 
+                            <MerchantDetailsModalContent
                                 merchant={{
                                     id: selectedApproval.id,
                                     name: selectedApproval.name,
@@ -251,7 +262,7 @@ const Approvals: React.FC = () => {
                                     gst: selectedApproval.gst,
                                     bank: selectedApproval.bank,
                                 }}
-                                onClose={() => setSelectedApproval(null)} 
+                                onClose={() => setSelectedApproval(null)}
                             />
                         </motion.div>
                     </motion.div>

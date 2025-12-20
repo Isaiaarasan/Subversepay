@@ -26,7 +26,7 @@ export default async function DashboardLayout({
 
   return (
     <AuthWrapper>
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-gray-50 dark:bg-black">
         {/* Sidebar */}
         <aside className="w-64 h-screen fixed left-0 top-0 z-50 flex flex-col bg-black text-white shadow-2xl overflow-hidden border-r border-slate-800">
           <div className="h-16 flex items-center px-6 border-b border-slate-800 font-bold text-xl tracking-tight">

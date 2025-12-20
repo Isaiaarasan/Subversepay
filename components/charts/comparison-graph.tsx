@@ -16,8 +16,8 @@ const ComparisonGraph: React.FC = () => {
     const maxValue = Math.max(...data.flatMap(d => [d.current, d.previous])) * 1.2;
 
     return (
-        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 hover:shadow-xl transition-all duration-300">
-            <h3 className="font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 h-full flex flex-col dark:bg-gray-900/80">
+            <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                 TPV Comparison (Current vs Previous Year)
             </h3>
@@ -25,8 +25,9 @@ const ComparisonGraph: React.FC = () => {
             <div className="relative h-64">
                 <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
                     {/* Grid lines */}
+                    {/* Grid lines */}
                     {[0, 50, 100, 150, 200].map(y => (
-                        <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="#f3f4f6" strokeWidth="0.5" />
+                        <line key={y} x1="0" y1={y} x2="400" y2={y} className="stroke-gray-100 dark:stroke-gray-800" strokeWidth="0.5" />
                     ))}
 
                     {/* Previous year bars */}
@@ -41,7 +42,7 @@ const ComparisonGraph: React.FC = () => {
                                 y={y}
                                 width="8"
                                 height={height}
-                                fill="#e5e7eb"
+                                className="fill-gray-200 dark:fill-gray-700"
                                 initial={{ height: 0, y: 200 }}
                                 animate={{ height, y }}
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
@@ -69,23 +70,23 @@ const ComparisonGraph: React.FC = () => {
                         );
                     })}
                 </svg>
-
-                {/* X-axis labels */}
-                <div className="flex justify-between mt-2 px-6">
-                    {data.map((d, i) => (
-                        <span key={i} className="text-xs text-gray-400 font-mono">{d.month}</span>
-                    ))}
-                </div>
             </div>
 
-            <div className="flex items-center justify-center gap-6 mt-4">
+            {/* X-axis labels */}
+            <div className="flex justify-between mt-2 px-6 mb-4">
+                {data.map((d, i) => (
+                    <span key={i} className="text-xs text-gray-400 dark:text-gray-500 font-mono">{d.month}</span>
+                ))}
+            </div>
+
+            <div className="flex items-center justify-center gap-6 mt-auto">
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                    <span className="text-xs text-gray-600">Current Year</span>
+                    <span className="text-xs text-gray-600 dark:text-gray-400">Current Year</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-                    <span className="text-xs text-gray-600">Previous Year</span>
+                    <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <span className="text-xs text-gray-600 dark:text-gray-400">Previous Year</span>
                 </div>
             </div>
         </div>
