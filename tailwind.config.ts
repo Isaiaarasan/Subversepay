@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 export default {
   darkMode: ["class"],
@@ -11,6 +12,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        blue: colors.zinc,
+        indigo: colors.zinc,
+        violet: colors.zinc,
+        purple: colors.zinc,
+        sky: colors.zinc,
+        cyan: colors.zinc,
+        slate: colors.zinc,
+        gray: colors.zinc,
+        neutral: colors.zinc,
+        stone: colors.zinc,
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -50,6 +61,18 @@ export default {
           "3": "hsl(var(--chart-3))",
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          secondary: "hsl(var(--sidebar-foreground-secondary))",
+          border: "hsl(var(--sidebar-border))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+        },
+        dashboard: {
+          DEFAULT: "hsl(var(--dashboard-background))",
+          foreground: "hsl(var(--dashboard-foreground))",
         },
       },
       borderRadius: {

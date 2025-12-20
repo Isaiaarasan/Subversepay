@@ -1,80 +1,89 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LogOut, User, LayoutDashboard, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { User, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket } from "lucide-react";
+import AuthWrapper from "@/components/auth-wrapper";
+import Header from "@/components/layout/header";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
+  const sb = await createClient();
+  const {
+    data: { user },
+  } = await sb.auth.getUser();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    redirect("/auth/login");
-  }
-
-  const { data: profile } = await supabase
-    .from("users")
-    .select("first_name, last_name")
-    .eq("id", user.id)
-    .single();
-
-  const handleSignOut = async () => {
-    "use server";
-    const sb = await createClient();
-    await sb.auth.signOut();
-    redirect("/auth/login");
-  };
 
   return (
-    <div className="min-h-screen grid grid-cols-[240px_1fr]">
-      {/* Sidebar */}
-      <aside className="bg-slate-900 text-slate-100 flex flex-col border-r border-slate-800">
-        <div className="h-16 flex items-center px-6 border-b border-slate-800 font-bold text-xl tracking-tight">
-          Subverse Pay
-        </div>
-        
-        <nav className="flex-1 p-4 space-y-2">
-          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 transition-colors">
-            <LayoutDashboard className="h-4 w-4" />
-            <span>Overview</span>
-          </Link>
-          <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 transition-colors">
-            <Settings className="h-4 w-4" />
-            <span>Settings</span>
-          </Link>
-        </nav>
-
-        <div className="p-4 border-t border-slate-800">
-          <div className="flex items-center gap-3 px-3 py-2 mb-2">
-            <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center">
-              <User className="h-4 w-4" />
-            </div>
-            <div className="text-sm overflow-hidden">
-              <p className="font-medium truncate">{profile?.first_name || "User"}</p>
-              <p className="text-xs text-slate-400 truncate">{user.email}</p>
-            </div>
+    <AuthWrapper>
+      <div className="flex min-h-screen bg-dashboard">
+        {/* Sidebar */}
+        <aside className="w-64 h-screen fixed left-0 top-0 z-50 flex flex-col bg-sidebar text-sidebar-foreground shadow-2xl overflow-hidden border-r border-sidebar-border">
+          <div className="h-16 flex items-center px-6 border-b border-sidebar-border font-bold text-xl tracking-tight">
+            Subverse Pay
           </div>
-          <form action={handleSignOut}>
-            <Button variant="destructive" className="w-full justify-start gap-2" size="sm">
-              <LogOut className="h-4 w-4" /> Sign Out
-            </Button>
-          </form>
-        </div>
-      </aside>
 
-      {/* Main Content Area */}
-      <main className="bg-muted/10 h-screen overflow-y-auto">
-        <div className="h-16 border-b bg-background flex items-center px-8 shadow-sm sticky top-0 z-10">
-          <h1 className="font-semibold text-lg">Dashboard</h1>
+          <nav className="flex-1 p-4 space-y-2">
+            <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <LayoutDashboard className="h-4 w-4" />
+              <span>Overview</span>
+            </Link>
+            <Link href="/dashboard/merchants" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <Store className="h-4 w-4" />
+              <span>Merchants</span>
+            </Link>
+            <Link href="/dashboard/approvals" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <CheckCircle className="h-4 w-4" />
+              <span>Approvals</span>
+            </Link>
+            <Link href="/dashboard/analytics" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <BarChart3 className="h-4 w-4" />
+              <span>Analytics</span>
+            </Link>
+            <Link href="/dashboard/alerts" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <Bell className="h-4 w-4" />
+              <span>Alerts</span>
+            </Link>
+            <Link href="/dashboard/settlements" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <CreditCard className="h-4 w-4" />
+              <span>Settlements</span>
+            </Link>
+            <Link href="/dashboard/system-health" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <Activity className="h-4 w-4" />
+              <span>System Health</span>
+            </Link>
+            <Link href="/dashboard/tickets" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+              <Ticket className="h-4 w-4" />
+              <span>Tickets</span>
+            </Link>
+          </nav>
+
+          <div className="p-4 border-t border-sidebar-border">
+            <Link
+              href="/dashboard/settings"
+              className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-sidebar-secondary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Settings</span>
+            </Link>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <div className="flex-1 ml-64">
+          <Header
+            userName={
+              (user?.user_metadata as { full_name?: string })?.full_name ||
+              user?.email ||
+              "User"
+            }
+            userEmail={user?.email || "user@example.com"}
+            avatarUrl={(user?.user_metadata as { avatar_url?: string })?.avatar_url}
+          />
+          <main className="p-8">{children}</main>
         </div>
-        <div className="p-8">
-          {children}
-        </div>
-      </main>
-    </div>
+      </div>
+    </AuthWrapper>
   );
 }
