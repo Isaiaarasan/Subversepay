@@ -203,7 +203,7 @@ const Overview = () => {
         <div className="lg:col-span-2 bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-800 dark:text-gray-200">Active Merchants Activity</h3>
-            <a href="/merchants" className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">Manage</a>
+            <a href="/dashboard/merchants" className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">Manage</a>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
