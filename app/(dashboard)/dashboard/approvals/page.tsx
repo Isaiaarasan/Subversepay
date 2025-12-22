@@ -244,7 +244,7 @@ const Approvals: React.FC = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
+                            className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm"
                             onClick={() => setSelectedApproval(null)}
                         >
                             <motion.div
@@ -252,7 +252,7 @@ const Approvals: React.FC = () => {
                                 animate={{ x: 0 }}
                                 exit={{ x: "100%" }}
                                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
+                                className="bg-slate-50 dark:bg-gray-450 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
                                 onClick={e => e.stopPropagation()}
                             >
                                 <MerchantDetailsModalContent
