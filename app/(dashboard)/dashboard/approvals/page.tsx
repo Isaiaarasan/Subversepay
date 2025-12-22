@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Check, X, Eye, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MerchantDetailsModalContent from "@/components/merchants/merchant-details-modal-content";
@@ -29,6 +30,12 @@ interface Approval {
 }
 
 const Approvals: React.FC = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     // Mock Data
     const approvals: Approval[] = [
         {
@@ -229,45 +236,49 @@ const Approvals: React.FC = () => {
             </AnimatePresence>
 
             {/* Details Modal */}
-            <AnimatePresence>
-                {selectedApproval && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 backdrop-blur-sm"
-                        onClick={() => setSelectedApproval(null)}
-                    >
+            {/* Details Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {selectedApproval && (
                         <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
-                            onClick={e => e.stopPropagation()}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
+                            onClick={() => setSelectedApproval(null)}
                         >
-                            <MerchantDetailsModalContent
-                                merchant={{
-                                    id: selectedApproval.id,
-                                    name: selectedApproval.name,
-                                    logo: selectedApproval.logo,
-                                    status: selectedApproval.status === 'Pending' ? 'Active' : selectedApproval.status,
-                                    revenue: selectedApproval.revenue,
-                                    subscribers: selectedApproval.subscribers,
-                                    growth: selectedApproval.growth,
-                                    sector: selectedApproval.sector,
-                                    email: selectedApproval.email,
-                                    phone: selectedApproval.phone,
-                                    address: selectedApproval.address,
-                                    gst: selectedApproval.gst,
-                                    bank: selectedApproval.bank,
-                                }}
-                                onClose={() => setSelectedApproval(null)}
-                            />
+                            <motion.div
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <MerchantDetailsModalContent
+                                    merchant={{
+                                        id: selectedApproval.id,
+                                        name: selectedApproval.name,
+                                        logo: selectedApproval.logo,
+                                        status: selectedApproval.status === 'Pending' ? 'Active' : selectedApproval.status,
+                                        revenue: selectedApproval.revenue,
+                                        subscribers: selectedApproval.subscribers,
+                                        growth: selectedApproval.growth,
+                                        sector: selectedApproval.sector,
+                                        email: selectedApproval.email,
+                                        phone: selectedApproval.phone,
+                                        address: selectedApproval.address,
+                                        gst: selectedApproval.gst,
+                                        bank: selectedApproval.bank,
+                                    }}
+                                    onClose={() => setSelectedApproval(null)}
+                                />
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     );
 };
