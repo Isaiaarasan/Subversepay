@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     MoreHorizontal,
@@ -42,6 +43,12 @@ interface Merchant {
 }
 
 const ActiveMerchantsTable: React.FC = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     // Mock Data
     const [merchants, setMerchants] = useState<Merchant[]>([
         {
@@ -159,7 +166,7 @@ const ActiveMerchantsTable: React.FC = () => {
     return (
         <div className="space-y-6">
             {/* Search & Filter Bar */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-900/80 backdrop-blur-xl p-1 rounded-xl border border-transparent dark:border-gray-800">
+            <div className="relative z-30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-900/80 backdrop-blur-xl p-1 rounded-xl border border-transparent dark:border-gray-800">
                 <div className="relative w-full sm:w-96 group">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={16} />
                     <input
@@ -287,45 +294,49 @@ const ActiveMerchantsTable: React.FC = () => {
             </div>
 
             {/* Merchant Details Modal */}
-            <AnimatePresence>
-                {selectedMerchant && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 backdrop-blur-sm"
-                        onClick={() => setSelectedMerchant(null)}
-                    >
+            {/* Merchant Details Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {selectedMerchant && (
                         <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "tween", duration: 0.3 }}
-                            className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
-                            onClick={e => e.stopPropagation()}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
+                            onClick={() => setSelectedMerchant(null)}
                         >
-                            <MerchantDetailsModalContent
-                                merchant={{
-                                    id: selectedMerchant.id,
-                                    name: selectedMerchant.name,
-                                    logo: selectedMerchant.logo,
-                                    status: selectedMerchant.status === 'Active' ? 'Active' : 'Inactive',
-                                    revenue: selectedMerchant.revenue,
-                                    subscribers: selectedMerchant.subscribers,
-                                    growth: selectedMerchant.growth,
-                                    sector: selectedMerchant.sector,
-                                    email: selectedMerchant.email,
-                                    phone: selectedMerchant.phone,
-                                    address: selectedMerchant.address,
-                                    gst: selectedMerchant.gst,
-                                    bank: selectedMerchant.bank,
-                                }}
-                                onClose={() => setSelectedMerchant(null)}
-                            />
+                            <motion.div
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "tween", duration: 0.3 }}
+                                className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <MerchantDetailsModalContent
+                                    merchant={{
+                                        id: selectedMerchant.id,
+                                        name: selectedMerchant.name,
+                                        logo: selectedMerchant.logo,
+                                        status: selectedMerchant.status === 'Active' ? 'Active' : 'Inactive',
+                                        revenue: selectedMerchant.revenue,
+                                        subscribers: selectedMerchant.subscribers,
+                                        growth: selectedMerchant.growth,
+                                        sector: selectedMerchant.sector,
+                                        email: selectedMerchant.email,
+                                        phone: selectedMerchant.phone,
+                                        address: selectedMerchant.address,
+                                        gst: selectedMerchant.gst,
+                                        bank: selectedMerchant.bank,
+                                    }}
+                                    onClose={() => setSelectedMerchant(null)}
+                                />
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
 
             {/* Deactivation Modal */}
             <AnimatePresence>
