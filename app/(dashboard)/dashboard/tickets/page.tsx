@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MessageSquare, Paperclip, X, User, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { DateRangeFilter } from "@/components/ui/date-range-filter";
 
 interface Ticket {
     id: string;
@@ -14,6 +15,7 @@ interface Ticket {
     description: string;
     type: string;
     attachments: boolean;
+    createdDate?: string;
 }
 
 const Tickets: React.FC = () => {
@@ -23,16 +25,19 @@ const Tickets: React.FC = () => {
     const [showCloseModal, setShowCloseModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
     const [tickets, setTickets] = useState<Ticket[]>([
-        { id: "TCK-9921", title: "API Integration Error", priority: "High", user: "John Doe (Manager)", status: "Open", date: "2 hours ago", description: "Getting 500 errors on the payment endpoint repeatedly.", type: "Manager", attachments: true },
-        { id: "TCK-9922", title: "Settlement Delay Check", priority: "Medium", user: "Alice Smith (Admin)", status: "In Progress", date: "5 hours ago", description: "Settlement for ID SET-2024-001 hasn't reflected yet.", type: "Admin", attachments: false },
-        { id: "TCK-9920", title: "Login Failure for Staff", priority: "Critical", user: "Tech Team (Customer)", status: "Open", date: "1 day ago", description: "Staff members unable to login from new IP range.", type: "Customer", attachments: true },
-        { id: "TCK-9919", title: "Merchant Onboarding Issue", priority: "Medium", user: "Sarah Wilson (Merchant)", status: "Open", date: "3 hours ago", description: "New merchant unable to complete registration process.", type: "Merchant", attachments: false },
-        { id: "TCK-9918", title: "Webhook Delivery Failure", priority: "High", user: "Dev Team (Admin)", status: "In Progress", date: "6 hours ago", description: "Payment webhooks not being delivered to merchant endpoint.", type: "Admin", attachments: true },
-        { id: "TCK-9917", title: "Transaction Timeout", priority: "Critical", user: "Bob Johnson (Customer)", status: "Open", date: "8 hours ago", description: "Payment transactions timing out during peak hours.", type: "Customer", attachments: false },
-        { id: "TCK-9916", title: "Dashboard Loading Slow", priority: "Low", user: "Mike Chen (Manager)", status: "Open", date: "1 day ago", description: "Dashboard taking too long to load analytics data.", type: "Manager", attachments: true },
-        { id: "TCK-9915", title: "Refund Request Processing", priority: "Medium", user: "Lisa Park (Merchant)", status: "Closed", date: "2 days ago", description: "Refund request taking longer than usual to process.", type: "Merchant", attachments: false },
-        { id: "TCK-9914", title: "API Rate Limiting", priority: "High", user: "Tom Brown (Admin)", status: "Closed", date: "3 days ago", description: "API calls being rate limited unexpectedly.", type: "Admin", attachments: true },
+        { id: "TCK-9921", title: "API Integration Error", priority: "High", user: "John Doe (Manager)", status: "Open", date: "2 hours ago", description: "Getting 500 errors on the payment endpoint repeatedly.", type: "Manager", attachments: true, createdDate: "2024-10-24" },
+        { id: "TCK-9922", title: "Settlement Delay Check", priority: "Medium", user: "Alice Smith (Admin)", status: "In Progress", date: "5 hours ago", description: "Settlement for ID SET-2024-001 hasn't reflected yet.", type: "Admin", attachments: false, createdDate: "2024-10-24" },
+        { id: "TCK-9920", title: "Login Failure for Staff", priority: "Critical", user: "Tech Team (Customer)", status: "Open", date: "1 day ago", description: "Staff members unable to login from new IP range.", type: "Customer", attachments: true, createdDate: "2024-10-23" },
+        { id: "TCK-9919", title: "Merchant Onboarding Issue", priority: "Medium", user: "Sarah Wilson (Merchant)", status: "Open", date: "3 hours ago", description: "New merchant unable to complete registration process.", type: "Merchant", attachments: false, createdDate: "2024-10-24" },
+        { id: "TCK-9918", title: "Webhook Delivery Failure", priority: "High", user: "Dev Team (Admin)", status: "In Progress", date: "6 hours ago", description: "Payment webhooks not being delivered to merchant endpoint.", type: "Admin", attachments: true, createdDate: "2024-10-24" },
+        { id: "TCK-9917", title: "Transaction Timeout", priority: "Critical", user: "Bob Johnson (Customer)", status: "Open", date: "8 hours ago", description: "Payment transactions timing out during peak hours.", type: "Customer", attachments: false, createdDate: "2024-10-24" },
+        { id: "TCK-9916", title: "Dashboard Loading Slow", priority: "Low", user: "Mike Chen (Manager)", status: "Open", date: "1 day ago", description: "Dashboard taking too long to load analytics data.", type: "Manager", attachments: true, createdDate: "2024-10-23" },
+        { id: "TCK-9915", title: "Refund Request Processing", priority: "Medium", user: "Lisa Park (Merchant)", status: "Closed", date: "2 days ago", description: "Refund request taking longer than usual to process.", type: "Merchant", attachments: false, createdDate: "2024-10-22" },
+        { id: "TCK-9914", title: "API Rate Limiting", priority: "High", user: "Tom Brown (Admin)", status: "Closed", date: "3 days ago", description: "API calls being rate limited unexpectedly.", type: "Admin", attachments: true, createdDate: "2024-10-21" },
     ]);
 
     // Filter tickets based on active tab and search query
@@ -52,7 +57,13 @@ const Tickets: React.FC = () => {
             ticket.priority.toLowerCase().includes(searchQuery.toLowerCase()) ||
             ticket.status.toLowerCase().includes(searchQuery.toLowerCase());
 
-        return statusMatch && searchMatch;
+        const matchesDate = (!startDate || (ticket.createdDate && ticket.createdDate >= startDate)) &&
+            (!endDate || (ticket.createdDate && ticket.createdDate <= endDate));
+
+        // Note: Logic allows search filtering OR date filtering. Usually AND.
+        // The original code returned (statusMatch && searchMatch)
+        // I'll make it (statusMatch && searchMatch && matchesDate)
+        return statusMatch && searchMatch && matchesDate;
     });
 
     const handleTicketClick = (ticket: Ticket) => {
@@ -73,14 +84,12 @@ const Tickets: React.FC = () => {
 
     return (
         <div className="space-y-6 h-[calc(100vh-140px)] flex flex-col relative">
-            <div className="flex justify-between items-center shrink-0">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Support Tickets</h1>
                     <p className="text-gray-500 dark:text-gray-400">Manage and resolve user issues.</p>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-blue-500/30">
-                    Create Ticket
-                </button>
+                <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
             </div>
 
             {/* Tabs */}
@@ -137,29 +146,29 @@ const Tickets: React.FC = () => {
                     <div className="overflow-y-auto flex-1 p-2 space-y-2">
                         {filteredTickets.length > 0 ? (
                             filteredTickets.map((ticket) => (
-                            <div
-                                key={ticket.id}
-                                onClick={() => handleTicketClick(ticket)}
-                                className={`p-3 rounded-xl border transition-all cursor-pointer group ${selectedTicket?.id === ticket.id ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800' : 'border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
-                            >
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className="text-xs font-mono text-gray-400 font-bold">{ticket.id}</span>
-                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${ticket.priority === 'Critical' ? 'bg-red-100 text-red-600' :
-                                        ticket.priority === 'High' ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'
-                                        }`}>{ticket.priority}</span>
-                                </div>
-                                <h3 className={`font-bold text-sm mb-1 ${selectedTicket?.id === ticket.id ? 'text-blue-700 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>{ticket.title}</h3>
-                                <div className="flex items-center justify-between mt-3">
-                                    <div className="flex items-center text-xs text-gray-500 gap-1.5">
-                                        <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[10px] font-bold">
-                                            {ticket.user.charAt(0)}
-                                        </div>
-                                        <span className="truncate max-w-[100px]">{ticket.user}</span>
+                                <div
+                                    key={ticket.id}
+                                    onClick={() => handleTicketClick(ticket)}
+                                    className={`p-3 rounded-xl border transition-all cursor-pointer group ${selectedTicket?.id === ticket.id ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800' : 'border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
+                                >
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className="text-xs font-mono text-gray-400 font-bold">{ticket.id}</span>
+                                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${ticket.priority === 'Critical' ? 'bg-red-100 text-red-600' :
+                                            ticket.priority === 'High' ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'
+                                            }`}>{ticket.priority}</span>
                                     </div>
-                                    <span className="text-[10px] text-gray-400">{ticket.date}</span>
+                                    <h3 className={`font-bold text-sm mb-1 ${selectedTicket?.id === ticket.id ? 'text-blue-700 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>{ticket.title}</h3>
+                                    <div className="flex items-center justify-between mt-3">
+                                        <div className="flex items-center text-xs text-gray-500 gap-1.5">
+                                            <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[10px] font-bold">
+                                                {ticket.user.charAt(0)}
+                                            </div>
+                                            <span className="truncate max-w-[100px]">{ticket.user}</span>
+                                        </div>
+                                        <span className="text-[10px] text-gray-400">{ticket.date}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
+                            ))
                         ) : searchQuery ? (
                             <div className="flex flex-col items-center justify-center py-8 text-center">
                                 <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-3">

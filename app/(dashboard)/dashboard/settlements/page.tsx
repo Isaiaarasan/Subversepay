@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Download, Search, Filter } from "lucide-react";
+import { DateRangeFilter } from "@/components/ui/date-range-filter";
 
 interface Settlement {
     id: string;
@@ -24,13 +25,23 @@ const Settlements: React.FC = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     const filteredSettlements = settlements.filter(settlement => {
         const matchesSearch = settlement.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
             settlement.to.toLowerCase().includes(searchQuery.toLowerCase()) ||
             settlement.from.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === 'all' || settlement.status === statusFilter;
-        return matchesSearch && matchesStatus;
+
+        const settlementDate = new Date(settlement.date);
+        const start = startDate ? new Date(startDate) : null;
+        const end = endDate ? new Date(endDate) : null;
+
+        const matchesDate = (!start || settlementDate >= start) &&
+            (!end || settlementDate <= end);
+
+        return matchesSearch && matchesStatus && matchesDate;
     });
 
     return (
@@ -41,38 +52,41 @@ const Settlements: React.FC = () => {
                     <p className="text-gray-500 dark:text-gray-400">Manage and track merchant payouts.</p>
                 </div>
 
-                <div className="flex gap-2">
-                    <div className="relative group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
-                        <input
-                            type="text"
-                            placeholder="Search ID, merchant..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500"
-                        />
-                    </div>
-                    <div className="relative group main-dropdown">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors">
-                            <Filter size={18} />
-                            <span>{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
-                        </button>
-                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-20">
-                            {['all', 'Completed', 'Processing', 'Failed'].map(status => (
-                                <button
-                                    key={status}
-                                    onClick={() => setStatusFilter(status)}
-                                    className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
-                                >
-                                    {status === 'all' ? 'All Settlements' : status}
-                                </button>
-                            ))}
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                    {/* <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} /> */}
+                    <div className="flex gap-2">
+                        <div className="relative group">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
+                            <input
+                                type="text"
+                                placeholder="Search ID, merchant..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                            />
                         </div>
+                        <div className="relative group main-dropdown">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors">
+                                <Filter size={18} />
+                                <span>{statusFilter === 'all' ? 'Status' : statusFilter}</span>
+                            </button>
+                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-20">
+                                {['all', 'Completed', 'Processing', 'Failed'].map(status => (
+                                    <button
+                                        key={status}
+                                        onClick={() => setStatusFilter(status)}
+                                        className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
+                                    >
+                                        {status === 'all' ? 'All Settlements' : status}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
+                            <Download size={18} />
+                            Export
+                        </button>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
-                        <Download size={18} />
-                        Export
-                    </button>
                 </div>
             </div>
 

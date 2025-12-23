@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import MerchantDetailsModalContent from './merchant-details-modal-content';
+import { DateRangeFilter } from '@/components/ui/date-range-filter';
 
 interface Merchant {
     id: number;
@@ -58,6 +59,7 @@ interface Merchant {
         url?: string;
         type?: 'image' | 'pdf';
     }[];
+    joinedDate?: string;
 }
 
 const ActiveMerchantsTable: React.FC = () => {
@@ -83,6 +85,7 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 43210",
             address: "123, Tech Park, Bangalore",
             gst: "29ABCDE1234F1Z5",
+            joinedDate: "2024-01-15",
             bank: { name: "HDFC Bank", acc: "1234567890", ifsc: "HDFC0001234" },
             managers: [
                 { name: "Arjun Kumar", role: "General Manager", email: "arjun@speednet.com", status: "Active" }
@@ -110,6 +113,7 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 11111",
             address: "45, Media Street, Mumbai",
             gst: "27AAAAA0000A1Z5",
+            joinedDate: "2024-02-20",
             bank: { name: "ICICI Bank", acc: "0987654321", ifsc: "ICIC0001234" },
             managers: [
                 { name: "Ravi Mehta", role: "Ops Manager", email: "ravi@cablenet.in", status: "Active" }
@@ -135,6 +139,7 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 22222",
             address: "78, Health Avenue, Delhi",
             gst: "07BBBBB1111B1Z5",
+            joinedDate: "2024-03-10",
             bank: { name: "SBI", acc: "1122334455", ifsc: "SBIN0001234" },
             managers: [],
             los: [],
@@ -158,6 +163,7 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 33333",
             address: "90, Cyber City, Gurgaon",
             gst: "06CCCCC2222C1Z5",
+            joinedDate: "2024-04-05",
             bank: { name: "Axis Bank", acc: "6789012345", ifsc: "UTIB0001234" },
             managers: [],
             los: [],
@@ -181,6 +187,7 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 44444",
             address: "10, Film City, Noida",
             gst: "09DDDDD3333D1Z5",
+            joinedDate: "2023-11-12",
             bank: { name: "PNB", acc: "5544332211", ifsc: "PUNB0001234" },
             managers: [],
             los: [],
@@ -197,12 +204,18 @@ const ActiveMerchantsTable: React.FC = () => {
     const [selectedMerchant, setSelectedMerchant] = useState<Merchant | null>(null);
     const [deactivateId, setDeactivateId] = useState<number | null>(null);
     const [deactivateReason, setDeactivateReason] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
     const filteredMerchants = merchants.filter(merchant => {
         const matchesSearch = merchant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             merchant.sector.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === 'all' || merchant.status === statusFilter;
-        return matchesSearch && matchesStatus;
+
+        const matchesDate = (!startDate || (merchant.joinedDate && merchant.joinedDate >= startDate)) &&
+            (!endDate || (merchant.joinedDate && merchant.joinedDate <= endDate));
+
+        return matchesSearch && matchesStatus && matchesDate;
     });
 
     const handleDeactivateClick = (id: number) => {
@@ -235,9 +248,11 @@ const ActiveMerchantsTable: React.FC = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-xs transition-all"
                     />
+
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto">
-                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center">
+                    {/* <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} /> */}
+                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full sm:w-auto mt-2 sm:mt-0">
                         <UserCheck size={14} />
                         <span>Approvals</span>
                     </Link>
