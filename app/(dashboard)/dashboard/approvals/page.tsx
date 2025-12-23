@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Check, X, Eye, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MerchantDetailsModalContent from "@/components/merchants/merchant-details-modal-content";
@@ -29,6 +30,12 @@ interface Approval {
 }
 
 const Approvals: React.FC = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     // Mock Data
     const approvals: Approval[] = [
         {
@@ -134,13 +141,20 @@ const Approvals: React.FC = () => {
                         {approvals.map((item) => (
                             <tr key={item.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors text-xs">
                                 <td className="px-4 py-3">
-                                    <div className="font-bold text-gray-900 dark:text-gray-100">{item.name}</div>
-                                    <button
-                                        onClick={() => setSelectedApproval(item)}
-                                        className="text-[10px] text-blue-600 dark:text-blue-400 cursor-pointer hover:underline flex items-center gap-1 mt-0.5"
-                                    >
-                                        <Eye size={10} /> View Details
-                                    </button>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-blue-100 dark:border-blue-900/30 text-[10px]">
+                                            {item.logo}
+                                        </div>
+                                        <div>
+                                            <div className="font-bold text-gray-900 dark:text-gray-100 text-xs">{item.name}</div>
+                                            <button
+                                                onClick={() => setSelectedApproval(item)}
+                                                className="text-[10px] text-blue-600 dark:text-blue-400 cursor-pointer hover:underline flex items-center gap-1 mt-0.5"
+                                            >
+                                                <Eye size={10} /> View Details
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{item.type}</td>
                                 <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{item.date}</td>
@@ -229,45 +243,48 @@ const Approvals: React.FC = () => {
             </AnimatePresence>
 
             {/* Details Modal */}
-            <AnimatePresence>
-                {selectedApproval && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 backdrop-blur-sm"
-                        onClick={() => setSelectedApproval(null)}
-                    >
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {selectedApproval && (
                         <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
-                            onClick={e => e.stopPropagation()}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
+                            onClick={() => setSelectedApproval(null)}
                         >
-                            <MerchantDetailsModalContent
-                                merchant={{
-                                    id: selectedApproval.id,
-                                    name: selectedApproval.name,
-                                    logo: selectedApproval.logo,
-                                    status: selectedApproval.status === 'Pending' ? 'Active' : selectedApproval.status,
-                                    revenue: selectedApproval.revenue,
-                                    subscribers: selectedApproval.subscribers,
-                                    growth: selectedApproval.growth,
-                                    sector: selectedApproval.sector,
-                                    email: selectedApproval.email,
-                                    phone: selectedApproval.phone,
-                                    address: selectedApproval.address,
-                                    gst: selectedApproval.gst,
-                                    bank: selectedApproval.bank,
-                                }}
-                                onClose={() => setSelectedApproval(null)}
-                            />
+                            <motion.div
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "tween", duration: 0.3 }}
+                                className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <MerchantDetailsModalContent
+                                    merchant={{
+                                        id: selectedApproval.id,
+                                        name: selectedApproval.name,
+                                        logo: selectedApproval.logo,
+                                        status: selectedApproval.status === 'Pending' ? 'Active' : selectedApproval.status,
+                                        revenue: selectedApproval.revenue,
+                                        subscribers: selectedApproval.subscribers,
+                                        growth: selectedApproval.growth,
+                                        sector: selectedApproval.sector,
+                                        email: selectedApproval.email,
+                                        phone: selectedApproval.phone,
+                                        address: selectedApproval.address,
+                                        gst: selectedApproval.gst,
+                                        bank: selectedApproval.bank,
+                                    }}
+                                    onClose={() => setSelectedApproval(null)}
+                                />
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     );
 };
