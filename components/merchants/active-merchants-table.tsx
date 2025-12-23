@@ -40,6 +40,24 @@ interface Merchant {
         acc: string;
         ifsc: string;
     };
+    managers?: {
+        name: string;
+        role: string;
+        email: string;
+        status: string;
+    }[];
+    los?: {
+        name: string;
+        role: string;
+        email: string;
+        status: string;
+    }[];
+    documents?: {
+        name: string;
+        status: string;
+        url?: string;
+        type?: 'image' | 'pdf';
+    }[];
 }
 
 const ActiveMerchantsTable: React.FC = () => {
@@ -65,7 +83,18 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 43210",
             address: "123, Tech Park, Bangalore",
             gst: "29ABCDE1234F1Z5",
-            bank: { name: "HDFC Bank", acc: "1234567890", ifsc: "HDFC0001234" }
+            bank: { name: "HDFC Bank", acc: "1234567890", ifsc: "HDFC0001234" },
+            managers: [
+                { name: "Arjun Kumar", role: "General Manager", email: "arjun@speednet.com", status: "Active" }
+            ],
+            los: [
+                { name: "Priya Singh", role: "Loan Officer", email: "priya@speednet.com", status: "Active" }
+            ],
+            documents: [
+                { name: "GST Certificate", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "PAN Card", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "Business Registration", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" }
+            ]
         },
         {
             id: 2,
@@ -81,7 +110,16 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 11111",
             address: "45, Media Street, Mumbai",
             gst: "27AAAAA0000A1Z5",
-            bank: { name: "ICICI Bank", acc: "0987654321", ifsc: "ICIC0001234" }
+            bank: { name: "ICICI Bank", acc: "0987654321", ifsc: "ICIC0001234" },
+            managers: [
+                { name: "Ravi Mehta", role: "Ops Manager", email: "ravi@cablenet.in", status: "Active" }
+            ],
+            los: [],
+            documents: [
+                { name: "GST Certificate", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "PAN Card", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "Business Registration", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" }
+            ]
         },
         {
             id: 3,
@@ -97,7 +135,14 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 22222",
             address: "78, Health Avenue, Delhi",
             gst: "07BBBBB1111B1Z5",
-            bank: { name: "SBI", acc: "1122334455", ifsc: "SBIN0001234" }
+            bank: { name: "SBI", acc: "1122334455", ifsc: "SBIN0001234" },
+            managers: [],
+            los: [],
+            documents: [
+                { name: "GST Certificate", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "PAN Card", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "Business Registration", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" }
+            ]
         },
         {
             id: 4,
@@ -113,7 +158,14 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 33333",
             address: "90, Cyber City, Gurgaon",
             gst: "06CCCCC2222C1Z5",
-            bank: { name: "Axis Bank", acc: "6789012345", ifsc: "UTIB0001234" }
+            bank: { name: "Axis Bank", acc: "6789012345", ifsc: "UTIB0001234" },
+            managers: [],
+            los: [],
+            documents: [
+                { name: "GST Certificate", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "PAN Card", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "Business Registration", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" }
+            ]
         },
         {
             id: 5,
@@ -129,7 +181,14 @@ const ActiveMerchantsTable: React.FC = () => {
             phone: "+91 98765 44444",
             address: "10, Film City, Noida",
             gst: "09DDDDD3333D1Z5",
-            bank: { name: "PNB", acc: "5544332211", ifsc: "PUNB0001234" }
+            bank: { name: "PNB", acc: "5544332211", ifsc: "PUNB0001234" },
+            managers: [],
+            los: [],
+            documents: [
+                { name: "GST Certificate", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "PAN Card", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" },
+                { name: "Business Registration", status: "Verified", url: "https://placehold.co/600x400/png", type: "image" }
+            ]
         },
     ]);
 
@@ -302,15 +361,15 @@ const ActiveMerchantsTable: React.FC = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
+                            className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm"
                             onClick={() => setSelectedMerchant(null)}
                         >
                             <motion.div
                                 initial={{ x: "100%" }}
                                 animate={{ x: 0 }}
                                 exit={{ x: "100%" }}
-                                transition={{ type: "tween", duration: 0.3 }}
-                                className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
                                 onClick={e => e.stopPropagation()}
                             >
                                 <MerchantDetailsModalContent
@@ -328,6 +387,9 @@ const ActiveMerchantsTable: React.FC = () => {
                                         address: selectedMerchant.address,
                                         gst: selectedMerchant.gst,
                                         bank: selectedMerchant.bank,
+                                        managers: selectedMerchant.managers,
+                                        los: selectedMerchant.los,
+                                        documents: selectedMerchant.documents,
                                     }}
                                     onClose={() => setSelectedMerchant(null)}
                                 />
