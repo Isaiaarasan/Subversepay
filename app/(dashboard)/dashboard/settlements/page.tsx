@@ -1,32 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Download, Search, Filter } from "lucide-react";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
-
-interface Settlement {
-    id: string;
-    from: string;
-    to: string;
-    amount: string;
-    status: string;
-    date: string;
-    bankLogo: string;
-}
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setSearchQuery, setStatusFilter, setStartDate, setEndDate } from "@/lib/store/slices/settlementsSlice";
 
 const Settlements: React.FC = () => {
-    const [settlements] = useState<Settlement[]>([
-        { id: "SET-2024-001", from: "SubversePay", to: "SpeedNet ISP", amount: "₹45,200.00", status: "Completed", date: "Oct 24, 2024", bankLogo: "HDFC" },
-        { id: "SET-2024-002", from: "SubversePay", to: "CableNet Sols", amount: "₹12,450.00", status: "Processing", date: "Oct 24, 2024", bankLogo: "ICICI" },
-        { id: "SET-2024-003", from: "SubversePay", to: "FitZone Gyms", amount: "₹8,900.00", status: "Failed", date: "Oct 23, 2024", bankLogo: "SBI" },
-        { id: "SET-2024-004", from: "SubversePay", to: "TechStart Hub", amount: "₹1,25,000.00", status: "Completed", date: "Oct 23, 2024", bankLogo: "AXIS" },
-        { id: "SET-2024-005", from: "SubversePay", to: "Coffee House", amount: "₹3,400.00", status: "Completed", date: "Oct 22, 2024", bankLogo: "PNB" },
-    ]);
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('all');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const dispatch = useAppDispatch();
+    const { settlements, searchQuery, statusFilter, startDate, endDate } = useAppSelector((state) => state.settlements);
 
     const filteredSettlements = settlements.filter(settlement => {
         const matchesSearch = settlement.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -61,7 +43,7 @@ const Settlements: React.FC = () => {
                                 type="text"
                                 placeholder="Search ID, merchant..."
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                                 className="pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                             />
                         </div>
@@ -74,7 +56,7 @@ const Settlements: React.FC = () => {
                                 {['all', 'Completed', 'Processing', 'Failed'].map(status => (
                                     <button
                                         key={status}
-                                        onClick={() => setStatusFilter(status)}
+                                        onClick={() => dispatch(setStatusFilter(status))}
                                         className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                                     >
                                         {status === 'all' ? 'All Settlements' : status}

@@ -14,57 +14,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setTimeRange } from "@/lib/store/slices/overviewSlice";
 
 const Overview = () => {
-  const [timeRange, setTimeRange] = React.useState("This Month");
+  const dispatch = useAppDispatch();
+  const { timeRange, stats, recentActivities, pendingApprovals } = useAppSelector((state) => state.overview);
 
-  const stats = [
-    {
-      title: "Total Merchants",
-      value: "45",
-      subtext: "Platform partners",
-      icon: Users,
-      trend: "up" as const,
-      trendValue: "+3 this week",
-    },
-    {
-      title: "Total Managers",
-      value: "12",
-      subtext: "Operational staff",
-      icon: Shield,
-      trend: "up" as const,
-      trendValue: "+1 newly added",
-    },
-    {
-      title: "Total Customers",
-      value: "1.25L",
-      subtext: "End users",
-      icon: UserCheck,
-      trend: "up" as const,
-      trendValue: "+12.5% Growth",
-    },
-    {
-      title: "Total TPV",
-      value: "₹8.5 Cr",
-      subtext: "Processed Volume",
-      icon: CreditCard,
-      trend: "up" as const,
-      trendValue: "+8.2%",
-    },
-  ];
+  // Map icon strings to actual icon components
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Users,
+    Shield,
+    UserCheck,
+    CreditCard,
+  };
 
-  const recentActivities = [
-    { action: "New merchant onboarded", time: "2 mins ago", type: "success" },
-    { action: "Payment processed", time: "5 mins ago", type: "info" },
-    { action: "Approval request received", time: "10 mins ago", type: "warning" },
-    { action: "System health check completed", time: "15 mins ago", type: "success" },
-  ];
-
-  const pendingApprovals = [
-    { name: "Urban Fibernet Pvt Ltd", date: "2 mins ago", type: "ISP" },
-    { name: "SkyHigh Travels", date: "1 hour ago", type: "Travel" },
-    { name: "Fresh Mart Chain", date: "4 hours ago", type: "Retail" },
-  ];
+  const statsWithIcons = stats.map((stat) => ({
+    ...stat,
+    icon: iconMap[stat.icon] || Users,
+  }));
 
   return (
     <div className="space-y-8 pb-8">
@@ -102,7 +70,7 @@ const Overview = () => {
               className="w-[160px] bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 shadow-xl"
             >
               <DropdownMenuItem
-                onClick={() => setTimeRange("This Month")}
+                onClick={() => dispatch(setTimeRange("This Month"))}
                 className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
                   timeRange === "This Month"
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
@@ -113,7 +81,7 @@ const Overview = () => {
                 This Month
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => setTimeRange("Last Month")}
+                onClick={() => dispatch(setTimeRange("Last Month"))}
                 className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
                   timeRange === "Last Month"
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
@@ -124,7 +92,7 @@ const Overview = () => {
                 Last Month
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => setTimeRange("This Quarter")}
+                onClick={() => dispatch(setTimeRange("This Quarter"))}
                 className={`flex items-center gap-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
                   timeRange === "This Quarter"
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
@@ -149,7 +117,7 @@ const Overview = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, index) => (
+        {statsWithIcons.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>

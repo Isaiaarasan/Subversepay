@@ -1,44 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { MessageSquare, Paperclip, X, User, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
-
-interface Ticket {
-    id: string;
-    title: string;
-    priority: string;
-    user: string;
-    status: string;
-    date: string;
-    description: string;
-    type: string;
-    attachments: boolean;
-    createdDate?: string;
-}
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import {
+    setActiveTab,
+    setSelectedTicket,
+    setCloseTicketReason,
+    setShowCloseModal,
+    setSearchQuery,
+    setStartDate,
+    setEndDate,
+    closeTicket,
+} from "@/lib/store/slices/ticketsSlice";
 
 const Tickets: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'active' | 'closed'>('active');
-    const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-    const [closeTicketReason, setCloseTicketReason] = useState("");
-    const [showCloseModal, setShowCloseModal] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-
-    const [tickets, setTickets] = useState<Ticket[]>([
-        { id: "TCK-9921", title: "API Integration Error", priority: "High", user: "John Doe (Manager)", status: "Open", date: "2 hours ago", description: "Getting 500 errors on the payment endpoint repeatedly.", type: "Manager", attachments: true, createdDate: "2024-10-24" },
-        { id: "TCK-9922", title: "Settlement Delay Check", priority: "Medium", user: "Alice Smith (Admin)", status: "In Progress", date: "5 hours ago", description: "Settlement for ID SET-2024-001 hasn't reflected yet.", type: "Admin", attachments: false, createdDate: "2024-10-24" },
-        { id: "TCK-9920", title: "Login Failure for Staff", priority: "Critical", user: "Tech Team (Customer)", status: "Open", date: "1 day ago", description: "Staff members unable to login from new IP range.", type: "Customer", attachments: true, createdDate: "2024-10-23" },
-        { id: "TCK-9919", title: "Merchant Onboarding Issue", priority: "Medium", user: "Sarah Wilson (Merchant)", status: "Open", date: "3 hours ago", description: "New merchant unable to complete registration process.", type: "Merchant", attachments: false, createdDate: "2024-10-24" },
-        { id: "TCK-9918", title: "Webhook Delivery Failure", priority: "High", user: "Dev Team (Admin)", status: "In Progress", date: "6 hours ago", description: "Payment webhooks not being delivered to merchant endpoint.", type: "Admin", attachments: true, createdDate: "2024-10-24" },
-        { id: "TCK-9917", title: "Transaction Timeout", priority: "Critical", user: "Bob Johnson (Customer)", status: "Open", date: "8 hours ago", description: "Payment transactions timing out during peak hours.", type: "Customer", attachments: false, createdDate: "2024-10-24" },
-        { id: "TCK-9916", title: "Dashboard Loading Slow", priority: "Low", user: "Mike Chen (Manager)", status: "Open", date: "1 day ago", description: "Dashboard taking too long to load analytics data.", type: "Manager", attachments: true, createdDate: "2024-10-23" },
-        { id: "TCK-9915", title: "Refund Request Processing", priority: "Medium", user: "Lisa Park (Merchant)", status: "Closed", date: "2 days ago", description: "Refund request taking longer than usual to process.", type: "Merchant", attachments: false, createdDate: "2024-10-22" },
-        { id: "TCK-9914", title: "API Rate Limiting", priority: "High", user: "Tom Brown (Admin)", status: "Closed", date: "3 days ago", description: "API calls being rate limited unexpectedly.", type: "Admin", attachments: true, createdDate: "2024-10-21" },
-    ]);
+    const dispatch = useAppDispatch();
+    const {
+        tickets,
+        activeTab,
+        selectedTicket,
+        closeTicketReason,
+        showCloseModal,
+        searchQuery,
+        startDate,
+        endDate,
+    } = useAppSelector((state) => state.tickets);
 
     // Filter tickets based on active tab and search query
     const filteredTickets = tickets.filter(ticket => {
@@ -60,26 +49,25 @@ const Tickets: React.FC = () => {
         const matchesDate = (!startDate || (ticket.createdDate && ticket.createdDate >= startDate)) &&
             (!endDate || (ticket.createdDate && ticket.createdDate <= endDate));
 
-        // Note: Logic allows search filtering OR date filtering. Usually AND.
-        // The original code returned (statusMatch && searchMatch)
-        // I'll make it (statusMatch && searchMatch && matchesDate)
+        
         return statusMatch && searchMatch && matchesDate;
     });
 
-    const handleTicketClick = (ticket: Ticket) => {
-        setSelectedTicket(ticket);
+    const handleTicketClick = (ticket: typeof tickets[0]) => {
+        dispatch(setSelectedTicket(ticket));
     };
 
     const handleCloseTicketClick = () => {
-        setShowCloseModal(true);
-        setCloseTicketReason("");
+        dispatch(setShowCloseModal(true));
+        dispatch(setCloseTicketReason(""));
     };
 
     const confirmCloseTicket = () => {
         if (!closeTicketReason) return alert("Please provide a reason.");
-        alert("Ticket Closed: " + closeTicketReason);
-        setShowCloseModal(false);
-        // Logic to update ticket status
+        if (selectedTicket) {
+            dispatch(closeTicket(selectedTicket.id));
+        }
+        dispatch(setShowCloseModal(false));
     };
 
     return (
@@ -89,19 +77,19 @@ const Tickets: React.FC = () => {
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Support Tickets</h1>
                     <p className="text-gray-500 dark:text-gray-400">Manage and resolve user issues.</p>
                 </div>
-                <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
+                <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
             </div>
 
             {/* Tabs */}
             <div className="flex border-b border-gray-200 shrink-0">
                 <button
-                    onClick={() => setActiveTab('active')}
+                    onClick={() => dispatch(setActiveTab('active'))}
                     className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 ${activeTab === 'active' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
                 >
                     Active Tickets ({tickets.filter(t => t.status !== 'Closed').length})
                 </button>
                 <button
-                    onClick={() => setActiveTab('closed')}
+                    onClick={() => dispatch(setActiveTab('closed'))}
                     className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 ${activeTab === 'closed' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
                 >
                     Closed Tickets ({tickets.filter(t => t.status === 'Closed').length})
@@ -118,7 +106,7 @@ const Tickets: React.FC = () => {
                                 type="text"
                                 placeholder="Search tickets by title, ID, user, or description..."
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                                 className="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 pl-10 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:focus:border-blue-400 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
                             />
                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
@@ -128,7 +116,7 @@ const Tickets: React.FC = () => {
                             </div>
                             {searchQuery && (
                                 <button
-                                    onClick={() => setSearchQuery("")}
+                                    onClick={() => dispatch(setSearchQuery(""))}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +167,7 @@ const Tickets: React.FC = () => {
                                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">No tickets found</p>
                                 <p className="text-xs text-gray-400 dark:text-gray-500">Try adjusting your search terms</p>
                                 <button
-                                    onClick={() => setSearchQuery("")}
+                                    onClick={() => dispatch(setSearchQuery(""))}
                                     className="mt-3 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
                                 >
                                     Clear search
@@ -306,12 +294,12 @@ const Tickets: React.FC = () => {
                             <p className="text-sm text-gray-500 mb-4">Please provide a reason or resolution summary for closing this ticket.</p>
                             <textarea
                                 value={closeTicketReason}
-                                onChange={(e) => setCloseTicketReason(e.target.value)}
+                                onChange={(e) => dispatch(setCloseTicketReason(e.target.value))}
                                 className="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500/20 outline-none resize-none mb-4"
                                 placeholder="Resolution summary..."
                             ></textarea>
                             <div className="flex justify-end gap-3">
-                                <button onClick={() => setShowCloseModal(false)} className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
+                                <button onClick={() => dispatch(setShowCloseModal(false))} className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg">Cancel</button>
                                 <button onClick={confirmCloseTicket} className="px-4 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow-lg shadow-green-500/30">Confirm Close</button>
                             </div>
                         </motion.div>

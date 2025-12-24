@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import StatCard from "@/components/ui/stat-card";
 import MultiBarGraph from "@/components/charts/multi-bar-graph";
 import ComparisonGraph from "@/components/charts/comparison-graph";
@@ -8,10 +8,12 @@ import PaymentPieChart from "@/components/charts/payment-pie-chart";
 import SuccessScoreGraph from "@/components/charts/success-score-graph";
 import { motion } from "framer-motion";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setStartDate, setEndDate, setTimeRange } from "@/lib/store/slices/analyticsSlice";
 
 const Analytics: React.FC = () => {
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const dispatch = useAppDispatch();
+    const { startDate, endDate, timeRange } = useAppSelector((state) => state.analytics);
 
     return (
         <motion.div
@@ -27,9 +29,12 @@ const Analytics: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
-                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
+                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
                     <div className="relative">
-                        <select className="appearance-none bg-blue-600 text-white border border-blue-600 text-sm rounded-lg pl-4 pr-10 py-2 cursor-pointer focus:ring-2 focus:ring-blue-500/20 outline-none hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 font-medium">
+                        <select 
+                            value={timeRange}
+                            onChange={(e) => dispatch(setTimeRange(e.target.value))}
+                            className="appearance-none bg-blue-600 text-white border border-blue-600 text-sm rounded-lg pl-4 pr-10 py-2 cursor-pointer focus:ring-2 focus:ring-blue-500/20 outline-none hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 font-medium">
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 7 days</option>
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 30 days</option>
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 3 months</option>
