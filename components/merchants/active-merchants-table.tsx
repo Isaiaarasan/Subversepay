@@ -20,146 +20,71 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import MerchantDetailsModalContent from './merchant-details-modal-content';
-
-interface Merchant {
-    id: number;
-    name: string;
-    sector: string;
-    subscribers: number;
-    tpv: string;
-    revenue: string;
-    growth: number;
-    status: string;
-    logo: string;
-    email: string;
-    phone: string;
-    address: string;
-    gst: string;
-    bank: {
-        name: string;
-        acc: string;
-        ifsc: string;
-    };
-}
+import { DateRangeFilter } from '@/components/ui/date-range-filter';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import {
+    setSearchQuery,
+    setStatusFilter,
+    setSelectedMerchant,
+    setDeactivateId,
+    setDeactivateReason,
+    setStartDate,
+    setEndDate,
+    updateMerchant,
+    Merchant,
+} from '@/lib/store/slices/merchantsSlice';
 
 const ActiveMerchantsTable: React.FC = () => {
     const [mounted, setMounted] = useState(false);
+    const dispatch = useAppDispatch();
+    const {
+        merchants,
+        searchQuery,
+        statusFilter,
+        selectedMerchant,
+        deactivateId,
+        deactivateReason,
+        startDate,
+        endDate,
+    } = useAppSelector((state) => state.merchants);
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    // Mock Data
-    const [merchants, setMerchants] = useState<Merchant[]>([
-        {
-            id: 1,
-            name: 'SpeedNet ISP',
-            sector: 'Internet',
-            subscribers: 12500,
-            tpv: '₹3.5 Cr',
-            revenue: '₹12.5 L',
-            growth: 12.5,
-            status: 'Active',
-            logo: 'SN',
-            email: "contact@speednet.com",
-            phone: "+91 98765 43210",
-            address: "123, Tech Park, Bangalore",
-            gst: "29ABCDE1234F1Z5",
-            bank: { name: "HDFC Bank", acc: "1234567890", ifsc: "HDFC0001234" }
-        },
-        {
-            id: 2,
-            name: 'CableNet Sols',
-            sector: 'Cable',
-            subscribers: 8200,
-            tpv: '₹2.1 Cr',
-            revenue: '₹8.2 L',
-            growth: -2.4,
-            status: 'Active',
-            logo: 'CN',
-            email: "support@cablenet.in",
-            phone: "+91 98765 11111",
-            address: "45, Media Street, Mumbai",
-            gst: "27AAAAA0000A1Z5",
-            bank: { name: "ICICI Bank", acc: "0987654321", ifsc: "ICIC0001234" }
-        },
-        {
-            id: 3,
-            name: 'FitZone Gyms',
-            sector: 'Fitness',
-            subscribers: 450,
-            tpv: '₹1.2 Cr',
-            revenue: '₹3.5 L',
-            growth: 5.8,
-            status: 'Active',
-            logo: 'FZ',
-            email: "info@fitzone.com",
-            phone: "+91 98765 22222",
-            address: "78, Health Avenue, Delhi",
-            gst: "07BBBBB1111B1Z5",
-            bank: { name: "SBI", acc: "1122334455", ifsc: "SBIN0001234" }
-        },
-        {
-            id: 4,
-            name: 'Urban Fibernet',
-            sector: 'Internet',
-            subscribers: 6800,
-            tpv: '₹1.8 Cr',
-            revenue: '₹6.1 L',
-            growth: 8.1,
-            status: 'Active',
-            logo: 'UF',
-            email: "hello@urbanfiber.net",
-            phone: "+91 98765 33333",
-            address: "90, Cyber City, Gurgaon",
-            gst: "06CCCCC2222C1Z5",
-            bank: { name: "Axis Bank", acc: "6789012345", ifsc: "UTIB0001234" }
-        },
-        {
-            id: 5,
-            name: 'Metro Cable',
-            sector: 'Cable',
-            subscribers: 3200,
-            tpv: '₹95 L',
-            revenue: '₹2.8 L',
-            growth: 0.5,
-            status: 'Inactive',
-            logo: 'MC',
-            email: "contact@metrocable.com",
-            phone: "+91 98765 44444",
-            address: "10, Film City, Noida",
-            gst: "09DDDDD3333D1Z5",
-            bank: { name: "PNB", acc: "5544332211", ifsc: "PUNB0001234" }
-        },
-    ]);
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('all');
-    const [selectedMerchant, setSelectedMerchant] = useState<Merchant | null>(null);
-    const [deactivateId, setDeactivateId] = useState<number | null>(null);
-    const [deactivateReason, setDeactivateReason] = useState("");
-
     const filteredMerchants = merchants.filter(merchant => {
         const matchesSearch = merchant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             merchant.sector.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === 'all' || merchant.status === statusFilter;
-        return matchesSearch && matchesStatus;
+
+        const matchesDate = (!startDate || (merchant.joinedDate && merchant.joinedDate >= startDate)) &&
+            (!endDate || (merchant.joinedDate && merchant.joinedDate <= endDate));
+
+        return matchesSearch && matchesStatus && matchesDate;
     });
 
     const handleDeactivateClick = (id: number) => {
-        setDeactivateId(id);
-        setDeactivateReason("");
+        dispatch(setDeactivateId(id));
+        dispatch(setDeactivateReason(""));
     };
 
     const confirmDeactivate = () => {
         if (!deactivateReason) return alert("Please provide a reason.");
-        setMerchants(merchants.map(m => m.id === deactivateId ? { ...m, status: 'Inactive' } : m));
-        setDeactivateId(null);
+        if (deactivateId) {
+            const merchant = merchants.find((m) => m.id === deactivateId);
+            if (merchant) {
+                dispatch(updateMerchant({ ...merchant, status: 'Inactive' }));
+            }
+        }
+        dispatch(setDeactivateId(null));
     };
 
     const handleActivate = (id: number) => {
         if (window.confirm("Are you sure you want to activate this merchant?")) {
-            setMerchants(merchants.map(m => m.id === id ? { ...m, status: 'Active' } : m));
+            const merchant = merchants.find((m) => m.id === id);
+            if (merchant) {
+                dispatch(updateMerchant({ ...merchant, status: 'Active' }));
+            }
         }
     };
 
@@ -173,12 +98,14 @@ const ActiveMerchantsTable: React.FC = () => {
                         type="text"
                         placeholder="Search merchants, sectors..."
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                         className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-xs transition-all"
                     />
+
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto">
-                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center">
+                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
+                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full sm:w-auto mt-2 sm:mt-0">
                         <UserCheck size={14} />
                         <span>Approvals</span>
                     </Link>
@@ -191,7 +118,7 @@ const ActiveMerchantsTable: React.FC = () => {
                             {['all', 'Active', 'Inactive'].map(status => (
                                 <button
                                     key={status}
-                                    onClick={() => setStatusFilter(status)}
+                                    onClick={() => dispatch(setStatusFilter(status))}
                                     className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                                 >
                                     {status === 'all' ? 'All Merchants' : status}
@@ -228,7 +155,7 @@ const ActiveMerchantsTable: React.FC = () => {
                                     key={merchant.id}
                                     className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
                                 >
-                                    <td className="px-6 py-3 cursor-pointer" onClick={() => setSelectedMerchant(merchant)}>
+                                    <td className="px-6 py-3 cursor-pointer" onClick={() => dispatch(setSelectedMerchant(merchant))}>
                                         <div className="flex items-center gap-3">
                                             <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-blue-100 dark:border-blue-900/30 text-[10px]">
                                                 {merchant.logo}
@@ -263,7 +190,7 @@ const ActiveMerchantsTable: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-3 text-right">
                                         <div className="flex items-center justify-end gap-2">
-                                            <button onClick={() => setSelectedMerchant(merchant)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded bg-transparent transition-colors">
+                                            <button onClick={() => dispatch(setSelectedMerchant(merchant))} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded bg-transparent transition-colors">
                                                 <Eye size={14} />
                                             </button>
                                             {merchant.status === 'Active' ? (
@@ -302,15 +229,15 @@ const ActiveMerchantsTable: React.FC = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[200] flex items-center justify-end bg-black/60 backdrop-blur-md"
-                            onClick={() => setSelectedMerchant(null)}
+                            className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm"
+                            onClick={() => dispatch(setSelectedMerchant(null))}
                         >
                             <motion.div
                                 initial={{ x: "100%" }}
                                 animate={{ x: 0 }}
                                 exit={{ x: "100%" }}
-                                transition={{ type: "tween", duration: 0.3 }}
-                                className="bg-white dark:bg-gray-950 w-full max-w-2xl h-full shadow-2xl overflow-y-auto border-l border-gray-100 dark:border-gray-800"
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="bg-slate-50 dark:bg-gray-950 w-full max-w-4xl h-full shadow-2xl overflow-y-auto"
                                 onClick={e => e.stopPropagation()}
                             >
                                 <MerchantDetailsModalContent
@@ -328,8 +255,11 @@ const ActiveMerchantsTable: React.FC = () => {
                                         address: selectedMerchant.address,
                                         gst: selectedMerchant.gst,
                                         bank: selectedMerchant.bank,
+                                        managers: selectedMerchant.managers,
+                                        los: selectedMerchant.los,
+                                        documents: selectedMerchant.documents,
                                     }}
-                                    onClose={() => setSelectedMerchant(null)}
+                                    onClose={() => dispatch(setSelectedMerchant(null))}
                                 />
                             </motion.div>
                         </motion.div>
@@ -367,13 +297,13 @@ const ActiveMerchantsTable: React.FC = () => {
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Reason for Deactivation</label>
                                     <textarea
                                         value={deactivateReason}
-                                        onChange={(e) => setDeactivateReason(e.target.value)}
+                                        onChange={(e) => dispatch(setDeactivateReason(e.target.value))}
                                         className="w-full h-24 p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none text-sm"
                                         placeholder="Please detail the reason..."
                                     ></textarea>
                                 </div>
                                 <div className="flex gap-3 justify-end">
-                                    <button onClick={() => setDeactivateId(null)} className="px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+                                    <button onClick={() => dispatch(setDeactivateId(null))} className="px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                                     <button onClick={confirmDeactivate} className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 shadow-sm transition-shadow">Deactivate</button>
                                 </div>
                             </div>

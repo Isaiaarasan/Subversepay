@@ -7,8 +7,14 @@ import ComparisonGraph from "@/components/charts/comparison-graph";
 import PaymentPieChart from "@/components/charts/payment-pie-chart";
 import SuccessScoreGraph from "@/components/charts/success-score-graph";
 import { motion } from "framer-motion";
+import { DateRangeFilter } from "@/components/ui/date-range-filter";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setStartDate, setEndDate, setTimeRange } from "@/lib/store/slices/analyticsSlice";
 
 const Analytics: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { startDate, endDate, timeRange } = useAppSelector((state) => state.analytics);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -21,9 +27,14 @@ const Analytics: React.FC = () => {
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
                     <p className="text-gray-500 dark:text-gray-400">Comprehensive insights into platform performance.</p>
                 </div>
-                <div className="flex gap-2">
+
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
                     <div className="relative">
-                        <select className="appearance-none bg-blue-600 text-white border border-blue-600 text-sm rounded-lg pl-4 pr-10 py-2 cursor-pointer focus:ring-2 focus:ring-blue-500/20 outline-none hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 font-medium">
+                        <select 
+                            value={timeRange}
+                            onChange={(e) => dispatch(setTimeRange(e.target.value))}
+                            className="appearance-none bg-blue-600 text-white border border-blue-600 text-sm rounded-lg pl-4 pr-10 py-2 cursor-pointer focus:ring-2 focus:ring-blue-500/20 outline-none hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 font-medium">
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 7 days</option>
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 30 days</option>
                             <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 3 months</option>
@@ -34,7 +45,7 @@ const Analytics: React.FC = () => {
                         </div>
                     </div>
                     <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
-                        Export Report
+                        Report
                     </button>
                 </div>
             </div>
@@ -44,7 +55,7 @@ const Analytics: React.FC = () => {
                 <StatCard
                     title="Total Revenue"
                     value="₹12.5L"
-                    subtext="This month"                  
+                    subtext="This month"
                     trend="up"
                     trendValue="+15.3%"
                 />
@@ -149,7 +160,7 @@ const Analytics: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </motion.div >
     );
 };
 

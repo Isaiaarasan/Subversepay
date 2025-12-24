@@ -1,65 +1,14 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { AlertOctagon, AlertTriangle, Info, CheckCircle, X, Filter } from "lucide-react";
 import { motion } from "framer-motion";
-
-type AlertType = "Critical" | "High" | "Medium" | "Low" | "Info";
-
-interface Alert {
-  id: number;
-  type: AlertType;
-  source: string;
-  message: string;
-  time: string;
-  category: string;
-}
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setFilterType, setShowFilter, AlertType } from "@/lib/store/slices/alertsSlice";
 
 const Alerts: React.FC = () => {
-  const [filterType, setFilterType] = useState<AlertType | "All">("All");
-  const [showFilter, setShowFilter] = useState(false);
-  const alerts: Alert[] = [
-    {
-      id: 1,
-      type: "Critical",
-      source: "Payment Gateway",
-      message: "High failure rate detected (15%) in last hour for HDFC Netbanking.",
-      time: "10 mins ago",
-      category: "Payment Failures",
-    },
-    {
-      id: 2,
-      type: "High",
-      source: "SpeedNet ISP",
-      message: "Sudden 20% drop in active subscribers detected.",
-      time: "45 mins ago",
-      category: "Subscriber Drop",
-    },
-    {
-      id: 3,
-      type: "Medium",
-      source: "Support Desk",
-      message: "Unusual spike in support tickets from 'CableNet Sols'.",
-      time: "2 hours ago",
-      category: "Support Tickets",
-    },
-    {
-      id: 4,
-      type: "Low",
-      source: "System",
-      message: "Routine database optimization completed with warnings.",
-      time: "5 hours ago",
-      category: "Maintenance",
-    },
-    {
-      id: 5,
-      type: "Info",
-      source: "Onboarding",
-      message: "New merchant 'Urban Fibernet' documentation verified.",
-      time: "1 day ago",
-      category: "Onboarding",
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const { alerts, filterType, showFilter } = useAppSelector((state) => state.alerts);
 
   const getIcon = (type: AlertType) => {
     switch (type) {
@@ -78,11 +27,10 @@ const Alerts: React.FC = () => {
   };
 
   const filteredAlerts = useMemo(() => {
-    let list = alerts;
     if (filterType !== "All") {
-      list = list.filter((a) => a.type === filterType);
+      return alerts.filter((a) => a.type === filterType);
     }
-    return list;
+    return alerts;
   }, [alerts, filterType]);
 
   const getTypeStyles = (type: AlertType) => {
@@ -110,7 +58,7 @@ const Alerts: React.FC = () => {
         <div className="flex gap-2">
           <div className="relative">
             <button
-              onClick={() => setShowFilter((s) => !s)}
+              onClick={() => dispatch(setShowFilter(!showFilter))}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 rounded-lg text-sm hover:bg-zinc-50 text-zinc-700 transition-all shadow-sm"
             >
               <Filter size={18} />
@@ -122,8 +70,8 @@ const Alerts: React.FC = () => {
                   <button
                     key={type}
                     onClick={() => {
-                      setFilterType(type as AlertType | "All");
-                      setShowFilter(false);
+                      dispatch(setFilterType(type as AlertType | "All"));
+                      dispatch(setShowFilter(false));
                     }}
                     className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${filterType === type
                       ? "bg-black text-white font-medium"
@@ -137,7 +85,7 @@ const Alerts: React.FC = () => {
             )}
           </div>
           <button
-            onClick={() => setFilterType("Critical")}
+            onClick={() => dispatch(setFilterType("Critical"))}
             className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-500/30 font-bold text-sm"
           >
             Clear Critical

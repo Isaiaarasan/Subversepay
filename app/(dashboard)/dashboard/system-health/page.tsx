@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Server, Activity, AlertTriangle, ExternalLink, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface ErrorLog {
-    id: string;
-    code: number;
-    endpoint: string;
-    message: string;
-    time: string;
-}
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setTimeRange } from "@/lib/store/slices/systemHealthSlice";
 
 const SystemHealth: React.FC = () => {
-    // Latency Mock Data
-    const [timeRange, setTimeRange] = useState('Current Day');
+    const dispatch = useAppDispatch();
+    const { timeRange, errorLogs } = useAppSelector((state) => state.systemHealth);
 
     const generateData = (points: number, base: number, variance: number): number[] => {
         return Array.from({ length: points }, () => base + Math.random() * variance - variance / 2);
@@ -29,11 +23,6 @@ const SystemHealth: React.FC = () => {
     const currentData = latencyData[timeRange as keyof typeof latencyData];
     const maxLatency = Math.max(...currentData.data) * 1.2;
 
-    const errorLogs: ErrorLog[] = [
-        { id: "ERR-5011", code: 500, endpoint: "/api/v1/payments/initiate", message: "Internal Server Error: Database Connection Limit Exceeded", time: "10:42 AM" },
-        { id: "ERR-5012", code: 503, endpoint: "/api/v1/webhooks/hdfc", message: "Service Unavailable: Upstream Timeout", time: "11:15 AM" },
-        { id: "ERR-5013", code: 500, endpoint: "/api/v1/merchants/onboard", message: "Unhandled Exception: Null Reference at Service.User", time: "01:20 PM" },
-    ];
 
     // SVG Layout Helpers
     const width = 100;
@@ -94,7 +83,7 @@ const SystemHealth: React.FC = () => {
                         {['Current Day', 'Week', 'Month'].map(range => (
                             <button
                                 key={range}
-                                onClick={() => setTimeRange(range)}
+                                onClick={() => dispatch(setTimeRange(range))}
                                 className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${timeRange === range ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm font-bold" : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
                                     }`}
                             >
