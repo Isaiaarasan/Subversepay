@@ -139,7 +139,6 @@ const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, search
   const handleNavigate = (href: string) => {
     window.location.href = href;
     onClose();
-    setSearchQuery("");
   };
 
   if (!isOpen) return null;
