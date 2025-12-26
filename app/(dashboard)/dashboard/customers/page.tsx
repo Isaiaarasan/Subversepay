@@ -1,20 +1,13 @@
 import React from "react";
 import { Search, Filter, Download, Users } from "lucide-react";
-
-interface Customer {
-    id: number;
-    name: string;
-    email: string;
-    merchant: string;
-    joined: string;
-}
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { selectFilteredCustomers } from "@/lib/store/slices/customersSlice";
 
 const Customers: React.FC = () => {
-    const customers: Customer[] = [
-        { id: 1, name: "Alice Brown", email: "alice@gmail.com", merchant: "SpeedNet ISP", joined: "Oct 24, 2024" },
-        { id: 2, name: "Bob White", email: "bob@yahoo.com", merchant: "FitZone Gyms", joined: "Oct 22, 2024" },
-        { id: 3, name: "Charlie Green", email: "charlie@outlook.com", merchant: "CableNet Sols", joined: "Oct 20, 2024" },
-    ];
+    // Use the memoized selector for efficiency
+    // If a search query existed, we would use selectFilteredCustomers
+    // For now, we defaults to all or filtered if query is set in slice
+    const customers = useAppSelector(selectFilteredCustomers);
 
     return (
         <div className="space-y-8">

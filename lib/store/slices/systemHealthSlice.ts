@@ -11,9 +11,13 @@ export interface ErrorLog {
 interface SystemHealthState {
   timeRange: string;
   errorLogs: ErrorLog[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: SystemHealthState = {
+  isLoading: false,
+  error: null,
   timeRange: 'Current Day',
   errorLogs: [
     {
@@ -53,9 +57,15 @@ const systemHealthSlice = createSlice({
     removeErrorLog: (state, action: PayloadAction<string>) => {
       state.errorLogs = state.errorLogs.filter((log) => log.id !== action.payload);
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setTimeRange, addErrorLog, removeErrorLog } = systemHealthSlice.actions;
+export const { setTimeRange, addErrorLog, removeErrorLog, setLoading, setError } = systemHealthSlice.actions;
 export default systemHealthSlice.reducer;
 

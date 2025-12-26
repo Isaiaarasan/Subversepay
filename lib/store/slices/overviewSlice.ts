@@ -26,9 +26,13 @@ interface OverviewState {
   stats: Stat[];
   recentActivities: RecentActivity[];
   pendingApprovals: PendingApproval[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: OverviewState = {
+  isLoading: false,
+  error: null,
   timeRange: 'This Month',
   stats: [
     {
@@ -93,9 +97,15 @@ const overviewSlice = createSlice({
     setPendingApprovals: (state, action: PayloadAction<PendingApproval[]>) => {
       state.pendingApprovals = action.payload;
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setTimeRange, setStats, setRecentActivities, setPendingApprovals } = overviewSlice.actions;
+export const { setTimeRange, setStats, setRecentActivities, setPendingApprovals, setLoading, setError } = overviewSlice.actions;
 export default overviewSlice.reducer;
 
