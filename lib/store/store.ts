@@ -7,6 +7,13 @@ import alertsReducer from './slices/alertsSlice';
 import settlementsReducer from './slices/settlementsSlice';
 import systemHealthReducer from './slices/systemHealthSlice';
 import ticketsReducer from './slices/ticketsSlice';
+import dashboardReducer from './slices/dashboardSlice';
+import adminReducer from './slices/adminSlice';
+import customersReducer from './slices/customersSlice';
+import managersReducer from './slices/managersSlice';
+import membersReducer from './slices/membersSlice';
+import superAdminReducer from './slices/superAdminSlice';
+import teamLeadReducer from './slices/teamLeadSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +25,13 @@ export const store = configureStore({
     settlements: settlementsReducer,
     systemHealth: systemHealthReducer,
     tickets: ticketsReducer,
+    dashboard: dashboardReducer,
+    admin: adminReducer,
+    customers: customersReducer,
+    managers: managersReducer,
+    members: membersReducer,
+    superAdmin: superAdminReducer,
+    teamLead: teamLeadReducer,
   },
 });
 

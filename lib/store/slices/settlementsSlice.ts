@@ -16,9 +16,13 @@ interface SettlementsState {
   statusFilter: string;
   startDate: string;
   endDate: string;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: SettlementsState = {
+  isLoading: false,
+  error: null,
   settlements: [
     {
       id: 'SET-2024-001',
@@ -97,10 +101,16 @@ const settlementsSlice = createSlice({
         state.settlements[index] = action.payload;
       }
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setSearchQuery, setStatusFilter, setStartDate, setEndDate, addSettlement, updateSettlement } =
+export const { setSearchQuery, setStatusFilter, setStartDate, setEndDate, addSettlement, updateSettlement, setLoading, setError } =
   settlementsSlice.actions;
 export default settlementsSlice.reducer;
 

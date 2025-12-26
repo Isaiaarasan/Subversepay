@@ -15,6 +15,8 @@ interface AlertsState {
   alerts: Alert[];
   filterType: AlertType | 'All';
   showFilter: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: AlertsState = {
@@ -62,6 +64,8 @@ const initialState: AlertsState = {
   ],
   filterType: 'All',
   showFilter: false,
+  isLoading: false,
+  error: null,
 };
 
 const alertsSlice = createSlice({
@@ -86,9 +90,15 @@ const alertsSlice = createSlice({
         state.alerts[index] = action.payload;
       }
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setFilterType, setShowFilter, addAlert, removeAlert, updateAlert } = alertsSlice.actions;
+export const { setFilterType, setShowFilter, addAlert, removeAlert, updateAlert, setLoading, setError } = alertsSlice.actions;
 export default alertsSlice.reducer;
 

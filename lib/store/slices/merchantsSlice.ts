@@ -49,9 +49,13 @@ interface MerchantsState {
   deactivateReason: string;
   startDate: string;
   endDate: string;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: MerchantsState = {
+  isLoading: false,
+  error: null,
   merchants: [
     {
       id: 1,
@@ -223,6 +227,12 @@ const merchantsSlice = createSlice({
     addMerchant: (state, action: PayloadAction<Merchant>) => {
       state.merchants.push(action.payload);
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
@@ -236,6 +246,8 @@ export const {
   setEndDate,
   updateMerchant,
   addMerchant,
+  setLoading,
+  setError,
 } = merchantsSlice.actions;
 export default merchantsSlice.reducer;
 

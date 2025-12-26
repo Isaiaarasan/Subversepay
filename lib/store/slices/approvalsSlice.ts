@@ -39,9 +39,13 @@ interface ApprovalsState {
   rejectId: number | null;
   rejectReason: string;
   approveId: number | null;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: ApprovalsState = {
+  isLoading: false,
+  error: null,
   approvals: [
     {
       id: 1,
@@ -165,6 +169,12 @@ const approvalsSlice = createSlice({
     removeApproval: (state, action: PayloadAction<number>) => {
       state.approvals = state.approvals.filter((a) => a.id !== action.payload);
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
   },
 });
 
@@ -179,6 +189,8 @@ export const {
   setApproveId,
   updateApproval,
   removeApproval,
+  setLoading,
+  setError,
 } = approvalsSlice.actions;
 export default approvalsSlice.reducer;
 
