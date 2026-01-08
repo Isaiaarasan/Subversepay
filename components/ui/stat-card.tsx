@@ -6,7 +6,7 @@ interface StatCardProps {
   value: string;
   subtext?: string;
   trend?: "up" | "down";
-  icon?: React.ComponentType<any>;
+  icon?: React.ComponentType<any> | string;
   trendValue?: string;
 }
 
@@ -18,7 +18,11 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, subtext, trend, icon:
       <div className="flex justify-between items-start mb-3">
         {Icon && (
           <div className="p-2.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
-            <Icon size={20} />
+            {typeof Icon === 'string' ? (
+              <span className="text-lg">{Icon}</span>
+            ) : (
+              <Icon size={20} />
+            )}
           </div>
         )}
         {trendValue && (
