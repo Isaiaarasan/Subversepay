@@ -1,39 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Server, Activity, AlertTriangle, ExternalLink, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { setTimeRange } from "@/lib/store/slices/systemHealthSlice";
+import {
+  calculateLatencyData,
+  calculateMaxLatency,
+  calculateChartPath,
+  calculateAreaPath,
+  TimeRange,
+} from "../../utils/system-health.utils";
 
 const SystemHealth: React.FC = () => {
     const dispatch = useAppDispatch();
     const { timeRange, errorLogs } = useAppSelector((state) => state.systemHealth);
 
-    const generateData = (points: number, base: number, variance: number): number[] => {
-        return Array.from({ length: points }, () => base + Math.random() * variance - variance / 2);
-    };
+    // All calculations moved to service
+    const currentData = useMemo(() => {
+        return calculateLatencyData(timeRange as TimeRange);
+    }, [timeRange]);
 
-    const latencyData = {
-        'Current Day': { data: generateData(24, 45, 10), labels: Array.from({ length: 24 }, (_, i) => `${i}:00`), interval: 'Overview (Hourly)' },
-        'Week': { data: generateData(7, 50, 15), labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], interval: 'Overview (Daily)' },
-        'Month': { data: generateData(30, 48, 20), labels: Array.from({ length: 30 }, (_, i) => `${i + 1}`), interval: 'Overview (Daily)' }
-    };
-
-    const currentData = latencyData[timeRange as keyof typeof latencyData];
-    const maxLatency = Math.max(...currentData.data) * 1.2;
-
+    const maxLatency = useMemo(() => {
+        return calculateMaxLatency(currentData.data);
+    }, [currentData.data]);
 
     // SVG Layout Helpers
     const width = 100;
     const height = 100;
 
-    // Create Line Path
-    const points = currentData.data.map((val, i) => {
-        const x = (i / (currentData.data.length - 1)) * width;
-        const y = height - (val / maxLatency) * height;
-        return `${x},${y}`;
-    }).join(" L ");
+    // All path calculations moved to service
+    const linePath = useMemo(() => {
+        return calculateChartPath(currentData.data, maxLatency, width, height);
+    }, [currentData.data, maxLatency]);
+
+    const areaPath = useMemo(() => {
+        return calculateAreaPath(currentData.data, maxLatency, width, height);
+    }, [currentData.data, maxLatency]);
 
     return (
         <div className="space-y-8">
@@ -102,7 +106,7 @@ const SystemHealth: React.FC = () => {
 
                         {/* Line Path */}
                         <motion.path
-                            d={`M ${points}`}
+                            d={linePath}
                             fill="none"
                             stroke="#3B82F6"
                             strokeWidth="2"
@@ -114,7 +118,7 @@ const SystemHealth: React.FC = () => {
 
                         {/* Area Fill (Optional) */}
                         <motion.path
-                            d={`M ${points} L 100,100 L 0,100 Z`}
+                            d={areaPath}
                             fill="url(#latencyGradient)"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

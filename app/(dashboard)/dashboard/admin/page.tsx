@@ -1,16 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { requireAuth } from "../services/auth.service";
+import { getOrganizationByCreator } from "../services/organizations.service";
 
 export default async function AdminPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  const { data: org } = await supabase
-    .from("organizations")
-    .select("*")
-    .eq("created_by", user?.id)
-    .single();
+  // Business logic moved to services
+  const user = await requireAuth();
+  const org = await getOrganizationByCreator(user.id);
 
   return (
     <div className="space-y-6">

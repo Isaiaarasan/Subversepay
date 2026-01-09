@@ -5,6 +5,7 @@ import { AlertOctagon, AlertTriangle, Info, CheckCircle, X, Filter } from "lucid
 import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { setFilterType, setShowFilter, AlertType } from "@/lib/store/slices/alertsSlice";
+import { filterAlerts } from "../../utils/alerts.utils";
 
 const Alerts: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,11 +27,9 @@ const Alerts: React.FC = () => {
     }
   };
 
+  // All filtering logic moved to service
   const filteredAlerts = useMemo(() => {
-    if (filterType !== "All") {
-      return alerts.filter((a) => a.type === filterType);
-    }
-    return alerts;
+    return filterAlerts(alerts, filterType);
   }, [alerts, filterType]);
 
   const getTypeStyles = (type: AlertType) => {

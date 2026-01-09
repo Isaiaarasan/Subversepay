@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { Check, X, Eye, AlertCircle, Search, Filter } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,6 +19,7 @@ import {
   removeApproval,
   Approval,
 } from "@/lib/store/slices/approvalsSlice";
+import { filterApprovals } from "../../utils/approvals.utils";
 
 const Approvals: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -39,17 +40,15 @@ const Approvals: React.FC = () => {
     setMounted(true);
   }, []);
 
-  const filteredApprovals = approvals.filter((item) => {
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const matchesFilter = filterStatus === "All" || item.status === filterStatus;
-    const matchesDate = (!startDate || item.date >= startDate) && (!endDate || item.date <= endDate);
-
-    return matchesSearch && matchesFilter && matchesDate;
-  });
+  // All filtering logic moved to service
+  const filteredApprovals = useMemo(() => {
+    return filterApprovals(approvals, {
+      searchQuery: searchTerm,
+      statusFilter: filterStatus,
+      startDate,
+      endDate,
+    });
+  }, [approvals, searchTerm, filterStatus, startDate, endDate]);
 
   const handleRejectClick = (id: number) => {
     dispatch(setRejectId(id));

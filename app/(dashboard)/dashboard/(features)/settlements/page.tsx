@@ -1,30 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Download, Search, Filter } from "lucide-react";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { setSearchQuery, setStatusFilter, setStartDate, setEndDate } from "@/lib/store/slices/settlementsSlice";
+import { filterSettlements } from "../../utils/settlements.utils";
 
 const Settlements: React.FC = () => {
     const dispatch = useAppDispatch();
     const { settlements, searchQuery, statusFilter, startDate, endDate } = useAppSelector((state) => state.settlements);
 
-    const filteredSettlements = settlements.filter(settlement => {
-        const matchesSearch = settlement.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            settlement.to.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            settlement.from.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesStatus = statusFilter === 'all' || settlement.status === statusFilter;
-
-        const settlementDate = new Date(settlement.date);
-        const start = startDate ? new Date(startDate) : null;
-        const end = endDate ? new Date(endDate) : null;
-
-        const matchesDate = (!start || settlementDate >= start) &&
-            (!end || settlementDate <= end);
-
-        return matchesSearch && matchesStatus && matchesDate;
-    });
+    // All filtering logic moved to service
+    const filteredSettlements = useMemo(() => {
+        return filterSettlements(settlements, {
+            searchQuery,
+            statusFilter,
+            startDate,
+            endDate,
+        });
+    }, [settlements, searchQuery, statusFilter, startDate, endDate]);
 
     return (
         <div className="space-y-8">

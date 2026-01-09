@@ -1,25 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { requireRole } from "../services/auth.service";
 
 export default async function SuperAdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) redirect("/auth/login");
-
-  const { data: role } = await supabase
-    .from("user_roles")
-    .select("role_id")
-    .eq("user_id", user.id)
-    .single();
-
-  if (role?.role_id !== 1) {
-    redirect("/unauthorized");
-  }
+  // Business logic moved to service
+  await requireRole(1);
 
   return <>{children}</>;
 }

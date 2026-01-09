@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { MessageSquare, Paperclip, X, User, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
@@ -15,6 +15,7 @@ import {
     setEndDate,
     closeTicket,
 } from "@/lib/store/slices/ticketsSlice";
+import { filterTickets, countActiveAndClosed } from "../../utils/tickets.utils";
 
 const Tickets: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -29,29 +30,18 @@ const Tickets: React.FC = () => {
         endDate,
     } = useAppSelector((state) => state.tickets);
 
-    // Filter tickets based on active tab and search query
-    const filteredTickets = tickets.filter(ticket => {
-        // First filter by tab (active vs closed)
-        const statusMatch = activeTab === 'active'
-            ? ticket.status !== 'Closed'
-            : ticket.status === 'Closed';
+    // All filtering logic moved to service
+    const filteredTickets = useMemo(() => {
+        return filterTickets(tickets, {
+            activeTab,
+            searchQuery,
+            startDate,
+            endDate,
+        });
+    }, [tickets, activeTab, searchQuery, startDate, endDate]);
 
-        // Then filter by search query if provided
-        const searchMatch = !searchQuery ||
-            ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.priority.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ticket.status.toLowerCase().includes(searchQuery.toLowerCase());
-
-        const matchesDate = (!startDate || (ticket.createdDate && ticket.createdDate >= startDate)) &&
-            (!endDate || (ticket.createdDate && ticket.createdDate <= endDate));
-
-        
-        return statusMatch && searchMatch && matchesDate;
-    });
+    // Count calculations moved to service
+    const { active, closed } = useMemo(() => countActiveAndClosed(tickets), [tickets]);
 
     const handleTicketClick = (ticket: typeof tickets[0]) => {
         dispatch(setSelectedTicket(ticket));
@@ -86,13 +76,13 @@ const Tickets: React.FC = () => {
                     onClick={() => dispatch(setActiveTab('active'))}
                     className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 ${activeTab === 'active' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
                 >
-                    Active Tickets ({tickets.filter(t => t.status !== 'Closed').length})
+                    Active Tickets ({active})
                 </button>
                 <button
                     onClick={() => dispatch(setActiveTab('closed'))}
                     className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 ${activeTab === 'closed' ? 'border-blue-600 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
                 >
-                    Closed Tickets ({tickets.filter(t => t.status === 'Closed').length})
+                    Closed Tickets ({closed})
                 </button>
             </div>
 
