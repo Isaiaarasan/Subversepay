@@ -6,7 +6,7 @@
 export type AlertType = "Critical" | "High" | "Medium" | "Low" | "Info";
 
 export interface Alert {
-  id: string;
+  id: number;
   type: AlertType;
   category: string;
   message: string;

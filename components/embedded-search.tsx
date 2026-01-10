@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Search, LayoutDashboard, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,63 +12,6 @@ interface NavigationItem {
   description?: string;
 }
 
-const navigationItems: NavigationItem[] = [
-  {
-    name: "Overview",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    description: "Dashboard overview and metrics"
-  },
-  {
-    name: "Merchants",
-    href: "/dashboard/merchants",
-    icon: Store,
-    description: "Manage and view merchant accounts"
-  },
-  {
-    name: "Approvals",
-    href: "/dashboard/approvals",
-    icon: CheckCircle,
-    description: "Review and approve pending requests"
-  },
-  {
-    name: "Analytics",
-    href: "/dashboard/analytics",
-    icon: BarChart3,
-    description: "View analytics and reports"
-  },
-  {
-    name: "Alerts",
-    href: "/dashboard/alerts",
-    icon: Bell,
-    description: "System alerts and notifications"
-  },
-  {
-    name: "Settlements",
-    href: "/dashboard/settlements",
-    icon: CreditCard,
-    description: "Settlement reports and payments"
-  },
-  {
-    name: "System Health",
-    href: "/dashboard/system-health",
-    icon: Activity,
-    description: "Monitor system status and performance"
-  },
-  {
-    name: "Tickets",
-    href: "/dashboard/tickets",
-    icon: Ticket,
-    description: "Support tickets and issues"
-  },
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-    description: "Account and system settings"
-  }
-];
-
 interface EmbeddedSearchProps {
   isOpen: boolean;
   onClose: () => void;
@@ -77,9 +21,79 @@ interface EmbeddedSearchProps {
 const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, searchQuery }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isSuperAdmin = pathname?.startsWith("/dashboard/super-admin");
+
+  // Get navigation items based on current context
+  const getNavigationItems = (): NavigationItem[] => {
+    const baseItems: NavigationItem[] = [
+      {
+        name: "Overview",
+        href: isSuperAdmin ? "/dashboard/super-admin" : "/dashboard",
+        icon: LayoutDashboard,
+        description: "Dashboard overview and metrics"
+      },
+      {
+        name: "Merchants",
+        href: isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants",
+        icon: Store,
+        description: "Manage and view merchant accounts"
+      },
+      {
+        name: "Approvals",
+        href: isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals",
+        icon: CheckCircle,
+        description: "Review and approve pending requests"
+      },
+      {
+        name: "Analytics",
+        href: isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics",
+        icon: BarChart3,
+        description: "View analytics and reports"
+      },
+      {
+        name: "Alerts",
+        href: isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts",
+        icon: Bell,
+        description: "System alerts and notifications"
+      },
+      {
+        name: "Settlements",
+        href: isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements",
+        icon: CreditCard,
+        description: "Settlement reports and payments"
+      },
+      {
+        name: "System Health",
+        href: isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health",
+        icon: Activity,
+        description: "Monitor system status and performance"
+      },
+      {
+        name: "Tickets",
+        href: isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets",
+        icon: Ticket,
+        description: "Support tickets and issues"
+      }
+    ];
+
+    // Add settings for non-super-admin users
+    if (!isSuperAdmin) {
+      baseItems.push({
+        name: "Settings",
+        href: "/dashboard/settings",
+        icon: Settings,
+        description: "Account and system settings"
+      });
+    }
+
+    return baseItems;
+  };
+
+  const currentNavigationItems = getNavigationItems();
 
   // Filter navigation items based on search query
-  const filteredItems = navigationItems.filter(item =>
+  const filteredItems = currentNavigationItems.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()))
   );
@@ -120,7 +134,7 @@ const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, search
       document.addEventListener("keydown", handleKeyDown);
     }
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, selectedIndex, filteredItems]);
+  }, [isOpen, selectedIndex, filteredItems, currentNavigationItems]);
 
   // Handle clicks outside
   useEffect(() => {

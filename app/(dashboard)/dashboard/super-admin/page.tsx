@@ -1,34 +1,288 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2, Activity } from "lucide-react";
+"use client";
 
-export default function SuperAdminPage() {
+import React from "react";
+import Link from "next/link";
+import StatCard from "@/components/ui/stat-card";
+import ComparisonGraph from "@/components/charts/comparison-graph";
+import PaymentPieChart from "@/components/charts/payment-pie-chart";
+import { Users, CreditCard, UserCheck, Shield, ArrowUpRight, ChevronDown, Download, Calendar, Building2, Activity, Store, CheckCircle, BarChart3, Bell, Ticket } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setTimeRange } from "@/lib/store/slices/overviewSlice";
+
+const SuperAdminPage = () => {
+  const dispatch = useAppDispatch();
+  const { timeRange, stats, recentActivities, pendingApprovals } = useAppSelector((state) => state.overview);
+
+  // Map icon strings to actual icon components
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Users,
+    Shield,
+    UserCheck,
+    CreditCard,
+    Building2,
+    Activity,
+  };
+
+  const statsWithIcons = stats.map((stat) => ({
+    ...stat,
+    icon: iconMap[stat.icon] || Users,
+  }));
+
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Super Admin Overview</h2>
-      
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Organizations</CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">+2 from last month</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">System Health</CardTitle>
-            <Activity className="h-4 w-4 text-green-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">99.9%</div>
-            <p className="text-xs text-muted-foreground">Operational</p>
-          </CardContent>
-        </Card>
+    <div className="space-y-8 pb-8">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl rounded-2xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <Shield className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              Super Admin Dashboard
+            </h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Complete platform oversight and management.</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* Time Range Selector */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-[160px] justify-between bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                  <span className="font-medium">{timeRange}</span>
+                </div>
+                <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-[160px] bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 shadow-xl"
+            >
+              <DropdownMenuItem
+                onClick={() => dispatch(setTimeRange("This Month"))}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
+                  timeRange === "This Month"
+                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
+                This Month
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => dispatch(setTimeRange("Last Month"))}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
+                  timeRange === "Last Month"
+                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
+                Last Month
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => dispatch(setTimeRange("This Quarter"))}
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
+                  timeRange === "This Quarter"
+                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
+                This Quarter
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Download Report Button */}
+          <Button
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg text-sm font-semibold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/40 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Download className="h-4 w-4" />
+            Download Report
+          </Button>
+        </div>
+      </div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {statsWithIcons.map((stat, index) => (
+          <StatCard key={index} {...stat} />
+        ))}
+      </div>
+
+      {/* Graph Row 1: TPV & Payment Methods */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <ComparisonGraph />
+        </div>
+        <div className="lg:col-span-1">
+          <PaymentPieChart />
+        </div>
+      </div>
+
+      {/* Quick Actions & Feature Access */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Quick Actions */}
+        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+          <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Super Admin Actions</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/dashboard/super-admin/merchants" className="p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-blue-900 dark:text-blue-100">Manage Merchants</div>
+              <div className="text-sm text-blue-600 dark:text-blue-300">Onboard & monitor partners</div>
+            </Link>
+            <Link href="/dashboard/super-admin/approvals" className="p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-green-900 dark:text-green-100">Review Approvals</div>
+              <div className="text-sm text-green-600 dark:text-green-300">Pending requests & validations</div>
+            </Link>
+            <Link href="/dashboard/super-admin/analytics" className="p-4 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-purple-900 dark:text-purple-100">View Analytics</div>
+              <div className="text-sm text-purple-600 dark:text-purple-300">Platform performance insights</div>
+            </Link>
+            <Link href="/dashboard/super-admin/system-health" className="p-4 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-orange-900 dark:text-orange-100">System Health</div>
+              <div className="text-sm text-orange-600 dark:text-orange-300">Monitor infrastructure status</div>
+            </Link>
+            <Link href="/dashboard/super-admin/alerts" className="p-4 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-red-900 dark:text-red-100">Monitor Alerts</div>
+              <div className="text-sm text-red-600 dark:text-red-300">System notifications & issues</div>
+            </Link>
+            <Link href="/dashboard/super-admin/tickets" className="p-4 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-lg text-left transition-colors">
+              <div className="font-medium text-indigo-900 dark:text-indigo-100">Support Tickets</div>
+              <div className="text-sm text-indigo-600 dark:text-indigo-300">Customer support management</div>
+            </Link>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+          <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Recent Activity</h3>
+          <div className="space-y-3">
+            {recentActivities.map((activity, i) => (
+              <div key={i} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                <div className={`w-2 h-2 rounded-full ${activity.type === 'success' ? 'bg-green-500' :
+                  activity.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                  }`}></div>
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.action}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Widgets */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Pending Approvals */}
+        <div className="bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-bold text-gray-800 dark:text-gray-200">Pending Approvals</h3>
+            <Link href="/dashboard/super-admin/approvals" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">View All</Link>
+          </div>
+          <div className="space-y-3">
+            {pendingApprovals.map((item, i) => (
+              <div key={i} className="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-gray-800/50 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors cursor-pointer group">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-[10px]">
+                    {item.name.substring(0, 2).toUpperCase()}
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100">{item.name}</h4>
+                    <p className="text-[10px] text-gray-500 dark:text-gray-400">{item.type} • {item.date}</p>
+                  </div>
+                </div>
+                <button className="text-[10px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded-md font-medium text-gray-600 dark:text-gray-300 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600 transition-all">
+                  Review
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Active Merchants Preview */}
+        <div className="lg:col-span-2 bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-bold text-gray-800 dark:text-gray-200">Active Merchants Activity</h3>
+            <Link href="/dashboard/super-admin/merchants" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">Manage</Link>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-100 dark:border-gray-800 text-[10px] text-gray-400 uppercase">
+                  <th className="pb-2 pl-2">Merchant</th>
+                  <th className="pb-2 text-right">TPV (Today)</th>
+                  <th className="pb-2 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                {[1, 2, 3].map((_, i) => (
+                  <tr key={i} className="text-xs hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
+                    <td className="py-2.5 pl-2 font-medium text-gray-700 dark:text-gray-300">SpeedNet ISP #{i + 1}</td>
+                    <td className="py-2.5 text-right text-gray-600 dark:text-gray-400">₹45,00{i}</td>
+                    <td className="py-2.5 text-center">
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* System Status Overview */}
+      <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+        <div className="flex justify-between items-center mb-4">
+            <h3 className="font-bold text-gray-800 dark:text-gray-200">System Status Overview</h3>
+            <Link href="/dashboard/super-admin/system-health" className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline">View Details</Link>
+          </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <div>
+              <div className="font-medium text-gray-900 dark:text-gray-100">API Services</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">All systems operational</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <div>
+              <div className="font-medium text-gray-900 dark:text-gray-100">Database</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">99.9% uptime</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div>
+              <div className="font-medium text-gray-900 dark:text-gray-100">Payment Gateway</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Minor latency detected</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <div>
+              <div className="font-medium text-gray-900 dark:text-gray-100">Security Systems</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">All protocols active</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default SuperAdminPage;

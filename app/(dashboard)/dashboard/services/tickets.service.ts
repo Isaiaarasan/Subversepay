@@ -33,31 +33,7 @@ export async function getTickets(
 ): Promise<Ticket[]> {
   const supabase = await createClient();
   
-  // TODO: Implement actual database query with role-based filtering
-  // This is a placeholder - actual implementation would query the tickets table
-  // with role-based RLS policies
-  
-  // Example structure:
-  // let query = supabase.from("tickets").select("*");
-  // 
-  // if (filters?.status) {
-  //   if (filters.status === 'active') {
-  //     query = query.neq("status", "Closed");
-  //   } else {
-  //     query = query.eq("status", "Closed");
-  //   }
-  // }
-  // 
-  // if (filters?.startDate) {
-  //   query = query.gte("created_at", filters.startDate);
-  // }
-  // 
-  // if (filters?.endDate) {
-  //   query = query.lte("created_at", filters.endDate);
-  // }
-  // 
-  // const { data, error } = await query;
-  // return data || [];
+
   
   return [];
 }

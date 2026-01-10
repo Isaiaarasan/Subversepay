@@ -28,20 +28,14 @@ export interface ApprovalFilters {
   endDate?: string;
 }
 
-/**
- * Get approvals (role-scoped)
- * Services enforce role scope based on user context
- * Server-side function only
- */
+
 export async function getApprovals(
   userId: string,
   filters?: ApprovalFilters
 ): Promise<Approval[]> {
   const supabase = await createClient();
   
-  // TODO: Implement actual database query with role-based filtering
-  // This is a placeholder - actual implementation would query the approvals table
-  // with role-based RLS policies
+ 
   
   return [];
 }

@@ -14,9 +14,7 @@ export interface AuthUser {
   };
 }
 
-/**
- * Get the current authenticated user
- */
+
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
@@ -28,9 +26,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   return user;
 }
 
-/**
- * Get the role ID for the current user
- */
+
 export async function getUserRole(userId: string): Promise<UserRole | null> {
   const supabase = await createClient();
   const { data: role, error } = await supabase

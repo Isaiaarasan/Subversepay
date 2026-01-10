@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { requireAuth } from "../services/auth.service";
-import { getOrganizationByCreator } from "../services/organizations.service";
+import { requireAuth } from "../../services/auth.service";
+import { getOrganizationByCreator } from "../../services/organizations.service";
 
 export default async function AdminPage() {
   // Business logic moved to services

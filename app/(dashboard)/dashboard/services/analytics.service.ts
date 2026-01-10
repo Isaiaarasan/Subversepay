@@ -23,19 +23,14 @@ export interface AnalyticsData {
   };
 }
 
-/**
- * Get analytics data (role-scoped)
- * Services enforce role scope based on user context
- */
+
 export async function getAnalyticsData(
   userId: string,
   filters?: AnalyticsFilters
 ): Promise<AnalyticsData> {
   const supabase = await createClient();
   
-  // TODO: Implement actual database queries with role-based filtering
-  // This is a placeholder - actual implementation would query analytics tables
-  // with role-based RLS policies
+ 
   
   return {
     stats: {

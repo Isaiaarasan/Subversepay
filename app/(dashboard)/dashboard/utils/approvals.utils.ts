@@ -12,15 +12,20 @@ export interface Approval {
   email: string;
   date: string;
   status: string;
+  documents: string;
   logo?: string;
   revenue?: string;
-  subscribers?: string;
-  growth?: string;
-  sector?: string;
+  subscribers?: number;
+  growth?: number;
+  sector: string;
   phone?: string;
   address?: string;
   gst?: string;
-  bank?: string;
+  bank?: {
+    name: string;
+    acc: string;
+    ifsc: string;
+  };
   documentsList: Array<{ name: string; status: string }>;
 }
 
