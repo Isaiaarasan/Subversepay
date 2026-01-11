@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { DashboardLayout as DashboardLayoutComponent } from "./_components/layout/DashboardLayout";
 import { requireAuth } from "./services/auth.service";
 

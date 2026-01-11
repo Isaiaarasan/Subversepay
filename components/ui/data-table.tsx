@@ -131,7 +131,7 @@ export function DataTable<T extends Record<string, any>>({
                         <tr
                             key={keyExtractor(item, index)}
                             className={getRowClassName(item, index)}
-                            onClick={() => onRowClick?.(item, index)}
+                            {...(onRowClick ? { onClick: () => onRowClick(item, index) } : {})}
                         >
                             {columns.map((column) => (
                                 <td

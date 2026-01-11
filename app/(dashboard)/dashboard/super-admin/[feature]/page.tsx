@@ -1,22 +1,26 @@
-"use client";
-
 import React from "react";
-import { useParams } from "next/navigation";
+import Merchants from "../../features/merchants/page";
+import Approvals from "../../features/approvals/page";
+import Analytics from "../../features/analytics/page";
+import Alerts from "../../features/alerts/page";
+import SystemHealth from "../../features/system-health/page";
+import Tickets from "../../features/tickets/page";
+import Settlements from "../../features/settlements/page";
 
 // Feature mapping for super-admin
-const featureComponents: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {
-  merchants: React.lazy(() => import("../../features/merchants/page")),
-  approvals: React.lazy(() => import("../../features/approvals/page")),
-  analytics: React.lazy(() => import("../../features/analytics/page")),
-  alerts: React.lazy(() => import("../../features/alerts/page")),
-  "system-health": React.lazy(() => import("../../features/system-health/page")),
-  tickets: React.lazy(() => import("../../features/tickets/page")),
-  settlements: React.lazy(() => import("../../features/settlements/page")),
+const featureComponents: Record<string, React.ComponentType<any>> = {
+  merchants: Merchants,
+  approvals: Approvals,
+  analytics: Analytics,
+  alerts: Alerts,
+  "system-health": SystemHealth as any, // Cast as any because Async Server Components typically don't match React.ComponentType perfectly in TS yet
+  tickets: Tickets,
+  settlements: Settlements,
 };
 
-const SuperAdminFeaturePage: React.FC = () => {
-  const params = useParams();
-  const feature = params.feature as string;
+export default async function SuperAdminFeaturePage(props: { params: Promise<{ feature: string }> }) {
+  const params = await props.params;
+  const feature = params.feature;
 
   const FeatureComponent = featureComponents[feature];
 
@@ -32,16 +36,6 @@ const SuperAdminFeaturePage: React.FC = () => {
   }
 
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-        </div>
-      }
-    >
-      <FeatureComponent />
-    </React.Suspense>
+    <FeatureComponent />
   );
-};
-
-export default SuperAdminFeaturePage;
+}

@@ -24,12 +24,7 @@ export default async function SystemHealthPage() {
     const metricsArray = [
         metrics.totalRequests,
         metrics.failedRequests,
-        {
-            ...metrics.supabaseLogs,
-            onClick: () => {
-                // This will be handled by client component
-            },
-        },
+        metrics.supabaseLogs,
     ];
 
     // Define table columns
