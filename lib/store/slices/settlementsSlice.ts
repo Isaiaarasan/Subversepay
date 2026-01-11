@@ -10,10 +10,12 @@ export interface Settlement {
   bankLogo: string;
 }
 
+export type SettlementStatusFilter = "all" | "Completed" | "Processing" | "Failed";
+
 interface SettlementsState {
   settlements: Settlement[];
   searchQuery: string;
-  statusFilter: string;
+  statusFilter: SettlementStatusFilter;
   startDate: string;
   endDate: string;
   isLoading: boolean;
@@ -83,7 +85,7 @@ const settlementsSlice = createSlice({
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
-    setStatusFilter: (state, action: PayloadAction<string>) => {
+    setStatusFilter: (state, action: PayloadAction<SettlementStatusFilter>) => {
       state.statusFilter = action.payload;
     },
     setStartDate: (state, action: PayloadAction<string>) => {

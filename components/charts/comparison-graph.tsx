@@ -18,7 +18,6 @@ const ComparisonGraph: React.FC = () => {
     return (
         <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 h-full flex flex-col dark:bg-gray-900/80">
             <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                 TPV Comparison (Current vs Previous Year)
             </h3>
 
@@ -81,12 +80,12 @@ const ComparisonGraph: React.FC = () => {
 
             <div className="flex items-center justify-center gap-6 mt-auto">
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                    <span className="text-xs text-gray-600 dark:text-gray-400">Current Year</span>
+                    <div className="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></div>
+                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">Current Year</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                    <span className="text-xs text-gray-600 dark:text-gray-400">Previous Year</span>
+                    <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-sm"></div>
+                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">Previous Year</span>
                 </div>
             </div>
         </div>

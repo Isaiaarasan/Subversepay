@@ -1,0 +1,150 @@
+"use client";
+
+import React, { useMemo } from "react";
+import { AlertOctagon, AlertTriangle, Info, CheckCircle, X, Filter } from "lucide-react";
+import { motion } from "framer-motion";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setFilterType, setShowFilter, AlertType } from "@/lib/store/slices/alertsSlice";
+import { filterAlerts } from "../../utils/alerts.utils";
+
+const Alerts: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { alerts, filterType, showFilter } = useAppSelector((state) => state.alerts);
+
+  const getIcon = (type: AlertType) => {
+    switch (type) {
+      case "Critical":
+        return <AlertOctagon className="text-red-500 dark:text-red-400" />;
+      case "High":
+        return <AlertTriangle className="text-orange-500 dark:text-orange-400" />;
+      case "Medium":
+        return <AlertTriangle className="text-yellow-500 dark:text-yellow-400" />;
+      case "Low":
+        return <Info className="text-blue-500 dark:text-blue-400" />;
+      case "Info":
+      default:
+        return <Info className="text-gray-400 dark:text-gray-500" />;
+    }
+  };
+
+  // All filtering logic moved to service
+  const filteredAlerts = useMemo(() => {
+    return filterAlerts(alerts, filterType);
+  }, [alerts, filterType]);
+
+  const getTypeStyles = (type: AlertType) => {
+    switch (type) {
+      case "Critical":
+        return "bg-red-50 dark:bg-red-900/10 border-red-100 dark:border-red-900/30 text-red-800 dark:text-red-200";
+      case "High":
+        return "bg-orange-50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30 text-orange-800 dark:text-orange-200";
+      case "Medium":
+        return "bg-yellow-50 dark:bg-yellow-900/10 border-yellow-100 dark:border-yellow-900/30 text-yellow-800 dark:text-yellow-200";
+      case "Low":
+        return "bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30 text-blue-800 dark:text-blue-200";
+      default:
+        return "bg-gray-50 dark:bg-gray-800/50 border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200";
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+<div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+
+    {/* Title */}
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        System Alerts
+      </h1>
+      <p className="text-gray-500 dark:text-gray-400">
+        Real-time monitoring of critical events.
+      </p>
+    </div>
+
+    {/* Actions */}
+    <div className="flex gap-2">
+      <div className="relative">
+        <button
+          onClick={() => dispatch(setShowFilter(!showFilter))}
+          className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-zinc-200 dark:border-gray-700 rounded-lg text-sm hover:bg-zinc-50 dark:hover:bg-gray-700 text-zinc-700 dark:text-gray-200 transition-all shadow-sm"
+        >
+          <Filter size={18} />
+          {filterType === "All"
+            ? "Filter Priority"
+            : `Priority: ${filterType}`}
+        </button>
+
+        {showFilter && (
+          <div className="absolute right-0 mt-2 w-44 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-zinc-200 dark:border-gray-700 rounded-lg shadow-xl z-20 p-2">
+            {["All", "Critical", "High", "Medium", "Low", "Info"].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  dispatch(setFilterType(type as AlertType | "All"))
+                  dispatch(setShowFilter(false))
+                }}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                  filterType === type
+                    ? "bg-black dark:bg-white text-white dark:text-black font-medium"
+                    : "text-zinc-600 dark:text-gray-300 hover:bg-zinc-100 dark:hover:bg-gray-700"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button
+        onClick={() => dispatch(setFilterType("Critical"))}
+        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-500/30 font-bold text-sm"
+      >
+        Clear Critical
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+      <div className="space-y-4">
+        {filteredAlerts.map((alert, index) => (
+          <motion.div
+            key={alert.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className={`flex items-start gap-4 p-5 rounded-2xl border transition-all ${getTypeStyles(alert.type)}`}
+          >
+            <div className="mt-0.5 flex-shrink-0 p-2 rounded-xl bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+              {getIcon(alert.type)}
+            </div>
+            <div className="flex-1">
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-base">{alert.type} Alert</h3>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide bg-white/50 dark:bg-black/20 backdrop-blur-sm`}>
+                    {alert.category}
+                  </span>
+                </div>
+                <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                  <X size={16} />
+                </button>
+              </div>
+              <p className="mt-1 text-sm font-medium opacity-90">{alert.message}</p>
+              <div className="flex items-center gap-4 mt-3 text-xs font-semibold uppercase tracking-wide opacity-60">
+                <span>Source: {alert.source}</span>
+                <span>•</span>
+                <span>{alert.time}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Alerts;

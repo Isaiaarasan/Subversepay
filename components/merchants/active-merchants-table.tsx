@@ -91,45 +91,71 @@ const ActiveMerchantsTable: React.FC = () => {
     return (
         <div className="space-y-6">
             {/* Search & Filter Bar */}
-            <div className="relative z-30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-900/80 backdrop-blur-xl p-1 rounded-xl border border-transparent dark:border-gray-800">
-                <div className="relative w-full sm:w-96 group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={16} />
-                    <input
-                        type="text"
-                        placeholder="Search merchants, sectors..."
-                        value={searchQuery}
-                        onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-                        className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-xs transition-all"
-                    />
+            <div className="relative z-30 flex flex-col sm:flex-row justify-between items-stretch gap-4 bg-white dark:bg-gray-900/80 backdrop-blur-xl p-1 rounded-xl border border-transparent dark:border-gray-800">
 
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center">
-                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
-                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full sm:w-auto mt-2 sm:mt-0">
-                        <UserCheck size={14} />
-                        <span>Approvals</span>
-                    </Link>
-                    <div className="relative group main-dropdown">
-                        <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full">
-                            <Filter size={14} />
-                            <span>{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
-                        </button>
-                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-20">
-                            {['all', 'Active', 'Inactive'].map(status => (
-                                <button
-                                    key={status}
-                                    onClick={() => dispatch(setStatusFilter(status))}
-                                    className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
-                                >
-                                    {status === 'all' ? 'All Merchants' : status}
-                                </button>
-                            ))}
+                {/* Search Bar - Premium Style */}
+                <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 flex-1 sm:max-w-md">
+                    <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
+                        <div className="flex flex-col justify-center w-full">
+                            <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Query</span>
+                            <div className="flex items-center gap-2">
+                                <Search className="text-blue-500 shrink-0" size={14} />
+                                <input
+                                    type="text"
+                                    placeholder="Search merchants, sectors..."
+                                    value={searchQuery}
+                                    onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                                    className="bg-transparent font-semibold text-xs text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none w-full"
+                                />
+                            </div>
                         </div>
                     </div>
-                    <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition-all text-xs font-medium">
-                        <Download size={14} />
-                        <span>Export</span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-stretch">
+
+                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
+
+                    {/* Status Filter - Premium Style */}
+                    <div className="group relative main-dropdown flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 cursor-pointer">
+                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[140px]">
+                            <div className="flex flex-col justify-center w-full">
+                                <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Filter Status</span>
+                                <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <Filter size={14} className="text-purple-500" />
+                                        <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="absolute inset-0 z-10" /> {/* Click overlay for dropdown */}
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-50">
+                                {['all', 'Active', 'Inactive'].map(status => (
+                                    <button
+                                        key={status}
+                                        onClick={() => dispatch(setStatusFilter(status))}
+                                        className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
+                                    >
+                                        {status === 'all' ? 'All Merchants' : status}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Export Button - Premium Style */}
+                    <button className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all duration-300">
+                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent transition-colors w-full h-full">
+                            <div className="flex flex-col justify-center w-full h-full">
+                                <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Action</span>
+                                <div className="flex items-center gap-2">
+                                    <Download size={14} className="text-emerald-500" />
+                                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Export CSV</span>
+                                </div>
+                            </div>
+                        </div>
                     </button>
+
                 </div>
             </div>
 

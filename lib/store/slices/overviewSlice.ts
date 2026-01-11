@@ -38,7 +38,7 @@ const initialState: OverviewState = {
     {
       title: 'Total Merchants',
       value: '45',
-      subtext: 'Platform partners',
+      subtext: ' ',
       icon: 'Users',
       trend: 'up',
       trendValue: '+3 this week',
@@ -46,7 +46,7 @@ const initialState: OverviewState = {
     {
       title: 'Total Managers',
       value: '12',
-      subtext: 'Operational staff',
+      subtext: ' ',
       icon: 'Shield',
       trend: 'up',
       trendValue: '+1 newly added',
@@ -54,7 +54,7 @@ const initialState: OverviewState = {
     {
       title: 'Total Customers',
       value: '1.25L',
-      subtext: 'End users',
+      subtext: ' ',
       icon: 'UserCheck',
       trend: 'up',
       trendValue: '+12.5% Growth',
@@ -62,10 +62,10 @@ const initialState: OverviewState = {
     {
       title: 'Total TPV',
       value: '₹8.5 Cr',
-      subtext: 'Processed Volume',
+      subtext: ' ',
       icon: 'CreditCard',
       trend: 'up',
-      trendValue: '+8.2%',
+      trendValue: '+8.2% Total',
     },
   ],
   recentActivities: [

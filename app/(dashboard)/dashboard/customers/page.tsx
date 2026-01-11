@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Search, Filter, Download, Users } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
