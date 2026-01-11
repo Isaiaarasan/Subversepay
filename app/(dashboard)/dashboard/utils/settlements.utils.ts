@@ -4,16 +4,7 @@
  */
 
 import { filterItems } from "./filtering.utils";
-
-export interface Settlement {
-  id: string;
-  from: string;
-  to: string;
-  bankLogo: string;
-  amount: string;
-  date: string;
-  status: 'Completed' | 'Processing' | 'Failed';
-}
+import { Settlement } from "@/lib/store/slices/settlementsSlice";
 
 export interface SettlementFilters {
   searchQuery?: string;

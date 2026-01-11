@@ -5,7 +5,7 @@ import Link from "next/link";
 import StatCard from "@/components/ui/stat-card";
 import ComparisonGraph from "@/components/charts/comparison-graph";
 import PaymentPieChart from "@/components/charts/payment-pie-chart";
-import { Users, CreditCard, UserCheck, Shield, ArrowUpRight, ChevronDown, Download, Calendar, Building2, Activity, Store, CheckCircle, BarChart3, Bell, Ticket } from "lucide-react";
+import { Users, CreditCard, UserCheck, Shield, ArrowUpRight, ChevronDown, Download, Calendar, Building2, Activity, Store, CheckCircle, BarChart3, Bell, Ticket, LucideIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ const SuperAdminPage = () => {
   const { timeRange, stats, recentActivities, pendingApprovals } = useAppSelector((state) => state.overview);
 
   // Map icon strings to actual icon components
-  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  const iconMap: Record<string, LucideIcon> = {
     Users,
     Shield,
     UserCheck,
@@ -31,7 +31,11 @@ const SuperAdminPage = () => {
   };
 
   const statsWithIcons = stats.map((stat) => ({
-    ...stat,
+    title: stat.title,
+    value: stat.value,
+    subtitle: stat.subtext, // Map subtext to subtitle
+    trend: stat.trend as "up" | "down" | "neutral",
+    trendValue: stat.trendValue,
     icon: iconMap[stat.icon] || Users,
   }));
 
@@ -72,33 +76,30 @@ const SuperAdminPage = () => {
             >
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("This Month"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
-                  timeRange === "This Month"
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "This Month"
                     ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
                     : "text-gray-700 dark:text-gray-200"
-                }`}
+                  }`}
               >
                 <Calendar className="h-4 w-4" />
                 This Month
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("Last Month"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
-                  timeRange === "Last Month"
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "Last Month"
                     ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
                     : "text-gray-700 dark:text-gray-200"
-                }`}
+                  }`}
               >
                 <Calendar className="h-4 w-4" />
                 Last Month
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("This Quarter"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
-                  timeRange === "This Quarter"
+                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "This Quarter"
                     ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
                     : "text-gray-700 dark:text-gray-200"
-                }`}
+                  }`}
               >
                 <Calendar className="h-4 w-4" />
                 This Quarter
@@ -247,9 +248,9 @@ const SuperAdminPage = () => {
       {/* System Status Overview */}
       <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
         <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-gray-800 dark:text-gray-200">System Status Overview</h3>
-            <Link href="/dashboard/super-admin/system-health" className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline">View Details</Link>
-          </div>
+          <h3 className="font-bold text-gray-800 dark:text-gray-200">System Status Overview</h3>
+          <Link href="/dashboard/super-admin/system-health" className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline">View Details</Link>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>

@@ -4,19 +4,7 @@
  */
 
 import { filterItems, filterTicketsByStatus } from "./filtering.utils";
-
-export interface Ticket {
-  id: string;
-  title: string;
-  description: string;
-  user: string;
-  type: string;
-  priority: string;
-  status: string;
-  date: string;
-  createdDate?: string;
-  attachments?: boolean;
-}
+import { Ticket } from "@/lib/store/slices/ticketsSlice";
 
 /**
  * Filter tickets client-side (for client components that already have data)

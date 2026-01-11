@@ -8,8 +8,8 @@ import {
     calculateMaxLatency,
     calculateChartPath,
     calculateAreaPath,
-    TimeRange,
-} from "../../../services/system-health.service";
+} from "../../../services/system-health.utils";
+import { TimeRange } from "../../../services/system-health.service";
 
 /**
  * LatencyChart - Client component for interactive latency visualization
@@ -55,8 +55,8 @@ export function LatencyChart() {
                             key={range}
                             onClick={() => setTimeRange(range)}
                             className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${timeRange === range
-                                    ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm font-bold"
-                                    : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                                ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm font-bold"
+                                : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
                                 }`}
                         >
                             {range}

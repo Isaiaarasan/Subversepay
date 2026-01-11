@@ -4,30 +4,7 @@
  */
 
 import { filterItems } from "./filtering.utils";
-
-export interface Approval {
-  id: number;
-  name: string;
-  type: string;
-  email: string;
-  date: string;
-  status: string;
-  documents: string;
-  logo?: string;
-  revenue?: string;
-  subscribers?: number;
-  growth?: number;
-  sector: string;
-  phone?: string;
-  address?: string;
-  gst?: string;
-  bank?: {
-    name: string;
-    acc: string;
-    ifsc: string;
-  };
-  documentsList: Array<{ name: string; status: string }>;
-}
+import { Approval } from "@/lib/store/slices/approvalsSlice";
 
 export interface ApprovalFilters {
   searchQuery?: string;
