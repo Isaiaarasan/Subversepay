@@ -65,7 +65,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             {/* Header with Icon and Trend */}
             <div className="flex justify-between items-start mb-3">
                 {Icon && (
-                    <div className="p-2.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+                    <div className="p-2.5 bg-blue-100 dark:bg-blue-900/40 rounded-xl text-blue-700 dark:text-blue-300">
                         <Icon size={variant === "compact" ? 16 : 20} />
                     </div>
                 )}

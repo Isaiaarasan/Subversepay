@@ -30,10 +30,10 @@ export function TimeRangeSelector() {
                         onChange={(e) => setTimeRange(e.target.value)}
                         className="bg-transparent font-semibold text-xs text-gray-900 dark:text-gray-100 focus:outline-none w-full cursor-pointer appearance-none pr-4"
                     >
-                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">Last 7 days</option>
-                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">Last 30 days</option>
-                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">Last 3 months</option>
-                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">Last year</option>
+                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">This days</option>
+                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">This week</option>
+                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">This month</option>
+                        <option className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">This year</option>
                     </select>
                 </div>
                 <div className="pointer-events-none absolute inset-y-0 right-1 flex items-center px-2 text-gray-400">

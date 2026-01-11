@@ -97,7 +97,6 @@ function TopPerformingMerchantsWidget({
     return (
         <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
             <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-purple-500"></div>
                 Top Performing Merchants
             </h3>
             <div className="space-y-4">
@@ -128,7 +127,6 @@ function GeographicDistributionWidget({
     return (
         <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
             <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-indigo-500"></div>
                 Geographic Distribution
             </h3>
             <div className="space-y-4">

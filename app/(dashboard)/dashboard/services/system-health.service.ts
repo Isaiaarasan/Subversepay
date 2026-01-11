@@ -38,7 +38,7 @@ export async function getSystemHealthMetrics(): Promise<SystemHealthMetrics> {
         totalRequests: {
             title: "Total Requests (24h)",
             value: "14.2M",
-            subtitle: "+5% vs yesterday",
+            subtitle: "",
             trend: "up",
             trendValue: "+5%",
             icon: Activity,
@@ -46,7 +46,7 @@ export async function getSystemHealthMetrics(): Promise<SystemHealthMetrics> {
         failedRequests: {
             title: "Failed Requests",
             value: "421",
-            subtitle: "0.003% Failure Rate",
+            subtitle: "",
             trend: "down",
             trendValue: "0.003%",
             icon: AlertOctagon,
@@ -54,7 +54,7 @@ export async function getSystemHealthMetrics(): Promise<SystemHealthMetrics> {
         supabaseLogs: {
             title: "Supabase Logs",
             value: "Open Dashboard",
-            subtitle: "External Link",
+            subtitle: " ",
             icon: Database,
         },
     };

@@ -49,7 +49,7 @@ const SuperAdminPage = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Super Admin Dashboard
+              Dashboard
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm">Complete platform oversight and management.</p>
           </div>
@@ -129,6 +129,37 @@ const SuperAdminPage = () => {
         ))}
       </div>
 
+      {/* Super Admin Actions - Moving Above Charts */}
+      <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+        <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Super Admin Actions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+          <Link href="/dashboard/super-admin/merchants" className="p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg text-left transition-colors border border-blue-100 dark:border-blue-900/10">
+            <div className="font-medium text-blue-900 dark:text-blue-100 text-sm">Manage Merchants</div>
+            <div className="text-[10px] text-blue-600 dark:text-blue-300 mt-1">Onboard & monitor partners</div>
+          </Link>
+          <Link href="/dashboard/super-admin/approvals" className="p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-left transition-colors border border-green-100 dark:border-green-900/10">
+            <div className="font-medium text-green-900 dark:text-green-100 text-sm">Review Approvals</div>
+            <div className="text-[10px] text-green-600 dark:text-green-300 mt-1">Pending requests & validations</div>
+          </Link>
+          <Link href="/dashboard/super-admin/analytics" className="p-4 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg text-left transition-colors border border-purple-100 dark:border-purple-900/10">
+            <div className="font-medium text-purple-900 dark:text-purple-100 text-sm">View Analytics</div>
+            <div className="text-[10px] text-purple-600 dark:text-purple-300 mt-1">Platform performance insights</div>
+          </Link>
+          <Link href="/dashboard/super-admin/system-health" className="p-4 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg text-left transition-colors border border-orange-100 dark:border-orange-900/10">
+            <div className="font-medium text-orange-900 dark:text-orange-100 text-sm">System Health</div>
+            <div className="text-[10px] text-orange-600 dark:text-orange-300 mt-1">Monitor infrastructure status</div>
+          </Link>
+          <Link href="/dashboard/super-admin/alerts" className="p-4 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg text-left transition-colors border border-red-100 dark:border-red-900/10">
+            <div className="font-medium text-red-900 dark:text-red-100 text-sm">Monitor Alerts</div>
+            <div className="text-[10px] text-red-600 dark:text-red-300 mt-1">System notifications & issues</div>
+          </Link>
+          <Link href="/dashboard/super-admin/tickets" className="p-4 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-lg text-left transition-colors border border-indigo-100 dark:border-indigo-900/10">
+            <div className="font-medium text-indigo-900 dark:text-indigo-100 text-sm">Support Tickets</div>
+            <div className="text-[10px] text-indigo-600 dark:text-indigo-300 mt-1">Customer support management</div>
+          </Link>
+        </div>
+      </div>
+
       {/* Graph Row 1: TPV & Payment Methods */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
@@ -136,58 +167,6 @@ const SuperAdminPage = () => {
         </div>
         <div className="lg:col-span-1">
           <PaymentPieChart />
-        </div>
-      </div>
-
-      {/* Quick Actions & Feature Access */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Quick Actions */}
-        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
-          <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Super Admin Actions</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/dashboard/super-admin/merchants" className="p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-blue-900 dark:text-blue-100">Manage Merchants</div>
-              <div className="text-sm text-blue-600 dark:text-blue-300">Onboard & monitor partners</div>
-            </Link>
-            <Link href="/dashboard/super-admin/approvals" className="p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-green-900 dark:text-green-100">Review Approvals</div>
-              <div className="text-sm text-green-600 dark:text-green-300">Pending requests & validations</div>
-            </Link>
-            <Link href="/dashboard/super-admin/analytics" className="p-4 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-purple-900 dark:text-purple-100">View Analytics</div>
-              <div className="text-sm text-purple-600 dark:text-purple-300">Platform performance insights</div>
-            </Link>
-            <Link href="/dashboard/super-admin/system-health" className="p-4 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-orange-900 dark:text-orange-100">System Health</div>
-              <div className="text-sm text-orange-600 dark:text-orange-300">Monitor infrastructure status</div>
-            </Link>
-            <Link href="/dashboard/super-admin/alerts" className="p-4 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-red-900 dark:text-red-100">Monitor Alerts</div>
-              <div className="text-sm text-red-600 dark:text-red-300">System notifications & issues</div>
-            </Link>
-            <Link href="/dashboard/super-admin/tickets" className="p-4 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-lg text-left transition-colors">
-              <div className="font-medium text-indigo-900 dark:text-indigo-100">Support Tickets</div>
-              <div className="text-sm text-indigo-600 dark:text-indigo-300">Customer support management</div>
-            </Link>
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
-          <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Recent Activity</h3>
-          <div className="space-y-3">
-            {recentActivities.map((activity, i) => (
-              <div key={i} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                <div className={`w-2 h-2 rounded-full ${activity.type === 'success' ? 'bg-green-500' :
-                  activity.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                  }`}></div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.action}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 

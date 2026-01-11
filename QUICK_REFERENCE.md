@@ -21,7 +21,7 @@ import { DataTable } from "@/components/ui/data-table";
 <MetricCard
   title="Total Revenue"
   value="₹12.5L"
-  subtitle="This month"
+  subtitle=" "
   trend="up"
   trendValue="+15.3%"
 />

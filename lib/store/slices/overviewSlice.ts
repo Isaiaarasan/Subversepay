@@ -65,7 +65,7 @@ const initialState: OverviewState = {
       subtext: ' ',
       icon: 'CreditCard',
       trend: 'up',
-      trendValue: '+8.2%',
+      trendValue: '+8.2% Total',
     },
   ],
   recentActivities: [

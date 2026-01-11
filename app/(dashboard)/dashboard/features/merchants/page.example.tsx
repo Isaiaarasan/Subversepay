@@ -140,7 +140,7 @@ function StatusFilter() {
             onChange={(e) => setStatus(e.target.value)}
             className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
         >
-            <option value="all">All Status</option>
+            <option value="all">Status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
         </select>

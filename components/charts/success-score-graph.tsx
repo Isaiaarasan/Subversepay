@@ -12,8 +12,7 @@ const SuccessScoreGraph: React.FC = () => {
 
     return (
         <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 h-full flex flex-col dark:bg-gray-900/80">
-            <h3 className="font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <h3 className="font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2"> 
                 Success Score
             </h3>
 

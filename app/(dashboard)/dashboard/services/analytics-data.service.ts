@@ -37,7 +37,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
         revenue: {
             title: "Total Revenue",
             value: "₹12.5L",
-            subtitle: "This month",
+            subtitle: " ",
             trend: "up",
             trendValue: "+15.3%",
             icon: IndianRupee,
@@ -45,7 +45,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
         activeUsers: {
             title: "Active Users",
             value: "45.2K",
-            subtitle: "Daily active",
+            subtitle: " ",
             trend: "up",
             trendValue: "+8.1%",
             icon: Users,
@@ -53,7 +53,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
         conversionRate: {
             title: "Conversion Rate",
             value: "3.24%",
-            subtitle: "Payment success",
+            subtitle: " ",
             trend: "up",
             trendValue: "+0.5%",
             icon: Percent,
@@ -61,7 +61,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
         avgTransaction: {
             title: "Avg Transaction",
             value: "₹1,250",
-            subtitle: "Per transaction",
+            subtitle: " ",
             trend: "down",
             trendValue: "-2.1%",
             icon: CreditCard,
