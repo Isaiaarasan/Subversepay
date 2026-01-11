@@ -55,65 +55,70 @@ const SuperAdminPage = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Time Range Selector */}
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          {/* Time Range Selector - Premium Style */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-[160px] justify-between bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
-              >
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                  <span className="font-medium">{timeRange}</span>
+              <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 cursor-pointer min-w-[140px]">
+                <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full">
+                  <div className="flex flex-col justify-center w-full">
+                    <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Time Period</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <Calendar size={14} className="text-purple-500" />
+                        <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">{timeRange}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-              </Button>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[160px] bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 shadow-xl"
+              className="w-[160px] bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 shadow-xl rounded-xl p-1"
             >
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("This Month"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "This Month"
-                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
-                    : "text-gray-700 dark:text-gray-200"
+                className={`flex items-center gap-2 cursor-pointer rounded-lg text-xs font-medium px-3 py-2 transition-colors ${timeRange === "This Month"
+                  ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
               >
-                <Calendar className="h-4 w-4" />
                 This Month
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("Last Month"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "Last Month"
-                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
-                    : "text-gray-700 dark:text-gray-200"
+                className={`flex items-center gap-2 cursor-pointer rounded-lg text-xs font-medium px-3 py-2 transition-colors ${timeRange === "Last Month"
+                  ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
               >
-                <Calendar className="h-4 w-4" />
                 Last Month
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => dispatch(setTimeRange("This Quarter"))}
-                className={`flex items-center gap-2 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${timeRange === "This Quarter"
-                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
-                    : "text-gray-700 dark:text-gray-200"
+                className={`flex items-center gap-2 cursor-pointer rounded-lg text-xs font-medium px-3 py-2 transition-colors ${timeRange === "This Quarter"
+                  ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300"
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
               >
-                <Calendar className="h-4 w-4" />
                 This Quarter
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Download Report Button */}
-          <Button
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg text-sm font-semibold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/40 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <Download className="h-4 w-4" />
-            Download Report
-          </Button>
+          {/* Download Report Button - Premium Style */}
+          <button className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-300 dark:hover:border-purple-700 hover:shadow-md transition-all duration-300">
+            <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent transition-colors w-full h-full">
+              <div className="flex flex-col justify-center w-full h-full">
+                <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Action</span>
+                <div className="flex items-center gap-2">
+                  <Download size={14} className="text-emerald-500" />
+                  <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Download Report</span>
+                </div>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
 

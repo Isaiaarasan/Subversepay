@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { MessageSquare, Paperclip, X, User, CheckCircle } from "lucide-react";
+import { MessageSquare, Paperclip, X, User, CheckCircle, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
@@ -62,13 +62,26 @@ const Tickets: React.FC = () => {
 
     return (
         <div className="space-y-6 h-[calc(100vh-140px)] flex flex-col relative">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Support Tickets</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Manage and resolve user issues.</p>
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Support Tickets
+                        </h1>
+                        <p className="text-gray-500 dark:text-gray-400">
+                            Manage and resolve user issues.
+                        </p>
+                    </div>
+
+                    <DateRangeFilter
+                        startDate={startDate}
+                        endDate={endDate}
+                        onStartDateChange={(date) => dispatch(setStartDate(date))}
+                        onEndDateChange={(date) => dispatch(setEndDate(date))}
+                    />
                 </div>
-                <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
             </div>
+
 
             {/* Tabs */}
             <div className="flex border-b border-gray-200 shrink-0">
@@ -91,29 +104,30 @@ const Tickets: React.FC = () => {
                 {/* List Column */}
                 <div className="lg:col-span-1 bg-white/80 backdrop-blur-xl border border-white/60 dark:border-gray-800 rounded-2xl overflow-hidden flex flex-col shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
                     <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                placeholder="Search tickets by title, ID, user, or description..."
-                                value={searchQuery}
-                                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-                                className="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 pl-10 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:focus:border-blue-400 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
-                            />
-                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                        <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300">
+                            <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
+                                <div className="flex flex-col justify-center w-full">
+                                    <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Tickets</span>
+                                    <div className="flex items-center gap-2">
+                                        <Search className="text-blue-500 shrink-0" size={14} />
+                                        <input
+                                            type="text"
+                                            placeholder="Search by title, ID, user..."
+                                            value={searchQuery}
+                                            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                                            className="bg-transparent font-semibold text-xs text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none w-full"
+                                        />
+                                    </div>
+                                </div>
+                                {searchQuery && (
+                                    <button
+                                        onClick={() => dispatch(setSearchQuery(""))}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
+                                    >
+                                        <X size={14} className="text-gray-400" />
+                                    </button>
+                                )}
                             </div>
-                            {searchQuery && (
-                                <button
-                                    onClick={() => dispatch(setSearchQuery(""))}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            )}
                         </div>
                         {searchQuery && (
                             <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">

@@ -49,48 +49,65 @@ const Alerts: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">System Alerts</h1>
-          <p className="text-gray-500 dark:text-gray-400">Real-time monitoring of critical events.</p>
-        </div>
-        <div className="flex gap-2">
-          <div className="relative">
-            <button
-              onClick={() => dispatch(setShowFilter(!showFilter))}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 rounded-lg text-sm hover:bg-zinc-50 text-zinc-700 transition-all shadow-sm"
-            >
-              <Filter size={18} />
-              {filterType === "All" ? "Filter Priority" : `Priority: ${filterType}`}
-            </button>
-            {showFilter && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border border-zinc-200 rounded-lg shadow-xl z-20 p-2">
-                {["All", "Critical", "High", "Medium", "Low", "Info"].map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => {
-                      dispatch(setFilterType(type as AlertType | "All"));
-                      dispatch(setShowFilter(false));
-                    }}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${filterType === type
-                      ? "bg-black text-white font-medium"
-                      : "text-zinc-600 hover:bg-zinc-100"
-                      }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            )}
+<div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+
+    {/* Title */}
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        System Alerts
+      </h1>
+      <p className="text-gray-500 dark:text-gray-400">
+        Real-time monitoring of critical events.
+      </p>
+    </div>
+
+    {/* Actions */}
+    <div className="flex gap-2">
+      <div className="relative">
+        <button
+          onClick={() => dispatch(setShowFilter(!showFilter))}
+          className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-zinc-200 dark:border-gray-700 rounded-lg text-sm hover:bg-zinc-50 dark:hover:bg-gray-700 text-zinc-700 dark:text-gray-200 transition-all shadow-sm"
+        >
+          <Filter size={18} />
+          {filterType === "All"
+            ? "Filter Priority"
+            : `Priority: ${filterType}`}
+        </button>
+
+        {showFilter && (
+          <div className="absolute right-0 mt-2 w-44 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-zinc-200 dark:border-gray-700 rounded-lg shadow-xl z-20 p-2">
+            {["All", "Critical", "High", "Medium", "Low", "Info"].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  dispatch(setFilterType(type as AlertType | "All"))
+                  dispatch(setShowFilter(false))
+                }}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                  filterType === type
+                    ? "bg-black dark:bg-white text-white dark:text-black font-medium"
+                    : "text-zinc-600 dark:text-gray-300 hover:bg-zinc-100 dark:hover:bg-gray-700"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
           </div>
-          <button
-            onClick={() => dispatch(setFilterType("Critical"))}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-500/30 font-bold text-sm"
-          >
-            Clear Critical
-          </button>
-        </div>
+        )}
       </div>
+
+      <button
+        onClick={() => dispatch(setFilterType("Critical"))}
+        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-500/30 font-bold text-sm"
+      >
+        Clear Critical
+      </button>
+    </div>
+
+  </div>
+</div>
+
 
       <div className="space-y-4">
         {filteredAlerts.map((alert, index) => (

@@ -23,49 +23,105 @@ const Settlements: React.FC = () => {
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settlements</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Manage and track merchant payouts.</p>
-                </div>
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
-                <div className="flex flex-col sm:flex-row gap-2 items-center">
-                    {/* <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} /> */}
-                    <div className="flex gap-2">
-                        <div className="relative group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={18} />
-                            <input
-                                type="text"
-                                placeholder="Search ID, merchant..."
-                                value={searchQuery}
-                                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-                                className="pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500"
-                            />
-                        </div>
-                        <div className="relative group main-dropdown">
-                            <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors">
-                                <Filter size={18} />
-                                <span>{statusFilter === 'all' ? 'Status' : statusFilter}</span>
-                            </button>
-                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-20">
-                                {['all', 'Completed', 'Processing', 'Failed'].map(status => (
-                                    <button
-                                        key={status}
-                                        onClick={() => dispatch(setStatusFilter(status as SettlementStatusFilter))}
-                                        className={`w-full text-left px-3 py-2 rounded-md text-xs font-medium ${statusFilter === status ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
-                                    >
-                                        {status === 'all' ? 'All Settlements' : status}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
-                            <Download size={18} />
-                            Export
-                        </button>
-                    </div>
-                </div>
+    {/* Title */}
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        Settlements
+      </h1>
+      <p className="text-gray-500 dark:text-gray-400">
+        Manage and track merchant payouts.
+      </p>
+    </div>
+
+    {/* Controls */}
+    <div className="flex flex-col sm:flex-row gap-2 items-center">
+      <div className="flex flex-col sm:flex-row gap-2 items-stretch h-full">
+
+        {/* Search */}
+        <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300">
+          <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
+            <div className="flex flex-col justify-center w-full">
+              <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">
+                Search ID/Merchant
+              </span>
+              <div className="flex items-center gap-2">
+                <Search className="text-blue-500 shrink-0" size={14} />
+                <input
+                  type="text"
+                  placeholder="Search transactions..."
+                  value={searchQuery}
+                  onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                  className="bg-transparent font-semibold text-xs text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none w-full min-w-[140px]"
+                />
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Status Filter */}
+        <div className="group relative main-dropdown flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 cursor-pointer z-20">
+          <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[130px]">
+            <div className="flex flex-col justify-center w-full">
+              <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">
+                Filter Status
+              </span>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Filter size={14} className="text-purple-500" />
+                  <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">
+                    {statusFilter === "all" ? "All Status" : statusFilter}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-0 z-10" />
+          </div>
+
+          {/* Dropdown */}
+          <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-50">
+            {["all", "Completed", "Processing", "Failed"].map((status) => (
+              <button
+                key={status}
+                onClick={() =>
+                  dispatch(setStatusFilter(status as SettlementStatusFilter))
+                }
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                  statusFilter === status
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                }`}
+              >
+                {status === "all" ? "All Settlements" : status}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Export */}
+        <button className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all duration-300">
+          <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent transition-colors w-full h-full">
+            <div className="flex flex-col justify-center w-full h-full">
+              <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">
+                Action
+              </span>
+              <div className="flex items-center gap-2">
+                <Download size={14} className="text-emerald-500" />
+                <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">
+                  Export CSV
+                </span>
+              </div>
+            </div>
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
 
             <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-white/60 dark:border-gray-800 overflow-hidden dark:bg-gray-900/80">
                 <table className="w-full text-left">

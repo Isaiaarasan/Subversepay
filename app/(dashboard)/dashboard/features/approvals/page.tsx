@@ -76,14 +76,14 @@ const Approvals: React.FC = () => {
 
   return (
     <div className="space-y-8 relative">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Pending Approvals
-        </h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Review and approve new merchant onboardings.
-        </p>
-      </div>
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+    Pending Approvals
+  </h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-1">
+    Review and approve new merchant onboardings.
+  </p>
+</div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm p-1 rounded-2xl">
         <div className="relative w-full sm:w-100">
