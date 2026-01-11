@@ -1,0 +1,167 @@
+"use client";
+
+import React from "react";
+import StatCard from "@/components/ui/stat-card";
+import MultiBarGraph from "@/components/charts/multi-bar-graph";
+import ComparisonGraph from "@/components/charts/comparison-graph";
+import PaymentPieChart from "@/components/charts/payment-pie-chart";
+import SuccessScoreGraph from "@/components/charts/success-score-graph";
+import { motion } from "framer-motion";
+import { DateRangeFilter } from "@/components/ui/date-range-filter";
+import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
+import { setStartDate, setEndDate, setTimeRange } from "@/lib/store/slices/analyticsSlice";
+
+const Analytics: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { startDate, endDate, timeRange } = useAppSelector((state) => state.analytics);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-8"
+        >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+                    <p className="text-gray-500 dark:text-gray-400">Comprehensive insights into platform performance.</p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                    <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
+                    <div className="relative">
+                        <select 
+                            value={timeRange}
+                            onChange={(e) => dispatch(setTimeRange(e.target.value))}
+                            className="appearance-none bg-blue-600 text-white border border-blue-600 text-sm rounded-lg pl-4 pr-10 py-2 cursor-pointer focus:ring-2 focus:ring-blue-500/20 outline-none hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 font-medium">
+                            <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 7 days</option>
+                            <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 30 days</option>
+                            <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last 3 months</option>
+                            <option className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Last year</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        </div>
+                    </div>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
+                        Report
+                    </button>
+                </div>
+            </div>
+
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard
+                    title="Total Revenue"
+                    value="₹12.5L"
+                    subtext="This month"
+                    trend="up"
+                    trendValue="+15.3%"
+                />
+                <StatCard
+                    title="Active Users"
+                    value="45.2K"
+                    subtext="Daily active"
+                    trend="up"
+                    trendValue="+8.1%"
+                />
+                <StatCard
+                    title="Conversion Rate"
+                    value="3.24%"
+                    subtext="Payment success"
+
+                    trend="up"
+                    trendValue="+0.5%"
+                />
+                <StatCard
+                    title="Avg Transaction"
+                    value="₹1,250"
+                    subtext="Per transaction"
+                    trend="down"
+                    trendValue="-2.1%"
+                />
+            </div>
+
+            {/* Charts Row 1 */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="lg:col-span-2">
+                    <MultiBarGraph />
+                </div>
+                <div className="lg:col-span-1">
+                    <PaymentPieChart />
+                </div>
+            </div>
+
+            {/* Charts Row 2 */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="lg:col-span-2">
+                    <ComparisonGraph />
+                </div>
+                <div className="lg:col-span-1">
+                    <SuccessScoreGraph />
+                </div>
+            </div>
+
+            {/* Additional Analytics */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+                    <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                        Top Performing Merchants
+                    </h3>
+                    <div className="space-y-4">
+                        {[
+                            { name: "SpeedNet ISP", revenue: "₹2.1L", growth: "+12%" },
+                            { name: "FitZone Gyms", revenue: "₹1.8L", growth: "+8%" },
+                            { name: "CableNet Sols", revenue: "₹1.5L", growth: "+15%" },
+                        ].map((merchant, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                                <div>
+                                    <div className="font-medium text-gray-900 dark:text-gray-100">{merchant.name}</div>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">{merchant.revenue}</div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-sm font-bold text-green-600 dark:text-green-400">{merchant.growth}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
+                    <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-indigo-500"></div>
+                        Geographic Distribution
+                    </h3>
+                    <div className="space-y-4">
+                        {[
+                            { region: "Maharashtra", percentage: 35, amount: "₹4.2L" },
+                            { region: "Karnataka", percentage: 28, amount: "₹3.4L" },
+                            { region: "Tamil Nadu", percentage: 20, amount: "₹2.4L" },
+                            { region: "Delhi NCR", percentage: 17, amount: "₹2.1L" },
+                        ].map((region, i) => (
+                            <div key={i} className="flex items-center justify-between">
+                                <div className="flex-1">
+                                    <div className="flex justify-between mb-1">
+                                        <span className="text-sm font-medium text-gray-900 dark:text-gray-200">{region.region}</span>
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">{region.percentage}%</span>
+                                    </div>
+                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div
+                                            className="bg-indigo-500 h-2 rounded-full"
+                                            style={{ width: `${region.percentage}%` }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div className="ml-4 text-sm font-bold text-gray-900 dark:text-white">{region.amount}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </motion.div >
+    );
+};
+
+export default Analytics;

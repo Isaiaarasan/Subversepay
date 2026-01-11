@@ -60,12 +60,12 @@ export async function loginAction(prevState: any, formData: FormData) {
     case 1:
       redirect("/dashboard/super-admin");
     case 2:
-      redirect("/dashboard/admin");
+      redirect("/dashboard/roles/admin");
     case 3:
-      redirect("/dashboard/team-lead");
+      redirect("/dashboard/roles/team-lead");
     case 4:
-      redirect("/dashboard/member");
+      redirect("/dashboard/roles/member");
     default:
-      redirect("/dashboard"); 
+      redirect("/dashboard/"); 
   }
 }
