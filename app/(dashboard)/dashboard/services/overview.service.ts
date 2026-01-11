@@ -43,7 +43,7 @@ export async function getOverviewMetrics(): Promise<OverviewMetrics> {
         merchants: {
             title: "Total Merchants",
             value: "45",
-            subtitle: "Platform partners",
+            subtitle: " ",
             trend: "up",
             trendValue: "+3 this week",
             icon: Users,
@@ -51,7 +51,7 @@ export async function getOverviewMetrics(): Promise<OverviewMetrics> {
         managers: {
             title: "Total Managers",
             value: "12",
-            subtitle: "Operational staff",
+            subtitle: " ",
             trend: "up",
             trendValue: "+1 newly added",
             icon: Shield,
@@ -59,7 +59,7 @@ export async function getOverviewMetrics(): Promise<OverviewMetrics> {
         customers: {
             title: "Total Customers",
             value: "1.25L",
-            subtitle: "End users",
+            subtitle: " ",
             trend: "up",
             trendValue: "+12.5% Growth",
             icon: UserCheck,
@@ -67,7 +67,7 @@ export async function getOverviewMetrics(): Promise<OverviewMetrics> {
         tpv: {
             title: "Total TPV",
             value: "₹8.5 Cr",
-            subtitle: "Processed Volume",
+            subtitle: " ",
             trend: "up",
             trendValue: "+8.2%",
             icon: CreditCard,

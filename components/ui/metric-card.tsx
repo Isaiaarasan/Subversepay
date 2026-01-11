@@ -23,7 +23,7 @@ export interface MetricCardProps {
  * <MetricCard
  *   title="Total Merchants"
  *   value="45"
- *   subtitle="Platform partners"
+ *   subtitle=" "
  *   trend="up"
  *   trendValue="+3 this week"
  *   icon={Users}
@@ -70,7 +70,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
                     </div>
                 )}
                 {trendValue && (
-                    <div className={cn("flex items-center gap-0.5 text-xs font-medium", getTrendColor())}>
+                    <div className={cn("flex items-center gap-0.5 text-xs font-medium ml-auto", getTrendColor())}>
                         {isPositive && <ArrowUpRight size={14} />}
                         {isNegative && <ArrowDownRight size={14} />}
                         {trendValue}

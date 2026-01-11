@@ -62,7 +62,7 @@ import { Users } from "lucide-react";
 <MetricCard
   title="Total Merchants"
   value="45"
-  subtitle="Platform partners"
+  subtitle=" "
   trend="up"
   trendValue="+3 this week"
   icon={Users}

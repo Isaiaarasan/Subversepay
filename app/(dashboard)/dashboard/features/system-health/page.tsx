@@ -57,44 +57,58 @@ export default async function SystemHealthPage() {
 
     return (
         <div className="space-y-8">
-            {/* Page Header */}
-            <PageHeader
-                title="System Health"
-                description="Infrastructure performance and error tracking."
-                icon={Activity}
-                actions={
-                    <button className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        <RefreshCw size={14} /> Last updated: Just now
-                    </button>
-                }
-            />
 
-            {/* Metrics Grid */}
-            <MetricsGrid metrics={metricsArray} columns={3} />
+  {/* Page Header */}
+  <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+    <PageHeader
+      title="System Health"
+      description="Infrastructure performance and error tracking."
+      icon={Activity}
+      actions={
+        <button className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <RefreshCw size={14} /> Last updated: Just now
+        </button>
+      }
+    />
+  </div>
 
-            {/* API Latency Chart */}
-            <LatencyChart />
+  {/* Metrics Grid */}
+  <div className="p-4 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+    <MetricsGrid metrics={metricsArray} columns={3} />
+  </div>
 
-            {/* Error Logs Table */}
-            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-white/60 dark:border-gray-800 overflow-hidden">
-                <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/50">
-                    <h3 className="font-bold text-gray-800 dark:text-white text-sm flex items-center gap-2">
-                        <Activity size={16} className="text-red-500" /> Recent 500 Errors
-                    </h3>
-                    <button className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
-                        View All Logs
-                    </button>
-                </div>
-                <div className="overflow-x-auto">
-                    <DataTable
-                        columns={errorLogColumns}
-                        data={errorLogs}
-                        keyExtractor={(log) => log.id}
-                        rowClassName="hover:bg-red-50/10 dark:hover:bg-red-900/10"
-                        className="border-0 shadow-none"
-                    />
-                </div>
-            </div>
-        </div>
+  {/* API Latency Chart */}
+  <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+    <LatencyChart />
+  </div>
+
+  {/* Error Logs Table */}
+  <div className="rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none overflow-hidden">
+
+    {/* Table Header */}
+    <div className="px-4 py-3 border-b border-white/40 dark:border-gray-700/40 flex items-center justify-between bg-white/30 dark:bg-gray-800/30">
+      <h3 className="font-bold text-gray-800 dark:text-white text-sm flex items-center gap-2">
+        <Activity size={16} className="text-red-500" /> Recent 500 Errors
+      </h3>
+      <button className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+        View All Logs
+      </button>
+    </div>
+
+    {/* Table */}
+    <div className="overflow-x-auto">
+      <DataTable
+        columns={errorLogColumns}
+        data={errorLogs}
+        keyExtractor={(log) => log.id}
+        rowClassName="hover:bg-red-50/10 dark:hover:bg-red-900/10"
+        className="border-0 shadow-none"
+      />
+    </div>
+
+  </div>
+
+</div>
+
     );
 }

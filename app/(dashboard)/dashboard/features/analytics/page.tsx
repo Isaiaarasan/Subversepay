@@ -30,51 +30,62 @@ export default async function AnalyticsPage() {
 
     return (
         <div className="space-y-8">
-            {/* Page Header */}
-            <PageHeader
-                title="Analytics Dashboard"
-                description="Comprehensive insights into platform performance."
-                icon={BarChart3}
-                actions={
-                    <>
-                        <DateRangeFilterWrapper />
-                        <TimeRangeSelector />
-                        <Button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
-                            Report
-                        </Button>
-                    </>
-                }
-            />
 
-            {/* Metrics Grid */}
-            <MetricsGrid metrics={metricsArray} columns={4} />
+  {/* Page Header */}
+  <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+    <PageHeader
+      title="Analytics Dashboard"
+      description="Comprehensive insights into platform performance."
+      icon={BarChart3}
+      actions={
+        <>
+          <DateRangeFilterWrapper />
+          <TimeRangeSelector />
+          <Button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-shadow">
+            Report
+          </Button>
+        </>
+      }
+    />
+  </div>
 
-            {/* Charts Row 1 */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2">
-                    <MultiBarGraph />
-                </div>
-                <div className="lg:col-span-1">
-                    <PaymentPieChart />
-                </div>
-            </div>
+  {/* Metrics */}
+  <div className="p-4 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
+    <MetricsGrid metrics={metricsArray} columns={4} />
+  </div>
 
-            {/* Charts Row 2 */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2">
-                    <ComparisonGraph />
-                </div>
-                <div className="lg:col-span-1">
-                    <SuccessScoreGraph />
-                </div>
-            </div>
+  {/* Charts Row 1 */}
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div className="lg:col-span-2 p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <MultiBarGraph />
+    </div>
+    <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <PaymentPieChart />
+    </div>
+  </div>
 
-            {/* Additional Analytics */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <TopPerformingMerchantsWidget merchants={topMerchants} />
-                <GeographicDistributionWidget data={geographicData} />
-            </div>
-        </div>
+  {/* Charts Row 2 */}
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div className="lg:col-span-2 p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <ComparisonGraph />
+    </div>
+    <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <SuccessScoreGraph />
+    </div>
+  </div>
+
+  {/* Additional Analytics */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <TopPerformingMerchantsWidget merchants={topMerchants} />
+    </div>
+    <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg">
+      <GeographicDistributionWidget data={geographicData} />
+    </div>
+  </div>
+
+</div>
+
     );
 }
 

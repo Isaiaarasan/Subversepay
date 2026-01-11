@@ -1,6 +1,7 @@
 "use server";
 
 import { MetricCardProps } from "@/components/ui/metric-card";
+import { Activity, AlertOctagon, Database } from "lucide-react";
 
 /**
  * System Health Service
@@ -40,6 +41,7 @@ export async function getSystemHealthMetrics(): Promise<SystemHealthMetrics> {
             subtitle: "+5% vs yesterday",
             trend: "up",
             trendValue: "+5%",
+            icon: Activity,
         },
         failedRequests: {
             title: "Failed Requests",
@@ -47,11 +49,13 @@ export async function getSystemHealthMetrics(): Promise<SystemHealthMetrics> {
             subtitle: "0.003% Failure Rate",
             trend: "down",
             trendValue: "0.003%",
+            icon: AlertOctagon,
         },
         supabaseLogs: {
             title: "Supabase Logs",
             value: "Open Dashboard",
             subtitle: "External Link",
+            icon: Database,
         },
     };
 }

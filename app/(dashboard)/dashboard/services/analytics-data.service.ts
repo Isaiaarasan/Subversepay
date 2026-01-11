@@ -1,6 +1,7 @@
 "use server";
 
 import { MetricCardProps } from "@/components/ui/metric-card";
+import { IndianRupee, Users, Percent, CreditCard } from "lucide-react";
 
 /**
  * Analytics Service
@@ -39,6 +40,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
             subtitle: "This month",
             trend: "up",
             trendValue: "+15.3%",
+            icon: IndianRupee,
         },
         activeUsers: {
             title: "Active Users",
@@ -46,6 +48,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
             subtitle: "Daily active",
             trend: "up",
             trendValue: "+8.1%",
+            icon: Users,
         },
         conversionRate: {
             title: "Conversion Rate",
@@ -53,6 +56,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
             subtitle: "Payment success",
             trend: "up",
             trendValue: "+0.5%",
+            icon: Percent,
         },
         avgTransaction: {
             title: "Avg Transaction",
@@ -60,6 +64,7 @@ export async function getAnalyticsMetrics(): Promise<AnalyticsMetrics> {
             subtitle: "Per transaction",
             trend: "down",
             trendValue: "-2.1%",
+            icon: CreditCard,
         },
     };
 }

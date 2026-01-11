@@ -105,10 +105,10 @@ const ActiveMerchantsTable: React.FC = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center">
                     <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
-                    <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full sm:w-auto mt-2 sm:mt-0">
+                    {/* <Link href="/dashboard/approvals" className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full sm:w-auto mt-2 sm:mt-0">
                         <UserCheck size={14} />
                         <span>Approvals</span>
-                    </Link>
+                    </Link> */}
                     <div className="relative group main-dropdown">
                         <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-xs font-medium shadow-sm w-full">
                             <Filter size={14} />
