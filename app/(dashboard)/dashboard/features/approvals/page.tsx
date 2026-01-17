@@ -93,32 +93,42 @@ const Approvals: React.FC = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm p-1 rounded-2xl">
-        <div className="relative w-full sm:w-100">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-          <input
-            type="text"
-            placeholder="Search merchants..."
-            value={searchTerm}
-            onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-            className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm text-gray-900 dark:text-white placeholder-gray-400"
-          />
+        <div className="relative w-full sm:w-100 p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300">
+          <div className="flex flex-col justify-center px-3 py-1.5">
+            {/* <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search</span> */}
+            <div className="flex items-center gap-2">
+              <Search className="text-gray-400 shrink-0" size={14} />
+              <input
+                type="text"
+                placeholder="Search merchants..."
+                value={searchTerm}
+                onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+                className="bg-transparent font-semibold text-xs text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none w-full"
+              />
+            </div>
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
           <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={(date) => dispatch(setStartDate(date))} onEndDateChange={(date) => dispatch(setEndDate(date))} />
-          <div className="relative w-full sm:w-auto">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-            <select
-              value={filterStatus}
-              onChange={(e) => dispatch(setFilterStatus(e.target.value))}
-              className="w-full sm:w-auto pl-10 pr-10 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm text-gray-700 dark:text-gray-300 font-medium"
-            >
-              <option value="All">Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+          <div className="relative w-full sm:w-auto p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300">
+            <div className="flex flex-col justify-center px-3 py-0.5">
+              <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Filter Status</span>
+              <div className="flex items-center gap-2">
+                <Filter className="text-gray-400 shrink-0" size={14} />
+                <select
+                  value={filterStatus}
+                  onChange={(e) => dispatch(setFilterStatus(e.target.value))}
+                  className="bg-transparent font-semibold text-xs text-gray-700 dark:text-gray-300 appearance-none cursor-pointer focus:outline-none w-full min-w-[100px]"
+                >
+                  <option value="All">All Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+            <div className="absolute right-3 bottom-1.5 pointer-events-none">
+              <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </div>
           </div>
         </div>
@@ -143,7 +153,7 @@ const Approvals: React.FC = () => {
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                 Documents
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase text-right">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase text-center">
                 Actions
               </th>
             </tr>
@@ -166,10 +176,10 @@ const Approvals: React.FC = () => {
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${item.status === 'Approved' || item.status === 'Active'
-                        ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
-                        : item.status === 'Rejected'
-                          ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-100 dark:border-red-900/30'
-                          : 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 border-yellow-100 dark:border-yellow-900/30'
+                      ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
+                      : item.status === 'Rejected'
+                        ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-100 dark:border-red-900/30'
+                        : 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 border-yellow-100 dark:border-yellow-900/30'
                       }`}>
                       {item.status}
                     </span>

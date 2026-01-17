@@ -29,13 +29,13 @@ export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
         )}>
             {/* Start Date */}
             <div
-                className="relative flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50"
+                className="relative flex items-center gap-2 pl-3 pr-2 py-0.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50"
                 onClick={() => startInputRef.current?.showPicker()}
             >
                 <div className="flex flex-col justify-center">
                     <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">From</span>
                     <div className="flex items-center gap-2">
-                        <Calendar size={14} className="text-blue-500" />
+                        <Calendar size={12} className="text-blue-500" />
                         <input
                             ref={startInputRef}
                             type="date"
@@ -51,12 +51,12 @@ export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
             </div>
 
             <div className="text-gray-300 dark:text-gray-600">
-                <ArrowRight size={14} />
+                <ArrowRight size={12} />
             </div>
 
             {/* End Date */}
             <div
-                className="relative flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50"
+                className="relative flex items-center gap-2 pl-2 pr-3 py-0.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50"
                 onClick={() => endInputRef.current?.showPicker()}
             >
                 <div className="flex flex-col justify-center">

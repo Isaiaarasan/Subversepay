@@ -95,9 +95,9 @@ const ActiveMerchantsTable: React.FC = () => {
 
                 {/* Search Bar - Premium Style */}
                 <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 flex-1 sm:max-w-md">
-                    <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
+                    <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
                         <div className="flex flex-col justify-center w-full">
-                            <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Query</span>
+                            {/* <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Query</span> */}
                             <div className="flex items-center gap-2">
                                 <Search className="text-blue-500 shrink-0" size={14} />
                                 <input
@@ -118,7 +118,7 @@ const ActiveMerchantsTable: React.FC = () => {
 
                     {/* Status Filter - Premium Style */}
                     <div className="group relative main-dropdown flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 cursor-pointer">
-                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[140px]">
+                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[140px]">
                             <div className="flex flex-col justify-center w-full">
                                 <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Filter Status</span>
                                 <div className="flex items-center justify-between gap-2">
@@ -145,7 +145,7 @@ const ActiveMerchantsTable: React.FC = () => {
 
                     {/* Export Button - Premium Style */}
                     <button className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all duration-300">
-                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent transition-colors w-full h-full">
+                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent transition-colors w-full h-full">
                             <div className="flex flex-col justify-center w-full h-full">
                                 <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Action</span>
                                 <div className="flex items-center gap-2">
