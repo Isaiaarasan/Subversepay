@@ -11,14 +11,8 @@ import {
 } from "../../../services/system-health.utils";
 import { TimeRange } from "../../../services/system-health.service";
 
-/**
- * LatencyChart - Client component for interactive latency visualization
- * Separated from page component for client-side interactivity
- */
 export function LatencyChart() {
     const [timeRange, setTimeRange] = useState<TimeRange>("Current Day");
-
-    // All calculations via service functions
     const currentData = useMemo(() => {
         return calculateLatencyData(timeRange);
     }, [timeRange]);
@@ -27,11 +21,10 @@ export function LatencyChart() {
         return calculateMaxLatency(currentData.data);
     }, [currentData.data]);
 
-    // SVG Layout
     const width = 100;
     const height = 100;
 
-    // Path calculations via service
+
     const linePath = useMemo(() => {
         return calculateChartPath(currentData.data, maxLatency, width, height);
     }, [currentData.data, maxLatency]);
@@ -49,20 +42,17 @@ export function LatencyChart() {
                     </h3>
                     <p className="text-xs text-gray-400 dark:text-gray-500">Average response time in ms</p>
                 </div>
-                <div className="flex bg-gray-50 dark:bg-gray-800 rounded-lg p-1">
-                    {(["Current Day", "Week", "Month"] as TimeRange[]).map((range) => (
-                        <button
-                            key={range}
-                            onClick={() => setTimeRange(range)}
-                            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${timeRange === range
-                                ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm font-bold"
-                                : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                                }`}
-                        >
-                            {range}
-                        </button>
-                    ))}
+                <div>
+                    <select
+                        value={timeRange}
+                        onChange={(e) => setTimeRange(e.target.value as TimeRange)}
+                        className="text-xs font-medium rounded-lg px-3 py-2  bg-gray-50 dark:bg-gray-800text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                        <option value="Current Day">Current Day</option>
+                        <option value="Week">Week</option>
+                        <option value="Month">Month</option>
+                    </select>
                 </div>
+
             </div>
 
             <div className="flex-1 relative w-full overflow-hidden">
@@ -71,7 +61,7 @@ export function LatencyChart() {
                     viewBox={`0 0 ${width} ${height}`}
                     preserveAspectRatio="none"
                 >
-                    {/* Grid Lines */}
+
                     {[0, 25, 50, 75, 100].map((y) => (
                         <line
                             key={y}
@@ -86,7 +76,6 @@ export function LatencyChart() {
                         />
                     ))}
 
-                    {/* Line Path */}
                     <motion.path
                         d={linePath}
                         fill="none"
@@ -98,7 +87,7 @@ export function LatencyChart() {
                         transition={{ duration: 1, ease: "easeInOut" }}
                     />
 
-                    {/* Area Fill */}
+
                     <motion.path
                         d={areaPath}
                         fill="url(#latencyGradient)"
