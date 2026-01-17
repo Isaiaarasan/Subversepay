@@ -28,6 +28,12 @@ const NotificationsPage = () => {
         { action: "Payment Gateway latency resolved", time: "3 hours ago", type: "success" },
     ];
 
+    const recentAlerts = [
+        { title: "High Failure Rate", desc: "Unusual spike in transaction failures detected.", time: "10 mins ago", type: "warning" },
+        { title: "System Maintenance", desc: "Scheduled maintenance in 2 hours.", time: "1 hour ago", type: "neutral" },
+        { title: "New Merchant Application", desc: "TechPro Ltd has submitted documents.", time: "30 mins ago", type: "success" },
+    ];
+
     return (
         <div className="space-y-8 pb-8 max-w-7xl mx-auto">
             {/* Header */}

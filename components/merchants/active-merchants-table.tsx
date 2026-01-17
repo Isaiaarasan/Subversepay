@@ -95,9 +95,9 @@ const ActiveMerchantsTable: React.FC = () => {
 
                 {/* Search Bar - Premium Style */}
                 <div className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 flex-1 sm:max-w-md">
-                    <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
+                    <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-text w-full group-focus-within:bg-gray-50 dark:group-focus-within:bg-gray-800/50">
                         <div className="flex flex-col justify-center w-full">
-                            <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Query</span>
+                            {/* <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Search Query</span> */}
                             <div className="flex items-center gap-2">
                                 <Search className="text-blue-500 shrink-0" size={14} />
                                 <input
@@ -118,7 +118,7 @@ const ActiveMerchantsTable: React.FC = () => {
 
                     {/* Status Filter - Premium Style */}
                     <div className="group relative main-dropdown flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-white dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-md transition-all duration-300 cursor-pointer">
-                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[140px]">
+                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full min-w-[140px]">
                             <div className="flex flex-col justify-center w-full">
                                 <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Filter Status</span>
                                 <div className="flex items-center justify-between gap-2">
@@ -145,7 +145,7 @@ const ActiveMerchantsTable: React.FC = () => {
 
                     {/* Export Button - Premium Style */}
                     <button className="group flex items-center p-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all duration-300">
-                        <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-transparent transition-colors w-full h-full">
+                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-lg bg-transparent transition-colors w-full h-full">
                             <div className="flex flex-col justify-center w-full h-full">
                                 <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider leading-none mb-0.5">Action</span>
                                 <div className="flex items-center gap-2">
@@ -189,6 +189,12 @@ const ActiveMerchantsTable: React.FC = () => {
                                             <div>
                                                 <div className="font-bold text-gray-900 dark:text-gray-100 text-xs hover:text-blue-600 transition-colors">{merchant.name}</div>
                                                 <div className="text-[10px] text-gray-500 dark:text-gray-400">#{merchant.id}</div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); dispatch(setSelectedMerchant(merchant)); }}
+                                                    className="flex items-center gap-1 text-[10px] text-blue-600 dark:text-blue-400 hover:underline mt-1 font-medium"
+                                                >
+                                                    <Eye size={10} /> View Details
+                                                </button>
                                             </div>
                                         </div>
                                     </td>
@@ -215,17 +221,22 @@ const ActiveMerchantsTable: React.FC = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-3 text-right">
-                                        <div className="flex items-center justify-end gap-2">
-                                            <button onClick={() => dispatch(setSelectedMerchant(merchant))} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded bg-transparent transition-colors">
-                                                <Eye size={14} />
-                                            </button>
+                                        <div className="flex items-center justify-end gap-2 min-w-[120px]">
                                             {merchant.status === 'Active' ? (
-                                                <button onClick={() => handleDeactivateClick(merchant.id)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded bg-transparent transition-colors">
-                                                    <Ban size={14} />
+                                                <button
+                                                    onClick={() => handleDeactivateClick(merchant.id)}
+                                                    className="group flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold border border-rose-100 dark:border-rose-900/30 bg-rose-50 dark:bg-rose-900/10 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:border-rose-200 transition-all shadow-sm"
+                                                >
+                                                    <Ban size={12} className="group-hover:scale-110 transition-transform" />
+                                                    <span>Deactivate</span>
                                                 </button>
                                             ) : (
-                                                <button onClick={() => handleActivate(merchant.id)} className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded bg-transparent transition-colors">
-                                                    <Power size={14} />
+                                                <button
+                                                    onClick={() => handleActivate(merchant.id)}
+                                                    className="group flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-200 transition-all shadow-sm"
+                                                >
+                                                    <Power size={12} className="group-hover:scale-110 transition-transform" />
+                                                    <span>Activate</span>
                                                 </button>
                                             )}
                                         </div>
@@ -295,48 +306,63 @@ const ActiveMerchantsTable: React.FC = () => {
             )}
 
             {/* Deactivation Modal */}
-            <AnimatePresence>
-                {deactivateId && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
-                    >
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {deactivateId && (
                         <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-white dark:bg-gray-900 w-full max-w-md rounded-xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-3xl px-4"
                         >
-                            <div className="bg-white dark:bg-gray-900 p-6 pb-0 flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400">
-                                    <AlertCircle size={20} />
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
+                                className="bg-white dark:bg-gray-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 ring-1 ring-black/5"
+                            >
+                                <div className="bg-white dark:bg-gray-900 p-6 pb-0 flex items-start gap-5">
+                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/10 flex items-center justify-center text-red-600 dark:text-red-500 shadow-inner">
+                                        <AlertCircle size={24} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Deactivate Merchant</h3>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">This action will immediately suspend the merchant's access to the platform. Are you sure you want to proceed?</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Deactivate Merchant</h3>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">This action will suspend access immediately.</p>
+                                <div className="p-6 space-y-5">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Reason for Deactivation</label>
+                                        <textarea
+                                            value={deactivateReason}
+                                            onChange={(e) => dispatch(setDeactivateReason(e.target.value))}
+                                            className="w-full h-32 p-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-gray-900 dark:text-white rounded-xl focus:ring-4 focus:ring-red-500/10 focus:border-red-500 dark:focus:border-red-500 outline-none resize-none text-sm shadow-sm transition-all placeholder:text-gray-400"
+                                            placeholder="Please provide a detailed reason for this action..."
+                                            autoFocus
+                                        ></textarea>
+                                    </div>
+                                    <div className="flex gap-3 justify-end pt-2">
+                                        <button
+                                            onClick={() => dispatch(setDeactivateId(null))}
+                                            className="px-5 py-2.5 rounded-xl text-gray-600 dark:text-gray-300 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={confirmDeactivate}
+                                            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-500 dark:from-red-600 dark:to-red-500 text-white text-sm font-bold hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                                        >
+                                            Deactivate Merchant
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-6 space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Reason for Deactivation</label>
-                                    <textarea
-                                        value={deactivateReason}
-                                        onChange={(e) => dispatch(setDeactivateReason(e.target.value))}
-                                        className="w-full h-24 p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none text-sm"
-                                        placeholder="Please detail the reason..."
-                                    ></textarea>
-                                </div>
-                                <div className="flex gap-3 justify-end">
-                                    <button onClick={() => dispatch(setDeactivateId(null))} className="px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
-                                    <button onClick={confirmDeactivate} className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 shadow-sm transition-shadow">Deactivate</button>
-                                </div>
-                            </div>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     );
 };

@@ -5,6 +5,30 @@ import { usePathname } from "next/navigation";
 import { Link as Home, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut } from "lucide-react";
 import { signOut } from "@/app/actions/auth";
 
+interface SidebarLinkProps {
+  href: string;
+  icon: React.ElementType;
+  label: string;
+  active?: boolean;
+}
+
+function SidebarLink({ href, icon: Icon, label, active }: SidebarLinkProps) {
+  return (
+    <Link
+      href={href}
+      className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm
+        ${active
+          ? "bg-primary text-primary-foreground shadow-md"
+          : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        }
+      `}
+    >
+      <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-primary-foreground" : "text-muted-foreground group-hover:text-sidebar-accent-foreground"}`} />
+      <span>{label}</span>
+    </Link>
+  );
+}
+
 export function DashboardSidebar() {
   const pathname = usePathname();
   const isSuperAdmin = pathname?.startsWith("/dashboard/super-admin");
@@ -15,38 +39,54 @@ export function DashboardSidebar() {
       </div>
 
       <nav className="flex-1 p-4 space-y-2">
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <LayoutDashboard className="h-4 w-4" />
-          <span>Dashboard</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <Store className="h-4 w-4" />
-          <span>Merchants</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <CheckCircle className="h-4 w-4" />
-          <span>Approvals</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <BarChart3 className="h-4 w-4" />
-          <span>Analytics</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <Bell className="h-4 w-4" />
-          <span>Alerts</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <CreditCard className="h-4 w-4" />
-          <span>Settlements</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <Activity className="h-4 w-4" />
-          <span>System Health</span>
-        </Link>
-        <Link href={isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets"} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
-          <Ticket className="h-4 w-4" />
-          <span>Tickets</span>
-        </Link>
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/"}
+          icon={LayoutDashboard}
+          label="Dashboard"
+          active={pathname === (isSuperAdmin ? "/dashboard/super-admin" : "/dashboard") || pathname === (isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants"}
+          icon={Store}
+          label="Merchants"
+          active={pathname?.includes("merchants")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals"}
+          icon={CheckCircle}
+          label="Approvals"
+          active={pathname?.includes("approvals")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics"}
+          icon={BarChart3}
+          label="Analytics"
+          active={pathname?.includes("analytics")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts"}
+          icon={Bell}
+          label="Alerts"
+          active={pathname?.includes("alerts")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements"}
+          icon={CreditCard}
+          label="Settlements"
+          active={pathname?.includes("settlements")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health"}
+          icon={Activity}
+          label="System Health"
+          active={pathname?.includes("system-health")}
+        />
+        <SidebarLink
+          href={isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets"}
+          icon={Ticket}
+          label="Tickets"
+          active={pathname?.includes("tickets")}
+        />
       </nav>
 
       <div className="p-4 border-t border-sidebar-border">

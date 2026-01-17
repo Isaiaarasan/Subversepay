@@ -4,6 +4,7 @@ import React from "react";
 import { Search, Filter, Download, Users } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { selectFilteredCustomers } from "@/lib/store/slices/customersSlice";
+import CustomersTable from "../_components/CustomersTable";
 
 const Customers: React.FC = () => {
     // Use the memoized selector for efficiency
@@ -25,35 +26,7 @@ const Customers: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-gray-50/50 border-b border-gray-100">
-                        <tr>
-                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Name</th>
-                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Email</th>
-                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Associated Merchant</th>
-                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Joined Date</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                        {customers.map((item) => (
-                            <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">
-                                            {item.name.charAt(0)}
-                                        </div>
-                                        <span className="font-bold text-gray-900">{item.name}</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{item.email}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{item.merchant}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">{item.joined}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <CustomersTable customers={customers} />
         </div>
     );
 };

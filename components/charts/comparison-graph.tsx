@@ -80,11 +80,11 @@ const ComparisonGraph: React.FC = () => {
 
             <div className="flex items-center justify-center gap-6 mt-auto">
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-sm"></div>
                     <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">Current Year</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-sm"></div>
+                    <div className="w-3 h-3 rounded-full bg-blue-500 dark:bg-blue-500 shadow-sm"></div>
                     <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">Previous Year</span>
                 </div>
             </div>

@@ -182,7 +182,7 @@ const Tickets: React.FC = () => {
                                 <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-3">
                                     <MessageSquare className="w-6 h-6 text-gray-400" />
                                 </div>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">No tickets available</p>
+                                <p className="text-sm text-gray-500 dark:text-grey-500">No tickets available</p>
                             </div>
                         )}
                     </div>
@@ -275,7 +275,10 @@ const Tickets: React.FC = () => {
                             <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                                 <MessageSquare size={40} className="text-gray-300" />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No Ticket Selected</h3>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                No Ticket Selected
+                            </h3>
+
                             <p className="text-gray-500 max-w-sm">Select a ticket from the sidebar to view details, reply to customers, or manage status.</p>
                         </div>
                     )}

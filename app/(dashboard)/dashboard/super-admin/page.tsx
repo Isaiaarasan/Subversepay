@@ -129,33 +129,86 @@ const SuperAdminPage = () => {
         ))}
       </div>
 
-      {/* Super Admin Actions - Moving Above Charts */}
-      <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
-        <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Super Admin Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
-          <Link href="/dashboard/super-admin/merchants" className="p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg text-left transition-colors border border-blue-100 dark:border-blue-900/10">
-            <div className="font-medium text-blue-900 dark:text-blue-100 text-sm">Manage Merchants</div>
-            <div className="text-[10px] text-blue-600 dark:text-blue-300 mt-1">Onboard & monitor partners</div>
+      {/* Super Admin Actions - Premium Cards */}
+      <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
+        <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-5 text-lg">Quick Actions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Link href="/dashboard/super-admin/merchants" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                <Store size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-blue-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">Manage Merchants</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Onboard new partners and monitor merchant activities.</p>
           </Link>
-          <Link href="/dashboard/super-admin/approvals" className="p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-left transition-colors border border-green-100 dark:border-green-900/10">
-            <div className="font-medium text-green-900 dark:text-green-100 text-sm">Review Approvals</div>
-            <div className="text-[10px] text-green-600 dark:text-green-300 mt-1">Pending requests & validations</div>
+
+          <Link href="/dashboard/super-admin/approvals" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
+                <CheckCircle size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-green-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">Review Approvals</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Validate documents and approve pending requests.</p>
           </Link>
-          <Link href="/dashboard/super-admin/analytics" className="p-4 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg text-left transition-colors border border-purple-100 dark:border-purple-900/10">
-            <div className="font-medium text-purple-900 dark:text-purple-100 text-sm">View Analytics</div>
-            <div className="text-[10px] text-purple-600 dark:text-purple-300 mt-1">Platform performance insights</div>
+
+          <Link href="/dashboard/super-admin/analytics" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                <BarChart3 size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-purple-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">View Analytics</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Analyze platform performance and revenue growth.</p>
           </Link>
-          <Link href="/dashboard/super-admin/system-health" className="p-4 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg text-left transition-colors border border-orange-100 dark:border-orange-900/10">
-            <div className="font-medium text-orange-900 dark:text-orange-100 text-sm">System Health</div>
-            <div className="text-[10px] text-orange-600 dark:text-orange-300 mt-1">Monitor infrastructure status</div>
+
+          <Link href="/dashboard/super-admin/system-health" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+                <Activity size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-orange-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">System Health</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Monitor infrastructure status and uptime.</p>
           </Link>
-          <Link href="/dashboard/super-admin/alerts" className="p-4 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg text-left transition-colors border border-red-100 dark:border-red-900/10">
-            <div className="font-medium text-red-900 dark:text-red-100 text-sm">Monitor Alerts</div>
-            <div className="text-[10px] text-red-600 dark:text-red-300 mt-1">System notifications & issues</div>
+
+          <Link href="/dashboard/super-admin/alerts" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">
+                <Bell size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-red-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">Monitor Alerts</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Track critical system notifications and issues.</p>
           </Link>
-          <Link href="/dashboard/super-admin/tickets" className="p-4 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-lg text-left transition-colors border border-indigo-100 dark:border-indigo-900/10">
-            <div className="font-medium text-indigo-900 dark:text-indigo-100 text-sm">Support Tickets</div>
-            <div className="text-[10px] text-indigo-600 dark:text-indigo-300 mt-1">Customer support management</div>
+
+          <Link href="/dashboard/super-admin/tickets" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="flex items-start justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                <Ticket size={20} />
+              </div>
+              <div className="p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 group-hover:text-indigo-500 transition-colors">
+                <ArrowUpRight size={14} />
+              </div>
+            </div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mb-1">Support Tickets</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Manage customer support inquiries.</p>
           </Link>
         </div>
       </div>
@@ -219,7 +272,9 @@ const SuperAdminPage = () => {
                     <td className="py-2.5 pl-2 font-medium text-gray-700 dark:text-gray-300">SpeedNet ISP #{i + 1}</td>
                     <td className="py-2.5 text-right text-gray-600 dark:text-gray-400">₹45,00{i}</td>
                     <td className="py-2.5 text-center">
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                        Active
+                      </span>
                     </td>
                   </tr>
                 ))}
