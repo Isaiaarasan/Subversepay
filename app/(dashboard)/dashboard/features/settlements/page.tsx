@@ -9,6 +9,8 @@ import { filterSettlements } from "../../utils/settlements.utils";
 
 const Settlements: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 5;
   const { settlements, searchQuery, statusFilter, startDate, endDate } = useAppSelector((state) => state.settlements);
 
   // All filtering logic moved to service
@@ -20,6 +22,11 @@ const Settlements: React.FC = () => {
       endDate,
     });
   }, [settlements, searchQuery, statusFilter, startDate, endDate]);
+
+  const paginatedSettlements = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredSettlements.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredSettlements, currentPage]);
 
   return (
     <div className="space-y-8">
@@ -89,8 +96,8 @@ const Settlements: React.FC = () => {
                         dispatch(setStatusFilter(status as SettlementStatusFilter))
                       }
                       className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors ${statusFilter === status
-                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
-                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                         }`}
                     >
                       {status === "all" ? "All Settlements" : status}
@@ -136,7 +143,7 @@ const Settlements: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-            {filteredSettlements.map((item) => (
+            {paginatedSettlements.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors text-xs">
                 <td className="px-4 py-3 font-mono text-blue-600 dark:text-blue-400 font-bold">{item.id}</td>
                 <td className="px-4 py-3 font-medium text-gray-500 dark:text-gray-400">{item.from}</td>
@@ -162,6 +169,29 @@ const Settlements: React.FC = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Pagination */}
+        <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+          <div className="text-gray-500 dark:text-gray-400 text-xs">
+            Showing <span className="font-bold text-gray-900 dark:text-white">{Math.min((currentPage - 1) * itemsPerPage + 1, filteredSettlements.length)}-{Math.min(currentPage * itemsPerPage, filteredSettlements.length)}</span> of <span className="font-bold text-gray-900 dark:text-white">{filteredSettlements.length}</span>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setCurrentPage(p => Math.min(Math.ceil(filteredSettlements.length / itemsPerPage), p + 1))}
+              disabled={currentPage >= Math.ceil(filteredSettlements.length / itemsPerPage)}
+              className="px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
