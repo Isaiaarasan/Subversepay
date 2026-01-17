@@ -135,6 +135,9 @@ const Approvals: React.FC = () => {
                 Type
               </th>
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                Status
+              </th>
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                 Applied Date
               </th>
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
@@ -160,6 +163,16 @@ const Approvals: React.FC = () => {
                   </td>
                   <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
                     {item.type}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${item.status === 'Approved' || item.status === 'Active'
+                        ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
+                        : item.status === 'Rejected'
+                          ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-100 dark:border-red-900/30'
+                          : 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 border-yellow-100 dark:border-yellow-900/30'
+                      }`}>
+                      {item.status}
+                    </span>
                   </td>
                   <td className="px-4 py-3 text-gray-500 dark:text-gray-400">
                     {item.date}

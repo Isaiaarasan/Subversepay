@@ -12,16 +12,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        blue: colors.zinc,
-        indigo: colors.zinc,
-        violet: colors.zinc,
-        purple: colors.zinc,
-        sky: colors.zinc,
-        cyan: colors.zinc,
-        slate: colors.zinc,
-        gray: colors.zinc,
-        neutral: colors.zinc,
-        stone: colors.zinc,
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -79,6 +69,26 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontSize: {
+        // Headlines
+        h1: ['48px', { lineHeight: '58px', fontWeight: '600' }],
+        h2: ['40px', { lineHeight: '48px', fontWeight: '600' }],
+        h3: ['32px', { lineHeight: '38px', fontWeight: '600' }],
+        h4: ['28px', { lineHeight: '34px', fontWeight: '600' }],
+        h5: ['24px', { lineHeight: '28px', fontWeight: '600' }],
+        // Subtitles
+        s1: ['18px', { lineHeight: '28px', fontWeight: '600' }],
+        s2: ['16px', { lineHeight: '24px', fontWeight: '600' }],
+        // Body
+        b1: ['16px', { lineHeight: '24px', fontWeight: '400' }],
+        b2: ['16px', { lineHeight: '24px', fontWeight: '500' }],
+        b3: ['14px', { lineHeight: '20px', fontWeight: '400' }],
+        b4: ['14px', { lineHeight: '20px', fontWeight: '500' }],
+        // Captions
+        c1: ['12px', { lineHeight: '16px', fontWeight: '400' }],
+        c2: ['12px', { lineHeight: '16px', fontWeight: '500' }],
+        c3: ['10px', { lineHeight: '14px', fontWeight: '500' }],
       },
     },
   },

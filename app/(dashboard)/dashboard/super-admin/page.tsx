@@ -272,7 +272,9 @@ const SuperAdminPage = () => {
                     <td className="py-2.5 pl-2 font-medium text-gray-700 dark:text-gray-300">SpeedNet ISP #{i + 1}</td>
                     <td className="py-2.5 text-right text-gray-600 dark:text-gray-400">₹45,00{i}</td>
                     <td className="py-2.5 text-center">
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                        Active
+                      </span>
                     </td>
                   </tr>
                 ))}

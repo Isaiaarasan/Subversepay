@@ -16,18 +16,15 @@ function SidebarLink({ href, icon: Icon, label, active }: SidebarLinkProps) {
   return (
     <Link
       href={href}
-      className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 font-medium text-sm
+      className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm
         ${active
-          ? "bg-slate-100 text-slate-900 border border-slate-200 dark:bg-white/10 dark:text-white dark:border-white/10"
-          : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 border border-transparent"
+          ? "bg-primary text-primary-foreground shadow-md"
+          : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
         }
       `}
     >
-      <Icon className={`h-4 w-4 ${active ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200"}`} />
+      <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-primary-foreground" : "text-muted-foreground group-hover:text-sidebar-accent-foreground"}`} />
       <span>{label}</span>
-      {active && (
-        <div className="absolute right-2 w-1.5 h-1.5 rounded-full bg-slate-900 dark:bg-white" />
-      )}
     </Link>
   );
 }
