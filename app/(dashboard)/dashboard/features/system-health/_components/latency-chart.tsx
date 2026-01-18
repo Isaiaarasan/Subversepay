@@ -46,12 +46,8 @@ export function LatencyChart() {
                     <select
                         value={timeRange}
                         onChange={(e) => setTimeRange(e.target.value as TimeRange)}
-                        className="text-xs font-medium rounded-lg px-3 py-2
-bg-gray-50 dark:bg-gray-800
-text-gray-700 dark:text-gray-200
-border border-gray-200 dark:border-gray-700
-focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
->
+                        className="text-xs font-medium rounded-lg px-3 py-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+
                         <option value="Current Day">Current Day</option>
                         <option value="Week">Week</option>
                         <option value="Month">Month</option>
