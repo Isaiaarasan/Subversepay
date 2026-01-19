@@ -172,7 +172,7 @@ const ActiveMerchantsTable: React.FC = () => {
                                 <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Revenue</th>
                                 <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Growth</th>
                                 <th className="px-6 py-4 text-center text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                <th className="px-6 py-4 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                                <th className="px-6 py-4 text-center text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
@@ -257,8 +257,7 @@ const ActiveMerchantsTable: React.FC = () => {
                 </div>
             </div>
 
-            {/* Merchant Details Modal */}
-            {/* Merchant Details Modal */}
+
             {mounted && createPortal(
                 <AnimatePresence>
                     {selectedMerchant && (
