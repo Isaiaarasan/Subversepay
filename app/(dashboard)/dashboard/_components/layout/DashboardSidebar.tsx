@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Link as Home, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut } from "lucide-react";
+import { Link as Home, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut, TrendingUp, Cog } from "lucide-react";
 import { signOut } from "@/app/actions/auth";
 
 interface SidebarLinkProps {
@@ -32,6 +32,7 @@ function SidebarLink({ href, icon: Icon, label, active }: SidebarLinkProps) {
 export function DashboardSidebar() {
   const pathname = usePathname();
   const isSuperAdmin = pathname?.startsWith("/dashboard/super-admin");
+  const isAdmin = pathname?.startsWith("/dashboard/admin");
   return (
     <aside className="w-64 h-screen fixed left-0 top-0 z-50 flex flex-col bg-sidebar text-sidebar-foreground shadow-2xl overflow-hidden border-r border-sidebar-border">
       <div className="h-16 flex items-center px-6 border-b border-sidebar-border font-bold text-xl tracking-tight">
@@ -39,54 +40,103 @@ export function DashboardSidebar() {
       </div>
 
       <nav className="flex-1 p-4 space-y-2">
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/"}
-          icon={LayoutDashboard}
-          label="Dashboard"
-          active={pathname === (isSuperAdmin ? "/dashboard/super-admin" : "/dashboard") || pathname === (isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants"}
-          icon={Store}
-          label="Merchants"
-          active={pathname?.includes("merchants")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals"}
-          icon={CheckCircle}
-          label="Approvals"
-          active={pathname?.includes("approvals")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics"}
-          icon={BarChart3}
-          label="Analytics"
-          active={pathname?.includes("analytics")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts"}
-          icon={Bell}
-          label="Alerts"
-          active={pathname?.includes("alerts")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements"}
-          icon={CreditCard}
-          label="Settlements"
-          active={pathname?.includes("settlements")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health"}
-          icon={Activity}
-          label="System Health"
-          active={pathname?.includes("system-health")}
-        />
-        <SidebarLink
-          href={isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets"}
-          icon={Ticket}
-          label="Tickets"
-          active={pathname?.includes("tickets")}
-        />
+        {isAdmin ? (
+          <>
+            <SidebarLink
+              href="/dashboard/admin/"
+              icon={LayoutDashboard}
+              label="Dashboard"
+              active={pathname === "/dashboard/admin" || pathname === "/dashboard/admin/"}
+            />
+            <SidebarLink
+              href="/dashboard/admin/manage"
+              icon={Cog}
+              label="Manage"
+              active={pathname?.includes("manage")}
+            />
+            <SidebarLink
+              href="/dashboard/admin/analytics"
+              icon={BarChart3}
+              label="Analytics"
+              active={pathname?.includes("analytics")}
+            />
+            <SidebarLink
+              href="/dashboard/admin/performance"
+              icon={Activity}
+              label="Performance"
+              active={pathname?.includes("performance")}
+            />
+            <SidebarLink
+              href="/dashboard/admin/revenue-forecast"
+              icon={TrendingUp}
+              label="Revenue Forecast"
+              active={pathname?.includes("revenue-forecast")}
+            />
+            <SidebarLink
+              href="/dashboard/admin/settings"
+              icon={Settings}
+              label="Settings"
+              active={pathname?.includes("settings")}
+            />
+            <SidebarLink
+              href="/dashboard/admin/tickets"
+              icon={Ticket}
+              label="Tickets"
+              active={pathname?.includes("tickets")}
+            />
+          </>
+        ) : (
+          <>
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/"}
+              icon={LayoutDashboard}
+              label="Dashboard"
+              active={pathname === (isSuperAdmin ? "/dashboard/super-admin" : "/dashboard") || pathname === (isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants"}
+              icon={Store}
+              label="Merchants"
+              active={pathname?.includes("merchants")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals"}
+              icon={CheckCircle}
+              label="Approvals"
+              active={pathname?.includes("approvals")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics"}
+              icon={BarChart3}
+              label="Analytics"
+              active={pathname?.includes("analytics")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts"}
+              icon={Bell}
+              label="Alerts"
+              active={pathname?.includes("alerts")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements"}
+              icon={CreditCard}
+              label="Settlements"
+              active={pathname?.includes("settlements")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health"}
+              icon={Activity}
+              label="System Health"
+              active={pathname?.includes("system-health")}
+            />
+            <SidebarLink
+              href={isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets"}
+              icon={Ticket}
+              label="Tickets"
+              active={pathname?.includes("tickets")}
+            />
+          </>
+        )}
       </nav>
 
       <div className="p-4 border-t border-sidebar-border">
