@@ -2,7 +2,7 @@
 
 import React from "react";
 import StatCard from "@/components/ui/stat-card";
-import { CreditCard, Users, UserCheck, Brain } from "lucide-react";
+import { CreditCard, Users, UserCheck, Brain, CheckCircle, Clock, XCircle, AlertTriangle } from "lucide-react";
 
 export function AdminStatsCards() {
   // Admin-specific stats data
