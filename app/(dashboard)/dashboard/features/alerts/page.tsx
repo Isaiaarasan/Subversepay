@@ -48,7 +48,7 @@ const Alerts: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-8">
 <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
 

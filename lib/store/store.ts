@@ -11,6 +11,7 @@ import dashboardReducer from './slices/dashboardSlice';
 import adminReducer from './slices/adminSlice';
 import customersReducer from './slices/customersSlice';
 import managersReducer from './slices/managersSlice';
+import paymentsReducer from './slices/paymentsSlice';
 import membersReducer from './slices/membersSlice';
 import superAdminReducer from './slices/superAdminSlice';
 import teamLeadReducer from './slices/teamLeadSlice';
@@ -29,6 +30,7 @@ export const store = configureStore({
     admin: adminReducer,
     customers: customersReducer,
     managers: managersReducer,
+    payments: paymentsReducer,
     members: membersReducer,
     superAdmin: superAdminReducer,
     teamLead: teamLeadReducer,
