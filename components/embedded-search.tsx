@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Search, LayoutDashboard, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, Settings } from "lucide-react";
+import { Search, LayoutDashboard, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, Settings, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationItem {
@@ -26,68 +26,106 @@ const EmbeddedSearch: React.FC<EmbeddedSearchProps> = ({ isOpen, onClose, search
 
   // Get navigation items based on current context
   const getNavigationItems = (): NavigationItem[] => {
-    const baseItems: NavigationItem[] = [
-      {
-        name: "Overview",
-        href: isSuperAdmin ? "/dashboard/super-admin" : "/dashboard",
-        icon: LayoutDashboard,
-        description: "Dashboard overview and metrics"
-      },
-      {
-        name: "Merchants",
-        href: isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants",
-        icon: Store,
-        description: "Manage and view merchant accounts"
-      },
-      {
-        name: "Approvals",
-        href: isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals",
-        icon: CheckCircle,
-        description: "Review and approve pending requests"
-      },
-      {
-        name: "Analytics",
-        href: isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics",
-        icon: BarChart3,
-        description: "View analytics and reports"
-      },
-      {
-        name: "Alerts",
-        href: isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts",
-        icon: Bell,
-        description: "System alerts and notifications"
-      },
-      {
-        name: "Settlements",
-        href: isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements",
-        icon: CreditCard,
-        description: "Settlement reports and payments"
-      },
-      {
-        name: "System Health",
-        href: isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health",
-        icon: Activity,
-        description: "Monitor system status and performance"
-      },
-      {
-        name: "Tickets",
-        href: isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets",
-        icon: Ticket,
-        description: "Support tickets and issues"
-      }
-    ];
-
-    // Add settings for non-super-admin users
-    if (!isSuperAdmin) {
-      baseItems.push({
-        name: "Settings",
-        href: "/dashboard/settings",
-        icon: Settings,
-        description: "Account and system settings"
-      });
+    // Super Admin navigation items
+    if (isSuperAdmin) {
+      return [
+        {
+          name: "Overview",
+          href: "/dashboard/super-admin",
+          icon: LayoutDashboard,
+          description: "Super admin dashboard overview"
+        },
+        {
+          name: "Merchants",
+          href: "/dashboard/super-admin/merchants",
+          icon: Store,
+          description: "Manage all merchant accounts"
+        },
+        {
+          name: "Approvals",
+          href: "/dashboard/super-admin/approvals",
+          icon: CheckCircle,
+          description: "Review and approve all requests"
+        },
+        {
+          name: "Analytics",
+          href: "/dashboard/super-admin/analytics",
+          icon: BarChart3,
+          description: "System-wide analytics and reports"
+        },
+        {
+          name: "Alerts",
+          href: "/dashboard/super-admin/alerts",
+          icon: Bell,
+          description: "System-wide alerts and notifications"
+        },
+        {
+          name: "Settlements",
+          href: "/dashboard/super-admin/settlements",
+          icon: CreditCard,
+          description: "All settlement reports and payments"
+        },
+        {
+          name: "System Health",
+          href: "/dashboard/super-admin/system-health",
+          icon: Activity,
+          description: "Monitor complete system status"
+        },
+        {
+          name: "Tickets",
+          href: "/dashboard/super-admin/tickets",
+          icon: Ticket,
+          description: "All support tickets and issues"
+        }
+      ];
     }
-
-    return baseItems;
+    // Admin navigation items (regular admin users) - using else condition
+    else {
+      return [
+        {
+          name: "Overview",
+          href: "/dashboard",
+          icon: LayoutDashboard,
+          description: "Dashboard overview and metrics"
+        },
+        {
+          name: "Manage",
+          href: "/dashboard/admin/manage",
+          icon: Settings,
+          description: "Manage users and permissions"
+        },
+        {
+          name: "Revenue Forecast",
+          href: "/dashboard/admin/revenue-forecast",
+          icon: TrendingUp,
+          description: "View revenue forecasting and projections"
+        },
+        {
+          name: "Analytics",
+          href: "/dashboard/admin/analytics",
+          icon: BarChart3,
+          description: "View analytics and reports"
+        },
+        {
+          name: "Performance",
+          href: "/dashboard/admin/performance",
+          icon: Activity,
+          description: "Monitor team performance metrics"
+        },
+        {
+          name: "Tickets",
+          href: "/dashboard/admin/tickets",
+          icon: Ticket,
+          description: "Support tickets and issues"
+        },
+        {
+          name: "Settings",
+          href: "/dashboard/admin/settings",
+          icon: Settings,
+          description: "Account and system settings"
+        }
+      ];
+    }
   };
 
   const currentNavigationItems = getNavigationItems();

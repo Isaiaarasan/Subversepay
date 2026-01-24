@@ -1,11 +1,15 @@
 import React from "react";
 import Tickets from "../../features/tickets/page";
 import RevenueForecast from "../../features/revenue-forecast/page";
+import AdminAnalyticsPage from "../analytics/page";
+import PerformancePage from "../performance/page";
 
 // Feature mapping for admin
 const featureComponents: Record<string, React.ComponentType<any>> = {
   tickets: Tickets,
   "revenue-forecast": RevenueForecast,
+  analytics: AdminAnalyticsPage,
+  performance: PerformancePage,
 };
 
 export default async function AdminFeaturePage(props: { params: Promise<{ feature: string }> }) {

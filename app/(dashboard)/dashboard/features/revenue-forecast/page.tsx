@@ -45,7 +45,7 @@ const RevenueForecast: React.FC = () => {
 
         {/* Current Month Collection (Actual) */}
         <MetricCard
-          title="Current Month Collection (Actual)"
+          title="Current Month Collection"
           value="₹2,35,000"
           trend="up"
           trendValue="+15.2%"
@@ -54,7 +54,7 @@ const RevenueForecast: React.FC = () => {
 
         {/* Upcoming Month Collection (Predicted) */}
         <MetricCard
-          title="Upcoming Month Collection (Predicted)"
+          title="Upcoming Month Collection"
           value="₹3,05,000"
           trend="up"
           trendValue="+13.4%"
@@ -72,16 +72,7 @@ const RevenueForecast: React.FC = () => {
       </div>
 
       {/* Additional Content Area */}
-      <div className="bg-white/80 backdrop-blur-xl border border-white/60 dark:border-gray-800 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80 p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <BarChart3 className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Revenue Analysis</h3>
-        </div>
-        <p className="text-gray-600 dark:text-gray-400">
-          Detailed revenue forecasting and analysis will be displayed here. This section will include charts,
-          trends, and predictive analytics to help with financial planning and decision making.
-        </p>
-      </div>
+      
     </div>
   );
 };
