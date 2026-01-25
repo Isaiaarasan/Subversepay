@@ -36,6 +36,9 @@ export async function getMerchants(): Promise<Merchant[]> {
     // const supabase = await createClient();
     // const { data, error } = await supabase.from('merchants').select('*');
 
+    // Simulate database latency
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
     return [
         {
             id: 1,

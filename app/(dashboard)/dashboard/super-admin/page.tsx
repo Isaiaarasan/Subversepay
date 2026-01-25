@@ -44,7 +44,7 @@ const SuperAdminPage = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl rounded-2xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
             <Shield className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -123,7 +123,7 @@ const SuperAdminPage = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsWithIcons.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
@@ -133,7 +133,7 @@ const SuperAdminPage = () => {
       <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
         <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-5 text-lg">Quick Actions</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Link href="/dashboard/super-admin/merchants" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/merchants" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                 <Store size={20} />
@@ -146,7 +146,7 @@ const SuperAdminPage = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Onboard new partners and monitor merchant activities.</p>
           </Link>
 
-          <Link href="/dashboard/super-admin/approvals" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/approvals" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
                 <CheckCircle size={20} />
@@ -159,7 +159,7 @@ const SuperAdminPage = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Validate documents and approve pending requests.</p>
           </Link>
 
-          <Link href="/dashboard/super-admin/analytics" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/analytics" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
                 <BarChart3 size={20} />
@@ -172,7 +172,7 @@ const SuperAdminPage = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Analyze platform performance and revenue growth.</p>
           </Link>
 
-          <Link href="/dashboard/super-admin/system-health" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/system-health" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
                 <Activity size={20} />
@@ -185,7 +185,7 @@ const SuperAdminPage = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Monitor infrastructure status and uptime.</p>
           </Link>
 
-          <Link href="/dashboard/super-admin/alerts" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/alerts" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">
                 <Bell size={20} />
@@ -198,7 +198,7 @@ const SuperAdminPage = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Track critical system notifications and issues.</p>
           </Link>
 
-          <Link href="/dashboard/super-admin/tickets" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <Link href="/dashboard/super-admin/features/tickets" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
                 <Ticket size={20} />
@@ -229,7 +229,7 @@ const SuperAdminPage = () => {
         <div className="bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-800 dark:text-gray-200">Pending Approvals</h3>
-            <Link href="/dashboard/super-admin/approvals" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">View All</Link>
+            <Link href="/dashboard/super-admin/features/approvals" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">View All</Link>
           </div>
           <div className="space-y-3">
             {pendingApprovals.map((item, i) => (
@@ -255,7 +255,7 @@ const SuperAdminPage = () => {
         <div className="lg:col-span-2 bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-800 dark:text-gray-200">Active Merchants Activity</h3>
-            <Link href="/dashboard/super-admin/merchants" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">Manage</Link>
+            <Link href="/dashboard/super-admin/features/merchants" className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 hover:underline">Manage</Link>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
@@ -288,7 +288,7 @@ const SuperAdminPage = () => {
       <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 dark:bg-gray-900/80">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-gray-800 dark:text-gray-200">System Status Overview</h3>
-          <Link href="/dashboard/super-admin/system-health" className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline">View Details</Link>
+          <Link href="/dashboard/super-admin/features/system-health" className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline">View Details</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="flex items-center gap-3">
