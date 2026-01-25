@@ -10,7 +10,7 @@ export function AdminStatsCards() {
     {
       title: "Total Collection",
       value: "₹2,45,000",
-      subtitle: "This month",
+      subtitle: " ",
       trend: "up" as const,
       trendValue: "+12.5%",
       icon: CreditCard,
@@ -18,7 +18,7 @@ export function AdminStatsCards() {
     {
       title: "Total Managers",
       value: "24",
-      subtitle: "Active managers",
+      subtitle: " ",
       trend: "up" as const,
       trendValue: "+3",
       icon: Users,
@@ -26,7 +26,7 @@ export function AdminStatsCards() {
     {
       title: "Total Customers",
       value: "1,247",
-      subtitle: "Registered users",
+      subtitle: " ",
       trend: "up" as const,
       trendValue: "+8.2%",
       icon: UserCheck,
@@ -34,7 +34,7 @@ export function AdminStatsCards() {
     {
       title: "AI Retry Success",
       value: "94.7%",
-      subtitle: "Success rate",
+      subtitle: " ",
       trend: "up" as const,
       trendValue: "+2.1%",
       icon: Brain,
