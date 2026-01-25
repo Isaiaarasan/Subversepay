@@ -3,6 +3,7 @@
 import React, { useMemo } from "react";
 import { Download, Search, Filter } from "lucide-react";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
+import { SETTLEMENT_STATUS, SETTLEMENT_STATUS_OPTIONS } from "@/lib/constants/settlements";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { setSearchQuery, setStatusFilter, setStartDate, setEndDate, SettlementStatusFilter } from "@/lib/store/slices/settlementsSlice";
 import { filterSettlements } from "../../../utils/settlements.utils";
@@ -89,7 +90,7 @@ const Settlements: React.FC = () => {
 
                 {/* Dropdown */}
                 <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 p-1 hidden group-hover:block z-50">
-                  {["all", "Completed", "Processing", "Failed"].map((status) => (
+                  {SETTLEMENT_STATUS_OPTIONS.map((status) => (
                     <button
                       key={status}
                       onClick={() =>
@@ -100,7 +101,7 @@ const Settlements: React.FC = () => {
                         : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                         }`}
                     >
-                      {status === "all" ? "All Settlements" : status}
+                      {status === SETTLEMENT_STATUS.ALL ? "All Settlements" : status}
                     </button>
                   ))}
                 </div>

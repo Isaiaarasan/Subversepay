@@ -1,6 +1,6 @@
 import React from "react";
-import Tickets from "../../features/tickets/page";
-import RevenueForecast from "../../features/revenue-forecast/page";
+import Tickets from "../../super-admin/features/tickets/page";
+import RevenueForecast from "../../super-admin/features/revenue-forecast/page";
 import AdminAnalyticsPage from "../analytics/page";
 import PerformancePage from "../performance/page";
 

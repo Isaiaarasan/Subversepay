@@ -1,0 +1,18 @@
+export const LABELS = {
+    DASHBOARD: "Dashboard",
+    MANAGE: "Manage",
+    MANAGERS: "Managers",
+    CUSTOMERS: "Customers",
+    ANALYTICS: "Analytics",
+    PERFORMANCE: "Performance",
+    REVENUE_FORECAST: "Revenue Forecast",
+    SETTINGS: "Settings",
+    TICKETS: "Tickets",
+    MERCHANTS: "Merchants",
+    APPROVALS: "Approvals",
+    ALERTS: "Alerts",
+    SETTLEMENTS: "Settlements",
+    SYSTEM_HEALTH: "System Health",
+    LOGOUT: "Logout",
+    SUBVERSE_PAY: "Subverse Pay",
+};

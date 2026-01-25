@@ -3,7 +3,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-export type UserRole = 1 | 2 | 3 | 4;
+import { ROLES } from "@/lib/constants/roles";
+import { AUTH_ROUTES } from "@/lib/constants/auth-routes";
+
+export type UserRole = number;
 
 export interface AuthUser {
   id: string;
@@ -18,11 +21,11 @@ export interface AuthUser {
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
-  
+
   if (error || !user) {
     return null;
   }
-  
+
   return user;
 }
 
@@ -34,11 +37,11 @@ export async function getUserRole(userId: string): Promise<UserRole | null> {
     .select("role_id")
     .eq("user_id", userId)
     .single();
-  
+
   if (error || !role) {
     return null;
   }
-  
+
   return role.role_id as UserRole;
 }
 
@@ -47,11 +50,11 @@ export async function getUserRole(userId: string): Promise<UserRole | null> {
  */
 export async function requireAuth(): Promise<AuthUser> {
   const user = await getCurrentUser();
-  
+
   if (!user) {
-    redirect("/auth/login");
+    redirect(AUTH_ROUTES.LOGIN);
   }
-  
+
   return user;
 }
 
@@ -61,11 +64,11 @@ export async function requireAuth(): Promise<AuthUser> {
 export async function requireRole(requiredRoleId: UserRole): Promise<AuthUser> {
   const user = await requireAuth();
   const roleId = await getUserRole(user.id);
-  
+
   if (roleId !== requiredRoleId) {
-    redirect("/unauthorized");
+    redirect(AUTH_ROUTES.UNAUTHORIZED);
   }
-  
+
   return user;
 }
 

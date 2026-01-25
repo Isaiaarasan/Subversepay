@@ -1,0 +1,13 @@
+export const SETTLEMENT_STATUS = {
+    ALL: "all",
+    COMPLETED: "Completed",
+    PROCESSING: "Processing",
+    FAILED: "Failed",
+};
+
+export const SETTLEMENT_STATUS_OPTIONS = [
+    SETTLEMENT_STATUS.ALL,
+    SETTLEMENT_STATUS.COMPLETED,
+    SETTLEMENT_STATUS.PROCESSING,
+    SETTLEMENT_STATUS.FAILED,
+];

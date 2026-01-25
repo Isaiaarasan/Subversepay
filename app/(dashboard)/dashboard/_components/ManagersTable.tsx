@@ -1,4 +1,5 @@
 import React from "react";
+import { MANAGER_TABLE_COLUMNS } from "@/lib/constants/columns";
 import { StatusBadge } from "./StatusBadge";
 import { EmptyState } from "./EmptyState";
 import { Users } from "lucide-react";
@@ -42,11 +43,9 @@ const ManagersTable: React.FC<ManagersTableProps> = ({ managers = [] }) => {
             <table className="w-full text-left">
                 <thead className="bg-gray-50/50 border-b border-gray-100">
                     <tr>
-                        <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Name</th>
-                        <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Email</th>
-                        <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Role</th>
-                        <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
-                        <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Last Active</th>
+                        {MANAGER_TABLE_COLUMNS.map((col) => (
+                            <th key={col} className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase">{col}</th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
