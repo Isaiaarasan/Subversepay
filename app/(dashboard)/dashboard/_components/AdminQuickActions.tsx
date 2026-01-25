@@ -9,7 +9,7 @@ export function AdminQuickActions() {
     <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl border border-white/60 dark:border-gray-800 shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80">
       <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-5 text-lg">Quick Actions</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Link href="/dashboard/admin/manage" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+        <Link href="/dashboard/admin/manage/managers" className="group p-4 bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-start justify-between mb-3">
             <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
               <Cog size={20} />

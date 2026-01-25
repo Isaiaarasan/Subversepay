@@ -4,11 +4,11 @@ import React from "react";
 import { TrendingUp, DollarSign, Calendar, BarChart3, Plus, CreditCard, Target } from "lucide-react";
 import MetricCard from "@/components/ui/metric-card";
 import { TimePeriodSelector } from "../../_components/TimePeriodSelector";
-import CollectionTrendBarGraph from "@/components/charts/collection-trend-bar-graph";
+import RevenueForecastChart from "@/components/charts/revenue-forecast-chart";
 
 const RevenueForecast: React.FC = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-8">
       <div className="p-6 rounded-2xl bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-900/60 dark:to-gray-900/40 backdrop-blur-xl border border-white/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-none">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
@@ -66,9 +66,9 @@ const RevenueForecast: React.FC = () => {
       <div className="bg-white/80 backdrop-blur-xl border border-white/60 dark:border-gray-800 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-none dark:bg-gray-900/80 p-6">
         <div className="flex items-center gap-3 mb-6">
           <BarChart3 className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Revenue Forecast Trend Graph</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Revenue Forecast Trend</h3>
         </div>
-        <CollectionTrendBarGraph />
+        <RevenueForecastChart />
       </div>
 
       {/* Additional Content Area */}

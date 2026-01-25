@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Link as Home, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut, TrendingUp, Cog } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link as Home, LayoutDashboard, Settings, Store, CheckCircle, BarChart3, Bell, CreditCard, Activity, Ticket, LogOut, TrendingUp, Cog, ChevronDown, Users, UserCog } from "lucide-react";
 import { signOut } from "@/app/actions/auth";
 
 interface SidebarLinkProps {
@@ -33,6 +34,17 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const isSuperAdmin = pathname?.startsWith("/dashboard/super-admin");
   const isAdmin = pathname?.startsWith("/dashboard/admin");
+  const [isManageOpen, setIsManageOpen] = useState(pathname?.includes("/dashboard/admin/manage"));
+  
+  const isManageActive = pathname?.includes("/dashboard/admin/manage");
+  
+  // Keep dropdown open when on manage sub-pages
+  useEffect(() => {
+    if (pathname?.includes("/dashboard/admin/manage")) {
+      setIsManageOpen(true);
+    }
+  }, [pathname]);
+  
   return (
     <aside className="w-64 h-screen fixed left-0 top-0 z-50 flex flex-col bg-sidebar text-sidebar-foreground shadow-2xl overflow-hidden border-r border-sidebar-border">
       <div className="h-16 flex items-center px-6 border-b border-sidebar-border font-bold text-xl tracking-tight">
@@ -48,12 +60,53 @@ export function DashboardSidebar() {
               label="Dashboard"
               active={pathname === "/dashboard/admin" || pathname === "/dashboard/admin/"}
             />
-            <SidebarLink
-              href="/dashboard/admin/manage"
-              icon={Cog}
-              label="Manage"
-              active={pathname?.includes("manage")}
-            />
+            <div className="space-y-1">
+              <button
+                onClick={() => setIsManageOpen(!isManageOpen)}
+                className={`w-full relative group flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm
+                  ${isManageActive
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  }
+                `}
+              >
+                <div className="flex items-center gap-3">
+                  <Cog className={`h-4 w-4 shrink-0 transition-colors ${isManageActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-sidebar-accent-foreground"}`} />
+                  <span>Manage</span>
+                </div>
+                <ChevronDown 
+                  className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isManageOpen ? "rotate-180" : ""} ${isManageActive ? "text-primary-foreground" : "text-muted-foreground"}`} 
+                />
+              </button>
+              {isManageOpen && (
+                <div className="ml-4 space-y-1 pl-4 border-l-2 border-sidebar-border">
+                  <Link
+                    href="/dashboard/admin/manage/managers"
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium
+                      ${pathname?.includes("/dashboard/admin/manage/managers")
+                        ? "bg-primary/20 text-primary"
+                        : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      }
+                    `}
+                  >
+                    <UserCog className="h-4 w-4 shrink-0" />
+                    <span>Managers</span>
+                  </Link>
+                  <Link
+                    href="/dashboard/admin/manage/customers"
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium
+                      ${pathname?.includes("/dashboard/admin/manage/customers")
+                        ? "bg-primary/20 text-primary"
+                        : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      }
+                    `}
+                  >
+                    <Users className="h-4 w-4 shrink-0" />
+                    <span>Customers</span>
+                  </Link>
+                </div>
+              )}
+            </div>
             <SidebarLink
               href="/dashboard/admin/analytics"
               icon={BarChart3}

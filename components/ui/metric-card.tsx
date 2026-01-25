@@ -53,17 +53,17 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 
     const baseStyles = cn(
         "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-white/60 dark:border-gray-800",
-        "shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300",
+        "shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all duration-300 min-h-[140px]",
         isClickable && "cursor-pointer hover:scale-[1.02] active:scale-[0.98]",
         className
     );
 
-    const contentPadding = variant === "compact" ? "p-4" : "p-5";
+    const contentPadding = variant === "compact" ? "p-4" : "p-6";
 
     return (
         <div className={cn(baseStyles, contentPadding)} onClick={onClick}>
             {/* Header with Icon and Trend */}
-            <div className="flex justify-between items-start mb-3">
+            <div className="flex justify-between items-start mb-4">
                 {Icon && (
                     <div className="p-2.5 bg-blue-100 dark:bg-blue-900/40 rounded-xl text-blue-700 dark:text-blue-300">
                         <Icon size={variant === "compact" ? 16 : 20} />
@@ -79,7 +79,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             </div>
 
             {/* Title */}
-            <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1 uppercase tracking-wide">
+            <h3 className="text-gray-500 dark:text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
                 {title}
             </h3>
 
