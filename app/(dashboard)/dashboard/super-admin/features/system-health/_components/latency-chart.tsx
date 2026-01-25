@@ -8,8 +8,8 @@ import {
     calculateMaxLatency,
     calculateChartPath,
     calculateAreaPath,
-} from "../../../services/system-health.utils";
-import { TimeRange } from "../../../services/system-health.service";
+} from "../../../../services/system-health.utils";
+import { TimeRange } from "../../../../services/system-health.service";
 
 export function LatencyChart() {
     const [timeRange, setTimeRange] = useState<TimeRange>("Current Day");

@@ -147,43 +147,43 @@ export function DashboardSidebar() {
               active={pathname === (isSuperAdmin ? "/dashboard/super-admin" : "/dashboard") || pathname === (isSuperAdmin ? "/dashboard/super-admin/" : "/dashboard/")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/merchants" : "/dashboard/features/merchants"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/merchants" : "/dashboard/features/merchants"}
               icon={Store}
               label="Merchants"
               active={pathname?.includes("merchants")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/approvals" : "/dashboard/features/approvals"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/approvals" : "/dashboard/features/approvals"}
               icon={CheckCircle}
               label="Approvals"
               active={pathname?.includes("approvals")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/analytics" : "/dashboard/features/analytics"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/analytics" : "/dashboard/features/analytics"}
               icon={BarChart3}
               label="Analytics"
               active={pathname?.includes("analytics")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/alerts" : "/dashboard/features/alerts"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/alerts" : "/dashboard/features/alerts"}
               icon={Bell}
               label="Alerts"
               active={pathname?.includes("alerts")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/settlements" : "/dashboard/features/settlements"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/settlements" : "/dashboard/features/settlements"}
               icon={CreditCard}
               label="Settlements"
               active={pathname?.includes("settlements")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/system-health" : "/dashboard/features/system-health"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/system-health" : "/dashboard/features/system-health"}
               icon={Activity}
               label="System Health"
               active={pathname?.includes("system-health")}
             />
             <SidebarLink
-              href={isSuperAdmin ? "/dashboard/super-admin/tickets" : "/dashboard/features/tickets"}
+              href={isSuperAdmin ? "/dashboard/super-admin/features/tickets" : "/dashboard/features/tickets"}
               icon={Ticket}
               label="Tickets"
               active={pathname?.includes("tickets")}

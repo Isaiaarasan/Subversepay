@@ -5,7 +5,7 @@ import { Download, Search, Filter } from "lucide-react";
 import { DateRangeFilter } from "@/components/ui/date-range-filter";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { setSearchQuery, setStatusFilter, setStartDate, setEndDate, SettlementStatusFilter } from "@/lib/store/slices/settlementsSlice";
-import { filterSettlements } from "../../utils/settlements.utils";
+import { filterSettlements } from "../../../utils/settlements.utils";
 
 const Settlements: React.FC = () => {
   const dispatch = useAppDispatch();

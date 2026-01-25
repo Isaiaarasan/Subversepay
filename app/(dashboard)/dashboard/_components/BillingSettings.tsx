@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Calendar, CreditCard } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -85,7 +85,7 @@ export function BillingSettings() {
                                 Automatically process payments on the billing date
                             </p>
                         </div>
-                        <Checkbox
+                        <Switch
                             checked={autopayEnabled}
                             onCheckedChange={handleAutopayToggle}
                             disabled={isCheckingCustomers}

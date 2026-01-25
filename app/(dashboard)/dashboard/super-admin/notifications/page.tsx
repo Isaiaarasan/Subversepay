@@ -122,7 +122,7 @@ const NotificationsPage = () => {
                                 <h3 className="font-bold text-lg text-gray-800 dark:text-white">Active Merchants Activity</h3>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Live transaction processing status</p>
                             </div>
-                            <Link href="/dashboard/super-admin/merchants" className="px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 text-xs font-semibold rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors border border-purple-100 dark:border-purple-900/30">
+                            <Link href="/dashboard/super-admin/features/merchants" className="px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 text-xs font-semibold rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors border border-purple-100 dark:border-purple-900/30">
                                 Manage Merchants
                             </Link>
                         </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Bell, MessageSquare, Mail, Phone, CreditCard } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
@@ -51,7 +51,7 @@ export function NotificationSettings() {
                             </p>
                         </div>
                     </div>
-                    <Checkbox
+                    <Switch
                         checked={notifications.autopayEnabled}
                         onCheckedChange={() => handleNotificationToggle('autopayEnabled')}
                     />
@@ -72,7 +72,7 @@ export function NotificationSettings() {
                             </p>
                         </div>
                     </div>
-                    <Checkbox
+                    <Switch
                         checked={notifications.whatsappEnabled}
                         onCheckedChange={() => handleNotificationToggle('whatsappEnabled')}
                     />
@@ -93,7 +93,7 @@ export function NotificationSettings() {
                             </p>
                         </div>
                     </div>
-                    <Checkbox
+                    <Switch
                         checked={notifications.smsEnabled}
                         onCheckedChange={() => handleNotificationToggle('smsEnabled')}
                     />
@@ -114,7 +114,7 @@ export function NotificationSettings() {
                             </p>
                         </div>
                     </div>
-                    <Checkbox
+                    <Switch
                         checked={notifications.emailEnabled}
                         onCheckedChange={() => handleNotificationToggle('emailEnabled')}
                     />

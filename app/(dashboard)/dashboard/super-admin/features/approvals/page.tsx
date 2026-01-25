@@ -19,7 +19,7 @@ import {
   removeApproval,
   Approval,
 } from "@/lib/store/slices/approvalsSlice";
-import { filterApprovals } from "../../utils/approvals.utils";
+import { filterApprovals } from "../../../utils/approvals.utils";
 
 const Approvals: React.FC = () => {
   const [mounted, setMounted] = useState(false);

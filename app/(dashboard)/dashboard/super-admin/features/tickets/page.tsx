@@ -15,7 +15,7 @@ import {
     setEndDate,
     closeTicket,
 } from "@/lib/store/slices/ticketsSlice";
-import { filterTickets, countActiveAndClosed } from "../../utils/tickets.utils";
+import { filterTickets, countActiveAndClosed } from "../../../utils/tickets.utils";
 
 const Tickets: React.FC = () => {
     const dispatch = useAppDispatch();
